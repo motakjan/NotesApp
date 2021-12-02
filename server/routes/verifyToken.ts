@@ -1,14 +1,10 @@
+import {RequestType} from "../types/usersTypes";
+import {generateErrorObject} from '../helpers/helpers';
+import {NextFunction, Response} from 'express';
+
 const jwt = require('jsonwebtoken');
-import { generateErrorObject } from '../helpers/helpers';
-import { Request, Response, NextFunction } from 'express';
 
-type verifyType = {
-    Request: Request;
-    user: any;
-    header: (token: string) => string;
-};
-
-const verify = (req: verifyType, res: Response, next: NextFunction) => {
+const verify = (req: RequestType, res: Response, next: NextFunction) => {
     const token = req.header('auth-token');
     if (!token)
         return res
@@ -16,8 +12,7 @@ const verify = (req: verifyType, res: Response, next: NextFunction) => {
             .json(generateErrorObject('access', 'Access denied (no token)'));
 
     try {
-        const verifiedUser = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
-        req.user = verifiedUser;
+        req.user = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
         next();
     } catch (err) {
         res.status(400).json(generateErrorObject('access', 'Invalid token'));
