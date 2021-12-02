@@ -6,8 +6,9 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 
 // Model Routes
-const userRoute = require('./routes/users');
+const usersRoute = require('./routes/users');
 const authRoute = require('./routes/auth');
+const postsRoute = require('./routes/posts');
 
 dotenv.config();
 
@@ -20,8 +21,9 @@ app.use(express.json());
 app.use(helmet());
 app.use(morgan('common'));
 
-app.use('/api/users', userRoute);
+app.use('/api/users', usersRoute);
 app.use('/api/auth', authRoute);
+app.use('/api/posts', postsRoute);
 
 app.listen(1337, () => {
     console.log('Backend server is running!');

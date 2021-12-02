@@ -1,11 +1,13 @@
-const router = require('express').Router();
+const authRouter = require('express').Router();
 const bcrypt = require('bcrypt');
-import { Request, Response } from 'express';
+const jwt = require('jsonwebtoken');
 
+import { Request, Response } from 'express';
 import { validatePassword, generateErrorObject } from '../helpers/helpers';
+
 const User = require('../models/User');
 
-router.post('/register', async (req: Request, res: Response) => {
+authRouter.post('/register', async (req: Request, res: Response) => {
     try {
         if (!validatePassword(req.body.password)) {
             return res
@@ -33,7 +35,7 @@ router.post('/register', async (req: Request, res: Response) => {
     }
 });
 
-router.post('/login', async (req: Request, res: Response) => {
+authRouter.post('/login', async (req: Request, res: Response) => {
     try {
         const user = await User.findOne({ email: req.body.email });
         !user && res.status(404).json({ errorMessage: 'User not found.' });
@@ -46,10 +48,15 @@ router.post('/login', async (req: Request, res: Response) => {
         !validPassword &&
             res.status(400).json({ errorMessage: 'Wrong password.' });
 
-        return res.status(200).json(user);
+        // Create and assign a token
+        const { _doc: userInfo } = user;
+        const jwtToken = jwt.sign({ userInfo }, process.env.JWT_TOKEN_SECRET);
+
+        //! Will this set header on frontend?
+        return res.header('auth-token', jwtToken).status(200).json(jwtToken);
     } catch (err) {
         return res.status(500).json(err);
     }
 });
 
-module.exports = router;
+module.exports = authRouter;
