@@ -1,5 +1,5 @@
-import {RequestType} from "../types/usersTypes";
-import {Response} from 'express';
+import { RequestType } from '../types/usersTypes';
+import { Response } from 'express';
 
 const postsRouter = require('express').Router();
 const verify = require('./verifyToken');
