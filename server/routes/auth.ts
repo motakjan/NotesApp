@@ -53,7 +53,10 @@ authRouter.post('/login', async (req: Request, res: Response) => {
         const jwtToken = jwt.sign({ userInfo }, process.env.JWT_TOKEN_SECRET);
 
         //! Will this set header on frontend?
-        return res.header('auth-token', jwtToken).status(200).json(jwtToken);
+        return res
+            .header('auth-token', jwtToken)
+            .status(200)
+            .json({ jwtToken });
     } catch (err) {
         return res.status(500).json(err);
     }
