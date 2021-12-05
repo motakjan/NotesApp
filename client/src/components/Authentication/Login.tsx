@@ -1,3 +1,5 @@
+import Button from '@mui/material/Button';
+
 type LoginPropsType = {
     login: () => void;
 };
@@ -7,7 +9,12 @@ export const Login: React.FC<LoginPropsType> = ({ login }) => {
     return (
         <div>
             {data}
-            <button onClick={login}>Login</button>
+            <Button 
+                variant="contained" 
+                onClick={login}
+            >
+                Login
+            </Button>
         </div>
     );
 };
