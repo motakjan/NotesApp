@@ -1,11 +1,6 @@
-import { RequestType } from '../types/usersTypes';
-import { Response } from 'express';
-
 const postsRouter = require('express').Router();
-const verify = require('./verifyToken');
+const PostsController = require('../controllers/postsController');
 
-postsRouter.get('/', verify, async (req: RequestType, res: Response) => {
-    return res.status(200).json(req.user);
-});
+postsRouter.get('/', PostsController.getPosts);
 
 module.exports = postsRouter;
