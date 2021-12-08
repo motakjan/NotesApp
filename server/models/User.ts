@@ -6,7 +6,8 @@ const UserSchema = new mongoose.Schema(
             type: String,
             required: true,
             min: 3,
-            max: 20,
+            max: 100,
+            lowercase: true,
             validate: {
                 validator: (v: string) =>
                     /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v),
@@ -25,8 +26,12 @@ const UserSchema = new mongoose.Schema(
             type: String,
             default: '',
             min: 3,
-            max: 20,
+            max: 15,
             unique: true,
+        },
+        name: {
+            first: String,
+            last: String,
         },
         profilePicture: {
             type: String,
