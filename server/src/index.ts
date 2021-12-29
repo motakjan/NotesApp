@@ -25,10 +25,10 @@ app.use(morganMiddleware);
 app.use(cors());
 
 app.use('/api/auth', authRoute);
-app.use('/api/users', verify , userRoute);
+app.use('/api/users', verify, userRoute);
 app.use('/api/posts', verify, postRoute);
 
-app.listen(1337, async () => {
+app.listen(3030, async () => {
     logger.info('Backend server is running!');
     await connect();
 });
