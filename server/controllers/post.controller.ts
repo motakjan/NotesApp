@@ -1,6 +1,5 @@
-import { RequestType } from '../types/usersTypes';
-import { Response } from 'express';
+import {Request, Response} from 'express';
 
-export const getPostsHandler = async (req: RequestType, res: Response) => {
+export const getPostsHandler = async (req: Request, res: Response) => {
     return res.status(200).json(req.user);
 };

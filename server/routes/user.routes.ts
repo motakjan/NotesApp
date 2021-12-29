@@ -1,5 +1,7 @@
-const usersRouter = require('express').Router();
-const UsersController = require('../controllers/user.controller');
+import express from "express";
+import * as UsersController from '../controllers/user.controller';
+
+const usersRouter = express.Router();
 
 usersRouter.get('/', UsersController.getUsersHandler);
 

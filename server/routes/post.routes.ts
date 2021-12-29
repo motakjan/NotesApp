@@ -1,5 +1,7 @@
-const postsRouter = require('express').Router();
-const PostsController = require('../controllers/post.controller');
+import * as PostsController from '../controllers/post.controller';
+import express from 'express';
+
+const postsRouter = express.Router();
 
 postsRouter.get('/', PostsController.getPostsHandler);
 

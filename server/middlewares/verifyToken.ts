@@ -1,11 +1,10 @@
-import {RequestType} from "../types/usersTypes";
 import {generateErrorObject} from '../utils/helpers';
-import {NextFunction, Response} from 'express';
+import {NextFunction, Request, Response} from 'express';
 
 import jwt from 'jsonwebtoken';
 
-const verify = (req: RequestType, res: Response, next: NextFunction) => {
-    const token = req.header('auth-token');
+const verify = (req: Request, res: Response, next: NextFunction) => {
+    const token = req.header('auth-token'); 
     if (!token)
         return res
             .status(401)
