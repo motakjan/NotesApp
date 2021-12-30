@@ -2,6 +2,7 @@ import { ThemeProvider } from '@emotion/react';
 import { createTheme, CssBaseline, Tooltip } from '@mui/material';
 import { getCurrentTheme } from '../../assets/theme';
 import { useColorMode } from '../../context/ColorModeContext';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
@@ -24,13 +25,15 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { DrawerHeader, Drawer, AppBar } from './LayoutStyledComponents';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import React from 'react';
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const tasksIcons = [<EventNoteIcon />, <NoteAddRoundedIcon />, <AssignmentReturnedIcon /> ];
 const profileIcons = [<DateRangeIcon />, <MailIcon />, <PersonIcon />, <SettingsIcon />];
 
 export const Layout: React.FC<React.ReactNode> = ({ children }) => {
     const { mode, toggleColorMode } = useColorMode();
+    const [isLoggedIn, _setIsLoggedIn] = useState<boolean>(false);
 
     const theme = React.useMemo(
         () => createTheme(getCurrentTheme(mode)),
@@ -93,6 +96,14 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
                                 color="inherit"
                             >
                                 {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip
+                            title={isLoggedIn ? 'Logout' : 'Login'}
+                            color="inherit"
+                        >
+                            <IconButton>
+                                {isLoggedIn ?<LogoutIcon /> : <LoginIcon /> }
                             </IconButton>
                         </Tooltip>
                     </Toolbar>
