@@ -3,34 +3,32 @@ import { PaletteMode } from '@mui/material';
 export const getCurrentTheme = (mode: PaletteMode) => ({
     palette: {
         mode,
-        ...mode === 'light'
+        ...(mode === 'light'
             ? {
                 primary: {
-                    light: '#393939',
-                    main: '#1a1a1a',
-                    dark: 'rgba(255,12,61,0.86)',
-                    contrastText: '#fff',
+                    main: '#011a2d',
+                    dark: '#062843',
                 },
                 secondary: {
-                    light: 'rgba(255,45,88,0.86)',
-                    main: 'rgba(255,12,61,0.86)',
-                    dark: '#b71a25',
-                    contrastText: '#000',
+                    main: '#FFB500',
+                    dark: '#ffc83e',
+                    light: '#f9c049',
                 },
             }
             : {
                 primary: {
-                    light: '#393939',
-                    main: '#1a1a1a',
-                    dark: 'rgba(255,12,61,0.86)',
-                    contrastText: '#fff',
+                    main: '#011a2d',
+                    dark: '#062843',
                 },
                 secondary: {
-                    light: 'rgba(255,45,88,0.86)',
-                    main: 'rgba(255,12,61,0.86)',
-                    dark: '#b71a25',
-                    contrastText: '#000',
+                    main: '#FFB500',
+                    dark: '#ffc83e',
+                    light: '#f9c049',
                 },
-            },
+                background: {
+                    default: '#091c2b',
+                    paper: '#00101c',
+                },
+            }),
     },
 });
