@@ -2,7 +2,7 @@ import { Button, IconButton } from '@mui/material';
 
 interface LoginWithButtonProps {
   icon: JSX.Element;
-  text: string;
+  text?: string;
   color: string;
 }
 

@@ -98,19 +98,20 @@ export const Login: React.FC<LoginPropsType> = ({ login }) => (
                     }}
                     component="div"
                 >
-                    OR
+                    OR SIGN IN WITH
                 </Typography>
                 <Box 
-                    className="loginWithWrapper"
+                    sx={{
+                        display: 'flex',
+                        gap: '1rem',
+                    }}
                 >
                     <LoginWithButton 
-                        icon={ <GoogleIcon /> } 
-                        text="Continue with Google" 
-                        color="orange"
+                        icon={<GoogleIcon />} 
+                        color="black"
                     />
                     <LoginWithButton 
-                        icon={ <FacebookIcon /> } 
-                        text="Continue with Facebook" 
+                        icon={<FacebookIcon />} 
                         color="blue"
                     />
                 </Box> 

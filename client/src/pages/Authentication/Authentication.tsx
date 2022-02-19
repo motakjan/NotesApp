@@ -20,21 +20,16 @@ export const Authentication = () => {
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const loginFormData = new FormData(event.currentTarget);
- 
-        console.log({
-            email: loginFormData.get('email'),
-            password: loginFormData.get('password'),
+        const email = loginFormData.get('email')?.toString();
+        const password = loginFormData.get('password')?.toString();
+        mutate({ 
+            email, 
+            password
         });
-
-        const staticData = {
-            email: 'teset@tetete.cz',
-            password: 'Jedoma1234',
-        };
-        mutate(staticData); 
     };
 
     return (
-        <GradientBox 
+        <GradientBox
             sx={{
                 display: 'flex',
                 justifyContent: 'center',
