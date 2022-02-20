@@ -9,4 +9,8 @@ export const authApi = {
   registerUser(data: any) {
     return instance.post('/api/auth/register', data).then(res => res.data);
   },
+
+  isLoggedIn() {
+    return instance.get('/api/auth/isLoggedIn').then(res => res.data);
+  }
 };

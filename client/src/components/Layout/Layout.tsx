@@ -2,7 +2,7 @@ import { ThemeProvider } from '@emotion/react';
 import { createTheme, CssBaseline, Tooltip } from '@mui/material';
 import { getCurrentTheme } from '../../assets/theme';
 import { useColorMode } from '../../context/ColorModeContext';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
@@ -27,18 +27,32 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useNavigate } from 'react-router';
+import { useQueryClient } from 'react-query';
 
 const tasksIcons = [<EventNoteIcon />, <NoteAddRoundedIcon />, <AssignmentReturnedIcon /> ];
 const profileIcons = [<DateRangeIcon />, <MailIcon />, <PersonIcon />, <SettingsIcon />];
 
 export const Layout: React.FC<React.ReactNode> = ({ children }) => {
   const { mode, toggleColorMode } = useColorMode();
-  const [isLoggedIn, _setIsLoggedIn] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const queryClient = useQueryClient();
+  const cachedIsLoggedIn: any = queryClient.getQueryData('isLoggedIn');
+  const navigate = useNavigate();
 
   const theme = React.useMemo(
     () => createTheme(getCurrentTheme(mode)),
     [mode]
   );
+
+  useEffect(() => {
+    if (cachedIsLoggedIn && !cachedIsLoggedIn.errors) {
+      setIsLoggedIn(cachedIsLoggedIn.isLoggedIn);
+    } else {
+      setIsLoggedIn(false);
+    }
+  },[cachedIsLoggedIn]);
+
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -48,6 +62,16 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleLogout = () => {
+    localStorage.setItem('auth-token', '');
+    setIsLoggedIn(false);
+    navigate('/login');
+  }
+
+  const handleLogin = () => {
+    navigate('/login');
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -71,7 +95,7 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
               sx={{
                 marginRight: '36px',
                 ...open && {
-                  display: 'none' 
+                  display: 'none',
                 },
               }}
             >
@@ -102,7 +126,7 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
               title={isLoggedIn ? 'Logout' : 'Login'}
               color="inherit"
             >
-              <IconButton>
+              <IconButton onClick={isLoggedIn ? handleLogout : handleLogin}>
                 {isLoggedIn ?<LogoutIcon /> : <LoginIcon /> }
               </IconButton>
             </Tooltip>
@@ -126,12 +150,12 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
             {['Tasks', 'Add Task', 'Join Task'].map(
               (text, index) => (
                 <Tooltip 
+                  key={`optionsMenu1-${text}`}
                   title={text} 
                   placement="right-start"
                 >
                   <ListItem
                     button
-                    key={text}
                   >
                     <ListItemIcon >                          
                       { tasksIcons[index] }
@@ -146,12 +170,12 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
           <List>
             {['Inbox', 'Calendar', 'Profile', 'Settings'].map((text, index) => (
               <Tooltip 
+                key={`optionsMenu2-${text}`}
                 title={text} 
                 placement="right-start"
               >
                 <ListItem
                   button
-                  key={text}
                 >
                   <ListItemIcon>
                     {profileIcons[index]}
