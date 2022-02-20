@@ -1,5 +1,6 @@
 export const Dashboard = () => (
-    <div>
+  <div>
       DASHBOARD
-    </div>
+  </div>
 )
+ 

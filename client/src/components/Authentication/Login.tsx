@@ -17,132 +17,132 @@ type LoginPropsType = {
 };
 
 export const Login: React.FC<LoginPropsType> = ({ login }) => (
-    <Container
-        component="main"
-        maxWidth="xs"
-        sx={{
-            backgroundColor: '#eef0ff',
-            p: '10px 2rem 2rem 2rem',
-            boxShadow: 'rgba(0, 0, 0, 0.1) 0px 10px 50px;', 
-            borderRadius: '6px',
-        }}
+  <Container
+    component="main"
+    maxWidth="xs"
+    sx={{
+      backgroundColor: '#eef0ff',
+      p: '10px 2rem 2rem 2rem',
+      boxShadow: 'rgba(0, 0, 0, 0.1) 0px 10px 50px;', 
+      borderRadius: '6px',
+    }}
+  >
+    <CssBaseline />
+    <Box 
+      sx={{
+        marginTop: 3,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
     >
-        <CssBaseline />
-        <Box
-            sx={{
-                marginTop: 3,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-            }}
-        >
-            <Avatar
-                sx={
-                    {
-                        m: 1, bgcolor: 'orange' 
-                    }
-                }
-            >
-                <LockOutlinedIcon />
-            </Avatar>
-            <Typography
-                component="h1"
-                variant="h5"
-            >
+      <Avatar
+        sx={  
+          {
+            m: 1, bgcolor: 'orange' 
+          }
+        }
+      >
+        <LockOutlinedIcon />
+      </Avatar>
+      <Typography
+        component="h1"
+        variant="h5"
+      >
                     Sign in
-            </Typography>
+      </Typography>
             
-            <Box
-                component="form"
-                onSubmit={login}
-                noValidate
-                sx={{
-                    mt: 1,
-                }}
-            >
-                <TextField
-                    margin="normal"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                />
-                <TextField
-                    margin="normal"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                />
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{
-                        mt: 3, height: '2.8rem',
-                    }}
-                >
+      <Box
+        component="form"
+        onSubmit={login}
+        noValidate
+        sx={{
+          mt: 1,
+        }}
+      >
+        <TextField
+          margin="normal"
+          variant="outlined"
+          required
+          fullWidth
+          id="email"
+          label="Email Address"
+          name="email"
+          autoComplete="email"
+          autoFocus
+        />
+        <TextField
+          margin="normal"
+          variant="outlined"
+          required
+          fullWidth
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+        />
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{
+            mt: 3, height: '2.8rem',
+          }}
+        >
                         Sign In
-                </Button>
-                <Typography
-                    sx={{
-                        color: 'gray', fontSize: '0.8rem', textAlign: 'center', p: '1rem 0'
-                    }}
-                    component="div"
-                >
+        </Button>
+        <Typography
+          sx={{
+            color: 'gray', fontSize: '0.8rem', textAlign: 'center', p: '1rem 0'
+          }}
+          component="div"
+        >
                     OR SIGN IN WITH
-                </Typography>
-                <Box 
-                    sx={{
-                        display: 'flex',
-                        gap: '1rem',
-                    }}
-                >
-                    <LoginWithButton 
-                        icon={<GoogleIcon />} 
-                        color="black"
-                    />
-                    <LoginWithButton 
-                        icon={<FacebookIcon />} 
-                        color="blue"
-                    />
-                </Box> 
-                <Divider
-                    variant="middle"
-                    sx={{
-                        m:'1rem 0'
-                    }}
-                />       
-                <Grid container>
-                    <Grid
-                        item
-                        xs
-                    >
-                        <Link
-                            href="#"
-                            color="inherit"
-                        >
+        </Typography>
+        <Box 
+          sx={{
+            display: 'flex',
+            gap: '1rem',
+          }}
+        >
+          <LoginWithButton 
+            icon={<GoogleIcon />} 
+            color="black"
+          />
+          <LoginWithButton 
+            icon={<FacebookIcon />} 
+            color="blue"
+          />
+        </Box> 
+        <Divider
+          variant="middle"
+          sx={{
+            m:'1rem 0'
+          }}
+        />       
+        <Grid container>
+          <Grid
+            item
+            xs
+          >
+            <Link
+              href="#"
+              color="inherit"
+            >
                                 Forgot password?
-                        </Link>
-                    </Grid>
-                    <Grid item>
-                        <Link
-                            href="#"
-                            color="inherit"
-                        >
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link
+              href="#"
+              color="inherit"
+            >
                                 Sign Up
-                        </Link>
-                    </Grid>
-                </Grid>
-            </Box>
-        </Box>
-    </Container>
+            </Link>
+          </Grid>
+        </Grid>
+      </Box>
+    </Box>
+  </Container>
 );
