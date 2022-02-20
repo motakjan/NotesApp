@@ -54,3 +54,20 @@ export const loginHandler = async (req: Request, res: Response) => {
         return res.status(500).json(err);
     }
 };
+
+export const isLoggedInHandler = async (req: Request, res: Response) => {
+    const token = req.header('auth-token'); 
+    if (!token)
+        return res
+            .status(401)
+            .json(generateErrorObject('access', 'Access denied (no token)'));
+
+    try {
+        const tokenCheck = jwt.verify(token, process.env.JWT_TOKEN_SECRET as string);
+        return res
+            .status(200)
+            .json({ isLoggedIn: true, tokenCheck });
+    } catch (err) {
+        res.status(400).json(generateErrorObject('access', 'Invalid or expired token'));
+    }
+}

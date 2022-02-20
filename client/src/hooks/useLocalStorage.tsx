@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-const PREFIX = 'notes-app-';
+const PREFIX = 'notes-app-'; 
 
 export const useLocalStorage = (key: string, initialValue?: any) => {
-    const prefixedKey: string = PREFIX + key;
-    const [value, setValue] = useState<any | null>(() => {
-        const jsonValue = localStorage.getItem(prefixedKey);
-        if (jsonValue) return JSON.parse(jsonValue);
-        if (typeof initialValue === 'function') {
-            return initialValue();
-        } 
-        return initialValue;
-    });
+  const prefixedKey: string = PREFIX + key;
+  const [value, setValue] = useState<any | null>(() => {
+    const jsonValue = localStorage.getItem(prefixedKey);
+    if (jsonValue) return JSON.parse(jsonValue);
+    if (typeof initialValue === 'function') {
+      return initialValue();
+    } 
+    return initialValue;
+  });
 
-    useEffect(() => {
-        localStorage.setItem(prefixedKey, JSON.stringify(value));
-    }, [prefixedKey, value]);
+  useEffect(() => {
+    localStorage.setItem(prefixedKey, JSON.stringify(value));
+  }, [prefixedKey, value]);
 
-    return [value, setValue];
+  return [value, setValue];
 };

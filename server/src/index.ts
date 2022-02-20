@@ -28,7 +28,7 @@ app.use('/api/auth', authRoute);
 app.use('/api/users', verify, userRoute);
 app.use('/api/posts', verify, postRoute);
 
-app.listen(3030, async () => {
+app.listen(1337, async () => {
     logger.info('Backend server is running!');
     await connect();
 });
