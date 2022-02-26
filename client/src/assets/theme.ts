@@ -1,13 +1,20 @@
 import { PaletteMode } from '@mui/material';
 
 export const getCurrentTheme = (mode: PaletteMode) => ({
-  palette: {
+  typography: {
+    fontFamily: [
+      '"Nunito"',
+      '"Segoe UI Emoji"',
+    ].join(','),
+  },
+  palette: {  
     mode,
     ...mode === 'light'
       ? {
         primary: {
-          main: '#011a2d',
+          main: '#ffffff',
           dark: '#062843', 
+          light: '#ffffff'
         },
         secondary: {
           main: '#FFB500',
@@ -32,3 +39,4 @@ export const getCurrentTheme = (mode: PaletteMode) => ({
       },
   },
 });
+
