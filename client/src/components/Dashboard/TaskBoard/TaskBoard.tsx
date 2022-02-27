@@ -1,11 +1,9 @@
-import { DragDropContext,
-  Droppable,
-  DropResult,
-  Draggable, } from 'react-beautiful-dnd';
+import { DragDropContext, Draggable, Droppable, DropResult, } from 'react-beautiful-dnd';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Box, Typography } from '@mui/material';
 import { TaskCard } from '../TaskCard/TaskCard';
+import { onDashboardTaskDragEnd } from '../../../utils/helpers';
 
 const itemsFromBackend = [
   {
@@ -68,7 +66,7 @@ const itemsFromBackend = [
     id: uuidv4(),
     title: 'Third Task',
     tags: [
-      {
+      { 
         name: 'Working',
         color: 'error',
         type: 'tag',
@@ -109,57 +107,20 @@ const columnsFromBacked = {
   },
 };
 
-const onDragEnd = (result: DropResult, columns: any, setColumns: any) => {
-  if (!result.destination) return;
-  const { source, destination } = result;
-
-  if (source.droppableId !== destination.droppableId) {
-    const sourceColumn = columns[source.droppableId];
-    const destColumn = columns[destination.droppableId];
-    const sourceItems = [...sourceColumn.items];
-    const destItems = [...destColumn.items];
-    const [removed] = sourceItems.splice(source.index, 1);
-    destItems.splice(destination.index, 0, removed);
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...sourceColumn,
-        items: sourceItems,
-      },
-      [destination.droppableId]: {
-        ...destColumn,
-        items: destItems,
-      },
-    });
-  } else {
-    const column = columns[source.droppableId];
-    const copiedItems = [...column.items];
-    const [removed] = copiedItems.splice(source.index, 1);
-    copiedItems.splice(destination.index, 0, removed);
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...column,
-        items: copiedItems,
-      },
-    });
-  }
-};
 
 export const TaskBoard = () => {
   const [columns, setColumns] = useState(columnsFromBacked);
-
   return (
     <Box
       style={{
         display: 'flex',
-        height: '100%',
+        height: '100%', 
         minHeight: '65vh'
       }}
     >
       <DragDropContext
         onDragEnd={(result: DropResult) =>
-          onDragEnd(result, columns, setColumns)
+          onDashboardTaskDragEnd(result, columns, setColumns)
         }
       >
         {Object.entries(columns).map(([id, column]) => (
@@ -220,7 +181,6 @@ export const TaskBoard = () => {
                             <TaskCard
                               title={item.title}
                               tags={item.tags}
-                              date="12.12.2020"
                               from="9:00"
                               to="10:30"
                               priority={2}
