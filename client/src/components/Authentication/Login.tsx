@@ -25,6 +25,7 @@ export const Login: React.FC<LoginPropsType> = ({ login }) => (
       p: '10px 2rem 2rem 2rem',
       boxShadow: 'rgba(0, 0, 0, 0.1) 0px 10px 50px;', 
       borderRadius: '6px',
+      m: '0.5rem'
     }}
   >
     <CssBaseline />
