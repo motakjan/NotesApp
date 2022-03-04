@@ -8,18 +8,17 @@ export type TaskCardPropsType = {
     title: string,
     priority: number,
     tags: TaskCardTagType[],
-    from: string,
-    to: string,
+    text: string,
 }
 
 export type CardActionPropsType = {
     showActions: boolean;
+    checked: boolean;
 }
 
 export type CardActionsAreaType = {
     title: string,
     tags: TaskCardTagType[],
-    setShowActions: (arg0: any) => void,
-    from: string,
-    to: string,
+    handleClick: () => void,
+    text: string,
 }

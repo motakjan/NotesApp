@@ -38,5 +38,16 @@ export const getCurrentTheme = (mode: PaletteMode) => ({
         },
       },
   },
+  components: {
+    MuiAvatar: {
+      styleOverrides: {
+        root: {
+          width: '24px',
+          fontSize: '12px',
+          height: '24px',
+        },
+      },
+    }
+  }
 });
 
