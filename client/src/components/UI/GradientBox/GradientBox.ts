@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 
 export const GradientBox = styled(Box)({ 
-  background: 'linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)',
+  background: 'linear-gradient(-45deg, #fc6435, #d9d0d2, #23a6d5, #ff3d67 )',
   backgroundSize: '400% 400%',
   animation: 'gradient 15s ease infinite',
   height: '100vh',
