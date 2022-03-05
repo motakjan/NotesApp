@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -39,7 +38,7 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
   const queryClient = useQueryClient();
   const cachedIsLoggedIn: any = queryClient.getQueryData('isLoggedIn');
   const navigate = useNavigate();
-
+  
   const theme = React.useMemo(
     () => createTheme(getCurrentTheme(mode)),
     [mode]
@@ -101,13 +100,13 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-            >
-                            NotesApp
-            </Typography>
+            <img
+              src={mode === 'dark' ? '/logoDark.svg' : '/logo.svg'}
+              alt="logo"
+              style={{
+                width: '4rem'
+              }}
+            />
             <Tooltip 
               title={'Switch to ' + (mode === 'light' ? 'dark' : 'light') + ' theme'} 
               placement="bottom-start"

@@ -2,8 +2,19 @@ import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 
 export const GradientBox = styled(Box)({ 
-  backgroundColor: '#0F0E13',
-  backgroundImage: 'linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url(https://marmotamaps.com/de/fx/wallpaper/download/faszinationen/Marmotamaps_Wallpaper_Inntal_Desktop_1920x1080.jpg)',
-  backgroundSize: 'cover',
-  height: '100vh'
+  background: 'linear-gradient(-45deg, #fc6435, #d9d0d2, #23a6d5, #ff3d67 )',
+  backgroundSize: '400% 400%',
+  animation: 'gradient 15s ease infinite',
+  height: '100vh',
+  '@keyframes gradient': {
+    '0%': {
+      backgroundPosition: '0% 50%'
+    },
+    '50%':{
+      backgroundPosition: '100% 50%'
+    },
+    '100%': {
+      backgroundPosition: '0% 50%'
+    }
+  }
 });

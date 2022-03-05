@@ -1,9 +1,9 @@
+import { NappLink } from '../UI/Link/NappLink';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import Link from '@mui/material/Link';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -25,6 +25,7 @@ export const Login: React.FC<LoginPropsType> = ({ login }) => (
       p: '10px 2rem 2rem 2rem',
       boxShadow: 'rgba(0, 0, 0, 0.1) 0px 10px 50px;', 
       borderRadius: '6px',
+      m: '0.5rem'
     }}
   >
     <CssBaseline />
@@ -126,20 +127,10 @@ export const Login: React.FC<LoginPropsType> = ({ login }) => (
             item
             xs
           >
-            <Link
-              href="#"
-              color="inherit"
-            >
-                                Forgot password?
-            </Link>
+            <NappLink text="Forgot Password" />
           </Grid>
           <Grid item>
-            <Link
-              href="#"
-              color="inherit"
-            >
-                                Sign Up
-            </Link>
+            <NappLink text="Sign Up" />
           </Grid>
         </Grid>
       </Box>

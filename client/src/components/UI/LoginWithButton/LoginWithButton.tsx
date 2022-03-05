@@ -2,11 +2,10 @@ import { Button, IconButton } from '@mui/material';
 
 interface LoginWithButtonProps {
   icon: JSX.Element; 
-  text?: string;
   color: string;
 }
 
-export const LoginWithButton = ({ icon, text, color }: LoginWithButtonProps) => (
+export const LoginWithButton = ({ icon,  color }: LoginWithButtonProps) => (
   <Button 
     variant="contained"
     color="inherit"
@@ -16,17 +15,14 @@ export const LoginWithButton = ({ icon, text, color }: LoginWithButtonProps) => 
       height: '2.6rem',
       backgroundColor: 'white',
     }}  
-    startIcon={
-      <IconButton
-        sx={{ 
-          color,
-          p: 0,
-        }}
-      >
-        {icon}
-      </IconButton>
-    }
   >
-    {text}
+    <IconButton
+      sx={{ 
+        color,
+        p: 0,
+      }}
+    >
+      {icon}
+    </IconButton>
   </Button>
 )
