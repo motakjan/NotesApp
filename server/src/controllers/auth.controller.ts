@@ -1,13 +1,8 @@
 import jwt from 'jsonwebtoken';
 
-import { Request, Response } from 'express';
-import {
-    createUser,
-    findUser,
-    hashPassword,
-    isPasswordValid,
-} from '../services/auth.service';
-import { validatePassword, generateErrorObject } from '../utils/helpers';
+import {Request, Response} from 'express';
+import {createUser, findUser, hashPassword, isPasswordValid,} from '../services/auth.service';
+import {generateErrorObject, validatePassword} from '../utils/helpers';
 
 export const registerHandler = async (req: Request, res: Response) => {
     try {
@@ -37,7 +32,7 @@ export const loginHandler = async (req: Request, res: Response) => {
         if (!user)
             return res.status(404).json({ errorMessage: 'User not found.' });
 
-        const validPassword = isPasswordValid(user.password, req.body.password);
+        const validPassword = await isPasswordValid(user.password, req.body.password);
         if (!validPassword)
             return res.status(400).json({ errorMessage: 'Invalid password.' });
 

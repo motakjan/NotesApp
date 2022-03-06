@@ -1,4 +1,4 @@
-import { Button, IconButton } from '@mui/material';
+import { Button, Icon } from '@mui/material';
 
 interface LoginWithButtonProps {
   icon: JSX.Element; 
@@ -16,13 +16,15 @@ export const LoginWithButton = ({ icon,  color }: LoginWithButtonProps) => (
       backgroundColor: 'white',
     }}  
   >
-    <IconButton
-      sx={{ 
+    <Icon
+      sx={{
         color,
         p: 0,
+        display:'flex',
+        alignSelf: 'center'
       }}
     >
       {icon}
-    </IconButton>
+    </Icon>
   </Button>
 )
