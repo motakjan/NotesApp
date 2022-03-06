@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Box, Typography } from '@mui/material';
 import { TaskCard } from '../TaskCard/TaskCard';
+import { useColorMode } from '../../../context/ColorModeContext';
 
 const itemsFromBackend = [
   {
@@ -146,8 +147,11 @@ const onDragEnd = (result: DropResult, columns: any, setColumns: any) => {
   }
 };
 
+const getBGColor = (mode: string, darkColor: string, lightColor: string) => mode === 'dark' ? darkColor : lightColor
+
 export const TaskBoard = () => {
   const [columns, setColumns] = useState(columnsFromBacked);
+  const { mode } = useColorMode();
 
   return (
     <Box
@@ -164,15 +168,16 @@ export const TaskBoard = () => {
       >
         {Object.entries(columns).map(([id, column]) => (
           <Box
-            style={{
+            key={`${uuidv4()}-column`}
+            sx={{
               display: 'flex',
               flexDirection: 'column',
               height: '100%',
             }}
           >
             <Box
-              style={{
-                margin: 8,
+              sx={{
+                m: '8px',
                 height: '100%',
               }}
             >
@@ -185,13 +190,13 @@ export const TaskBoard = () => {
                   <Box
                     {...provided.droppableProps}
                     ref={provided.innerRef}
-                    style={{
+                    sx={{
                       width: '17.8rem',
-                      padding: 4,
+                      p: '4px',
                       height: '100%',
                       backgroundColor: snapshot.isDraggingOver
-                        ? 'lightblue'
-                        : '#e9e9e9',
+                        ? getBGColor(mode, '#0e2a40', 'lightblue')
+                        : getBGColor(mode, '#00101c', '#e2e2e2')
                     }}
                   >
                     {column.items.map((item: any, index: number) => (
@@ -206,12 +211,10 @@ export const TaskBoard = () => {
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                             ref={provided.innerRef}
-                            style={{
+                            sx={{
                               userSelect: 'none',
                               margin: '0 0 8px 0',
                               width: '100%',
-                              zIndex: 20,
-                              position: 'relative',
                               minHeight: '50px',
                               textColor: 'white',
                               ...provided.draggableProps.style,
