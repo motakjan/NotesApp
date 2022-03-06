@@ -47,6 +47,15 @@ export const getCurrentTheme = (mode: PaletteMode) => ({
           height: '24px',
         },
       },
+    },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          '&:last-child': {
+            paddingBottom: '1px'
+          }
+        }
+      }
     }
   }
 });
