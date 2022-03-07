@@ -7,147 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Box, Typography } from '@mui/material';
 import { TaskCard } from '../TaskCard/TaskCard';
 import { useColorMode } from '../../../context/ColorModeContext';
-
-const itemsFromBackend = [
-  {
-    id: uuidv4(),
-    title: 'First Task',
-    tags: [
-      {
-        name: 'Testing',
-        color: 'info',
-        type: 'tag',
-      },
-      {
-        name: 'Testing',
-        color: 'warning',
-        type: 'filledTag',
-      },
-    ],
-  },
-  {
-    id: uuidv4(),
-    title: 'Second Task',
-    tags: [],
-  },
-  {
-    id: uuidv4(),
-    title: 'Third Task',
-    tags: [
-      {
-        name: 'Working',
-        color: 'error',
-        type: 'tag',
-      },
-    ],
-  },
-  {
-    id: uuidv4(),
-    title: 'Third Task',
-    tags: [
-      {
-        name: 'Working',
-        color: 'error',
-        type: 'tag',
-      },
-    ],
-  },
-
-  {
-    id: uuidv4(),
-    title: 'Third Task',
-    tags: [
-      {
-        name: 'Working',
-        color: 'error',
-        type: 'tag',
-      },
-    ],
-  },
-
-  {
-    id: uuidv4(),
-    title: 'Third Task',
-    tags: [
-      {
-        name: 'Working',
-        color: 'error',
-        type: 'tag',
-      },
-    ],
-  },
-
-  {
-    id: uuidv4(),
-    title: 'Third Task',
-    tags: [
-      {
-        name: 'Working',
-        color: 'error',
-        type: 'tag',
-      },
-    ],
-  },
-];
-
-const columnsFromBacked = {
-  [uuidv4()]: {
-    name: 'Requested',
-    items: itemsFromBackend,
-  },
-  [uuidv4()]: {
-    name: 'Todo',
-    items: [],
-  },
-  [uuidv4()]: {
-    name: 'In Progress',
-    items: [],
-  },
-
-  [uuidv4()]: {
-    name: 'Done',
-    items: [],
-  },
-};
-
-const onDragEnd = (result: DropResult, columns: any, setColumns: any) => {
-  if (!result.destination) return;
-  const { source, destination } = result;
-
-  if (source.droppableId !== destination.droppableId) {
-    const sourceColumn = columns[source.droppableId];
-    const destColumn = columns[destination.droppableId];
-    const sourceItems = [...sourceColumn.items];
-    const destItems = [...destColumn.items];
-    const [removed] = sourceItems.splice(source.index, 1);
-    destItems.splice(destination.index, 0, removed);
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...sourceColumn,
-        items: sourceItems,
-      },
-      [destination.droppableId]: {
-        ...destColumn,
-        items: destItems,
-      },
-    });
-  } else {
-    const column = columns[source.droppableId];
-    const copiedItems = [...column.items];
-    const [removed] = copiedItems.splice(source.index, 1);
-    copiedItems.splice(destination.index, 0, removed);
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...column,
-        items: copiedItems,
-      },
-    });
-  }
-};
-
-const getBGColor = (mode: string, darkColor: string, lightColor: string) => mode === 'dark' ? darkColor : lightColor
+import { onDragEnd, getBGColor, columnsFromBacked } from '../../../utils/dashboardHelpers';
 
 export const TaskBoard = () => {
   const [columns, setColumns] = useState(columnsFromBacked);
@@ -159,6 +19,7 @@ export const TaskBoard = () => {
         display: 'flex',
         height: '100%',
         minHeight: '65vh',
+        minWidth: '100rem',
       }}
     >
       <DragDropContext
@@ -173,6 +34,7 @@ export const TaskBoard = () => {
               display: 'flex',
               flexDirection: 'column',
               height: '100%',
+              minWidth: '16.66666%',
             }}
           >
             <Box
@@ -181,7 +43,12 @@ export const TaskBoard = () => {
                 height: '100%',
               }}
             >
-              <Typography variant="h5">{column.name}</Typography>
+              <Typography
+                variant="h5"
+                sx={{
+                  fontSize: 'small'
+                }}
+              >{column.name}</Typography>
               <Droppable
                 droppableId={id}
                 key={id}
@@ -191,12 +58,12 @@ export const TaskBoard = () => {
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                     sx={{
-                      width: '17.8rem',
-                      p: '4px',
                       height: '100%',
+                      minWidth: '100%',
+                      p: '10px',
                       backgroundColor: snapshot.isDraggingOver
                         ? getBGColor(mode, '#0e2a40', 'lightblue')
-                        : getBGColor(mode, '#00101c', '#e2e2e2')
+                        : getBGColor(mode, '#00101c', '#e2e2e2'),
                     }}
                   >
                     {column.items.map((item: any, index: number) => (

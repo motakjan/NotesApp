@@ -18,9 +18,9 @@ export const TaskCard: React.FC<TaskCardPropsType> = ({ title, priority, tags, t
   return (
     <Card
       sx={{
-        width: '16.2rem',
+        cursor: 'default',
+        width: '99%',
         borderLeft: `6px solid ${PRIORITY_TASK_CARD_COLORS[priority]}`,
-        margin: '0.5rem',
       }}
     >
       <CardActionsArea 
