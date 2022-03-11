@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router';
 import { authApi } from '../../api/auth';
+import { Loading } from '../../pages/Loading/Loading';
 import { Layout } from './Layout';
 
 export const WithLayout = ({ page }: { page: JSX.Element }) => {
@@ -13,13 +14,11 @@ export const WithLayout = ({ page }: { page: JSX.Element }) => {
     navigate('/login');
   }
 
-  if (status === 'loading') {
-    return <div><h1>LOADING ...</h1></div>
-  }
-
   return (
-    <Layout>
-      {page}
-    </Layout>
+    <>
+      <Layout>
+        {status === 'loading' ? <Loading status={status} /> : page}
+      </Layout>
+    </>
   );
 };

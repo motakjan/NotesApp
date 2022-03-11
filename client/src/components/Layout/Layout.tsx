@@ -28,6 +28,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router';
 import { useQueryClient } from 'react-query';
+import _ from 'lodash';
 
 const tasksIcons = [<EventNoteIcon />, <NoteAddRoundedIcon />, <AssignmentReturnedIcon /> ];
 const profileIcons = [<DateRangeIcon />, <MailIcon />, <PersonIcon />, <SettingsIcon />];
@@ -146,7 +147,7 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
           </DrawerHeader>
           <Divider />
           <List>
-            {['Tasks', 'Add Task', 'Join Task'].map(
+            {['Dashboard', 'Add Task', 'Join Task'].map(
               (text, index) => (
                 <Tooltip 
                   key={`optionsMenu1-${text}`}
@@ -155,6 +156,7 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
                 >
                   <ListItem
                     button
+                    onClick={() => navigate(`/${_.snakeCase(text)}`)}
                   >
                     <ListItemIcon >                          
                       { tasksIcons[index] }
@@ -167,7 +169,7 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
           </List>
           <Divider />
           <List>
-            {['Inbox', 'Calendar', 'Profile', 'Settings'].map((text, index) => (
+            {['Calendar', 'Inbox', 'Profile', 'Settings'].map((text, index) => (
               <Tooltip 
                 key={`optionsMenu2-${text}`}
                 title={text} 
