@@ -3,4 +3,7 @@
 
 /server/node_modules
 /server/.env
+/server/src/logs
+
+.vscode
 

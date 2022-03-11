@@ -1,11 +1,16 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { App } from './App';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ColorModeContextProvider } from './context/ColorModeContext';
+
+const queryClient = new QueryClient(); 
 
 ReactDOM.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
-    document.getElementById('root')
+  <QueryClientProvider client={queryClient}>
+    <ColorModeContextProvider>
+      <App />
+    </ColorModeContextProvider>
+  </QueryClientProvider>,
+  document.getElementById('root')
 );
