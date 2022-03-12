@@ -2,25 +2,17 @@ import { Avatar, AvatarGroup, Chip } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
-import { CardActionsAreaType,
-  TaskCardTagType, } from '../../../../types/taskCardTypes';
+import { CardActionsAreaType, TaskCardTagType } from '../../../../types/taskCardTypes';
 import CircleIcon from '@mui/icons-material/Circle';
 import './CardActionsArea.css';
 import { useColorMode } from '../../../../context/ColorModeContext';
 import { v4 as uuidv4 } from 'uuid';
 
-export const CardActionsArea: React.FC<CardActionsAreaType> = ({
-  title,
-  tags,
-  handleClick,
-}) => {
+export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, handleClick }) => {
   const { mode } = useColorMode();
 
   return (
-    <Box
-      onClick={() => handleClick()}
-      className={`hvr-fade-${mode}`}
-    >
+    <Box onClick={() => handleClick()} className={`hvr-fade-${mode}`}>
       <CardContent
         sx={{
           padding: '12px 16px 2px 16px',
@@ -36,12 +28,9 @@ export const CardActionsArea: React.FC<CardActionsAreaType> = ({
         >
           {title}
         </Typography>
-        <Typography
-          variant="caption"
-          display="block"
-          gutterBottom
-        >
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel reprehenderit quaerat quasi doloribus autem velit consequuntur, quo inventore ...
+        <Typography variant="caption" display="block" gutterBottom>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel reprehenderit quaerat quasi doloribus autem
+          velit consequuntur, quo inventore ...
         </Typography>
         <Box
           sx={{
@@ -53,81 +42,70 @@ export const CardActionsArea: React.FC<CardActionsAreaType> = ({
           }}
         >
           {tags &&
-          tags.map((tag: TaskCardTagType) => (
-            <Chip
-              key={`${uuidv4()}-chip`}
-              sx={{
-                borderRadius: '5px 5px',
-                height: '20px',
-                padding: '0px 3px',
-              }}
-              variant={tag.type === 'tag' ? 'outlined' : 'filled'}
-              color={tag.color}
-              size="small"
-              icon={
-                tag.type === 'tag' ? (
-                  <CircleIcon
+            tags.map((tag: TaskCardTagType) => (
+              <Chip
+                key={`${uuidv4()}-chip`}
+                sx={{
+                  borderRadius: '5px 5px',
+                  height: '20px',
+                  padding: '0px 3px',
+                }}
+                variant={tag.type === 'tag' ? 'outlined' : 'filled'}
+                color={tag.color}
+                size="small"
+                icon={
+                  tag.type === 'tag' ? (
+                    <CircleIcon
+                      sx={{
+                        width: '10px',
+                        height: '10px',
+                      }}
+                    />
+                  ) : (
+                    <></>
+                  )
+                }
+                label={
+                  <Typography
+                    variant="caption"
+                    gutterBottom
                     sx={{
-                      width: '10px',
-                      height: '10px',
+                      fontSize: '0.6rem',
                     }}
-                  />
-                ) : 
-                  <></>
-                
-              }
-              label={
-                <Typography
-                  variant="caption"
-                  gutterBottom
-                  sx={{
-                    fontSize: '0.6rem',
-                  }}
-                >
-                  {tag.name}
-                </Typography>
-              }
-            />
-          ))}
+                  >
+                    {tag.name}
+                  </Typography>
+                }
+              />
+            ))}
           <Box
             sx={{
-              display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center',
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '100%',
+              alignItems: 'center',
             }}
           >
             <Typography
               variant="caption"
               sx={{
-                mb: 0,  
+                mb: 0,
                 color: '#828282',
-                fontSize: '0.6rem'
+                fontSize: '0.6rem',
               }}
               gutterBottom
-            >updated 2022-08-05 15:00</Typography>
-            <AvatarGroup
-              max={3}
-              variant="rounded"
             >
-              <Avatar
-                alt="Remy Sharp"
-                src="https://avatars.dicebear.com/api/adventurer-neutral/yarosla.svg"
-              />
-              <Avatar
-                alt="Remy Sharp"
-                src="https://avatars.dicebear.com/api/adventurer-neutral/yaro.svg"
-              />
-              <Avatar
-                alt="Remy Sharp"
-                src="https://avatars.dicebear.com/api/adventurer-neutral/yaroslav1.svg"
-              />
-              <Avatar
-                alt="Remy"
-                src="https://avatars.dicebear.com/api/adventurer-neutral/ya1.svg"
-              />
+              updated 2022-08-05 15:00
+            </Typography>
+            <AvatarGroup max={3} variant="rounded">
+              <Avatar alt="Remy Sharp" src="https://avatars.dicebear.com/api/adventurer-neutral/yarosla.svg" />
+              <Avatar alt="Remy Sharp" src="https://avatars.dicebear.com/api/adventurer-neutral/yaro.svg" />
+              <Avatar alt="Remy Sharp" src="https://avatars.dicebear.com/api/adventurer-neutral/yaroslav1.svg" />
+              <Avatar alt="Remy" src="https://avatars.dicebear.com/api/adventurer-neutral/ya1.svg" />
             </AvatarGroup>
           </Box>
-        
         </Box>
       </CardContent>
     </Box>
-  )
+  );
 };

@@ -6,24 +6,19 @@ import PeopleIcon from '@mui/icons-material/People';
 import React from 'react';
 import { CardActionPropsType } from '../../../../types/taskCardTypes';
 
-
-export const CardAction:React.FC<CardActionPropsType> = ({ showActions, checked }) => (
-  <Slide
-    direction="right"
-    in={checked}
-    mountOnEnter
-    unmountOnExit
-  >
-    <CardActions 
+export const CardAction: React.FC<CardActionPropsType> = ({ showActions, checked }) => (
+  <Slide direction="right" in={checked} mountOnEnter unmountOnExit>
+    <CardActions
       sx={{
-        display: showActions ? 'flex' : 'none', padding: '3px 16px'
+        display: showActions ? 'flex' : 'none',
+        padding: '3px 16px',
       }}
-    > 
+    >
       {/* TODO onClick */}
       <Tooltip title="Open Menu">
         <IconButton
           sx={{
-            padding: '5px 2px'
+            padding: '5px 2px',
           }}
         >
           <MenuOpenOutlinedIcon fontSize="small" />
@@ -33,7 +28,7 @@ export const CardAction:React.FC<CardActionPropsType> = ({ showActions, checked 
       <Tooltip title="Comments">
         <IconButton
           sx={{
-            padding: '5px 2px'
+            padding: '5px 2px',
           }}
         >
           <CommentOutlinedIcon fontSize="small" />
@@ -43,7 +38,7 @@ export const CardAction:React.FC<CardActionPropsType> = ({ showActions, checked 
       <Tooltip title="Users">
         <IconButton
           sx={{
-            padding: '5px 2px'
+            padding: '5px 2px',
           }}
         >
           <PeopleIcon fontSize="small" />
@@ -53,7 +48,7 @@ export const CardAction:React.FC<CardActionPropsType> = ({ showActions, checked 
       <Tooltip title="Check">
         <IconButton
           sx={{
-            padding: '5px 2px'
+            padding: '5px 2px',
           }}
         >
           <CheckOutlinedIcon fontSize="small" />
@@ -61,5 +56,4 @@ export const CardAction:React.FC<CardActionPropsType> = ({ showActions, checked 
       </Tooltip>
     </CardActions>
   </Slide>
-  
 );

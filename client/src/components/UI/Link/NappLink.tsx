@@ -1,8 +1,8 @@
 import Link from '@mui/material/Link';
 
 type NappLinkPropsType = {
-    text: string;
-}
+  text: string;
+};
 
 export const NappLink: React.FC<NappLinkPropsType> = ({ text }) => (
   <Link

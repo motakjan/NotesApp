@@ -16,6 +16,7 @@
         "@types/node": "^12.0.0",
         "@types/react-beautiful-dnd": "^13.1.2",
         "@types/uuid": "^8.3.4",
+        "@vitejs/plugin-react": "^1.2.0",
         "axios": "^0.24.0",
         "lodash": "^4.17.21",
         "react": "^17.0.2",
@@ -30,10 +31,10 @@
         "web-vitals": "^1.0.1"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject",
+        "start": "vite",
+        "build": "eslint src && tsc && vite build",
+        "test": "vite test",
+        "eject": "vite eject",
         "lint": "eslint --fix --ext .ts,.tsx ."
     },
     "eslintConfig": {
@@ -60,6 +61,7 @@
         "@types/react-router-dom": "^5.3.2",
         "@typescript-eslint/eslint-plugin": "^4.29.1",
         "@typescript-eslint/parser": "^4.29.1",
+        "@vitejs/plugin-react-refresh": "^1.3.6",
         "eslint": "^7.32.0",
         "eslint-config-airbnb": "^18.2.1",
         "eslint-config-prettier": "^8.3.0",
@@ -70,6 +72,7 @@
         "eslint-plugin-react": "^7.24.0",
         "eslint-plugin-react-hooks": "^4.3.0",
         "prettier": "^2.3.2",
-        "react-router": "^6.0.2"
+        "react-router": "^6.0.2",
+        "vite": "^2.8.6"
     }
 }

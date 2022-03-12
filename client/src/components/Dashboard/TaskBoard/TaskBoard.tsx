@@ -1,13 +1,21 @@
-import { DragDropContext,
-  Droppable,
-  DropResult,
-  Draggable, } from 'react-beautiful-dnd';
 import { useState } from 'react';
+import {
+  DragDropContext,
+  Draggable,
+  DraggableProvided,
+  DraggableStateSnapshot,
+  Droppable,
+  DroppableProvided,
+  DroppableStateSnapshot,
+  DropResult,
+} from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import { Box, Typography } from '@mui/material';
 import { TaskCard } from '../TaskCard/TaskCard';
 import { useColorMode } from '../../../context/ColorModeContext';
-import { onDragEnd, getBGColor, columnsFromBacked } from '../../../utils/dashboardHelpers';
+import { columnsFromBacked, getBGColor, onDragEnd } from '../../../utils/dashboardHelpers';
+import { IItem } from '../../../types/Dashboard';
+import { TaskCardTagType } from '../../../types/taskCardTypes';
 
 export const TaskBoard = () => {
   const [columns, setColumns] = useState(columnsFromBacked);
@@ -22,11 +30,7 @@ export const TaskBoard = () => {
         minWidth: '100rem',
       }}
     >
-      <DragDropContext
-        onDragEnd={(result: DropResult) =>
-          onDragEnd(result, columns, setColumns)
-        }
-      >
+      <DragDropContext onDragEnd={(result: DropResult) => onDragEnd(result, columns, setColumns)}>
         {Object.entries(columns).map(([id, column]) => (
           <Box
             key={`${uuidv4()}-column`}
@@ -46,14 +50,13 @@ export const TaskBoard = () => {
               <Typography
                 variant="h5"
                 sx={{
-                  fontSize: 'small'
+                  fontSize: 'small',
                 }}
-              >{column.name}</Typography>
-              <Droppable
-                droppableId={id}
-                key={id}
               >
-                {(provided: any, snapshot: any) => (
+                {column.name}
+              </Typography>
+              <Droppable droppableId={id} key={id}>
+                {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
                   <Box
                     {...provided.droppableProps}
                     ref={provided.innerRef}
@@ -66,14 +69,10 @@ export const TaskBoard = () => {
                         : getBGColor(mode, '#00101c', '#e2e2e2'),
                     }}
                   >
-                    {column.items.map((item: any, index: number) => (
-                      <Draggable
-                        key={item.id}
-                        draggableId={item.id}
-                        index={index}
-                      >
+                    {column.items.map((item: IItem, index: number) => (
+                      <Draggable key={item.id} draggableId={item.id} index={index}>
                         {/* eslint-disable-next-line @typescript-eslint/no-shadow */}
-                        {(provided: any, _snapshot: any) => (
+                        {(provided: DraggableProvided, _snapshot: DraggableStateSnapshot) => (
                           <Box
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
@@ -90,7 +89,7 @@ export const TaskBoard = () => {
                             <TaskCard
                               title={item.title}
                               text={item.text}
-                              tags={item.tags}
+                              tags={item.tags as Array<TaskCardTagType>}
                               priority={2}
                             />
                           </Box>

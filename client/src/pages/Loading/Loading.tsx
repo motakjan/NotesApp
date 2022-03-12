@@ -1,6 +1,5 @@
-import { Paper, Box, LinearProgress, Fade } from '@mui/material';
+import { Box, createTheme, Fade, LinearProgress, Paper } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
-import { createTheme } from '@mui/material';
 import { getCurrentTheme } from '../../assets/theme';
 import { useMemo } from 'react';
 import { useColorMode } from '../../context/ColorModeContext';
@@ -9,16 +8,13 @@ type LoadingPropsType = {
   status: string;
 };
 
-export const Loading:React.FC<LoadingPropsType> = ({ status }) => {
+export const Loading: React.FC<LoadingPropsType> = ({ status }) => {
   const { mode } = useColorMode();
   const theme = useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);
 
   return (
     <ThemeProvider theme={theme}>
-      <Fade
-        in={status === 'loading'}
-        timeout={4000}
-      >
+      <Fade in={status === 'loading'} timeout={4000}>
         <Paper
           sx={{
             width: '100vw',
@@ -42,7 +38,7 @@ export const Loading:React.FC<LoadingPropsType> = ({ status }) => {
               src={mode === 'dark' ? '/logoDark.svg' : '/logo.svg'}
               alt="logo"
               style={{
-                width: '10rem'
+                width: '10rem',
               }}
             />
             <LinearProgress

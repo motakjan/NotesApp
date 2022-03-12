@@ -13,7 +13,7 @@ import { LoginWithButton } from '../UI/LoginWithButton/LoginWithButton';
 import { Avatar, Divider } from '@mui/material';
 
 type LoginPropsType = {
-    login: (event: React.FormEvent<HTMLFormElement>) => void;
+  login: (event: React.FormEvent<HTMLFormElement>) => void;
 };
 
 export const Login: React.FC<LoginPropsType> = ({ login }) => (
@@ -23,13 +23,13 @@ export const Login: React.FC<LoginPropsType> = ({ login }) => (
     sx={{
       backgroundColor: '#eef0ff',
       p: '10px 2rem 2rem 2rem',
-      boxShadow: 'rgba(0, 0, 0, 0.1) 0px 10px 50px;', 
+      boxShadow: 'rgba(0, 0, 0, 0.1) 0px 10px 50px;',
       borderRadius: '6px',
-      m: '0.5rem'
+      m: '0.5rem',
     }}
   >
     <CssBaseline />
-    <Box 
+    <Box
       sx={{
         marginTop: 3,
         display: 'flex',
@@ -38,21 +38,17 @@ export const Login: React.FC<LoginPropsType> = ({ login }) => (
       }}
     >
       <Avatar
-        sx={  
-          {
-            m: 1, bgcolor: 'orange' 
-          }
-        }
+        sx={{
+          m: 1,
+          bgcolor: 'orange',
+        }}
       >
         <LockOutlinedIcon />
       </Avatar>
-      <Typography
-        component="h1"
-        variant="h5"
-      >
-                    Sign in
+      <Typography component="h1" variant="h5">
+        Sign in
       </Typography>
-            
+
       <Box
         component="form"
         onSubmit={login}
@@ -88,45 +84,40 @@ export const Login: React.FC<LoginPropsType> = ({ login }) => (
           fullWidth
           variant="contained"
           sx={{
-            mt: 3, height: '2.8rem',
+            mt: 3,
+            height: '2.8rem',
           }}
         >
-                        Sign In
+          Sign In
         </Button>
         <Typography
           sx={{
-            color: 'gray', fontSize: '0.8rem', textAlign: 'center', p: '1rem 0'
+            color: 'gray',
+            fontSize: '0.8rem',
+            textAlign: 'center',
+            p: '1rem 0',
           }}
           component="div"
         >
-                    OR SIGN IN WITH
+          OR SIGN IN WITH
         </Typography>
-        <Box 
+        <Box
           sx={{
             display: 'flex',
             gap: '1rem',
           }}
         >
-          <LoginWithButton 
-            icon={<GoogleIcon />} 
-            color="black"
-          />
-          <LoginWithButton 
-            icon={<FacebookIcon />} 
-            color="blue"
-          />
-        </Box> 
+          <LoginWithButton icon={<GoogleIcon />} color="black" />
+          <LoginWithButton icon={<FacebookIcon />} color="blue" />
+        </Box>
         <Divider
           variant="middle"
           sx={{
-            m:'1rem 0'
+            m: '1rem 0',
           }}
-        />       
+        />
         <Grid container>
-          <Grid
-            item
-            xs
-          >
+          <Grid item xs>
             <NappLink text="Forgot Password" />
           </Grid>
           <Grid item>

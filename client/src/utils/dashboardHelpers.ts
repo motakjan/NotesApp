@@ -1,7 +1,7 @@
-import { DropResult } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
+import { IOnDragEnd } from '../types/Dashboard';
 
-export const onDragEnd = (result: DropResult, columns: any, setColumns: any) => {
+export const onDragEnd: IOnDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
   const { source, destination } = result;
 
