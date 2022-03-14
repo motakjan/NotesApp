@@ -1,5 +1,5 @@
-import { v4 as uuidv4 } from 'uuid';
 import { IOnDragEnd } from '../types/Dashboard';
+import { v4 as uuidv4 } from 'uuid';
 
 export const onDragEnd: IOnDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
@@ -125,7 +125,7 @@ const itemsFromBackend = [
 
 export const columnsFromBacked = {
   [uuidv4()]: {
-    name: 'Invited',
+    name: 'Unassigned',
     items: [],
   },
   [uuidv4()]: {

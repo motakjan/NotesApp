@@ -1,8 +1,9 @@
 import { Box, Button, IconButton, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
-import React from 'react';
-import ManageSearchIcon from '@mui/icons-material/ManageSearch';
-import RefreshIcon from '@mui/icons-material/Refresh';
+
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import React from 'react';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 export const FilterOptions: React.FC = () => {
   const [cardSize, setCardSize] = React.useState<string | null>('small');

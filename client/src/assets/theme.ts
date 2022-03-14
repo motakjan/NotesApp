@@ -1,15 +1,16 @@
 import { PaletteMode } from '@mui/material';
+
 // prettier-ignore
 export const getCurrentTheme = (mode: PaletteMode) => ({
   typography: {
-    fontFamily: ['"Nunito"', '"Segoe UI Emoji"'].join(','),
+    fontFamily: ['"Quicksand"', '"Segoe UI Emoji"'].join(','),
   },
   palette: {
     mode,
     ...(mode === 'light'
       ? {
         primary: {
-          main: '#ffffff',
+          main: '#0c427a',
           dark: '#062843',
           light: '#ffffff',
         },
