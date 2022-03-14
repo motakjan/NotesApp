@@ -96,7 +96,7 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
               <MenuIcon />
             </IconButton>
             <img
-              src={mode === 'dark' ? '/logoDark.svg' : '/logo.svg'}
+              src={mode === 'dark' ? '/logoDark.svg' : '/logoDark.svg'}
               alt="logo"
               style={{
                 width: '4rem',

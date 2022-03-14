@@ -10,9 +10,9 @@ export const getCurrentTheme = (mode: PaletteMode) => ({
     ...(mode === 'light'
       ? {
         primary: {
-          main: '#0c427a',
+          main: '#000135',
           dark: '#062843',
-          light: '#ffffff',
+          light: '#f2f2f2',
         },
         secondary: {
           main: '#FFB500',
