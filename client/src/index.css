@@ -75,3 +75,42 @@ select {
         scroll-behavior: auto !important;
     }
 }
+
+.loginGradientBox {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0;
+    background: 
+      radial-gradient(
+        circle at top left,
+        rgba(153, 4, 96, 0.45), 
+        rgba(0, 0, 0, 0.55) 27%
+      ),
+      radial-gradient(
+        circle at top right,
+        rgba(199, 89, 190, 0.33)  , 
+        rgba(0, 0, 0, 0.55) 25%
+      ),
+      radial-gradient(
+        at bottom left,
+        rgba(76, 0, 255, 0.6), 
+        rgba(0, 0, 0, 0.55) 55%
+      ),
+      radial-gradient(
+        at bottom right,
+        rgba(55, 64, 202, 0.9), 
+        rgba(0, 0, 0, 0.55) 50%
+      );
+    width: 100vw;
+    height: 100vh;
+}
+
+.loginText {
+    width: 25rem;
+    text-align: center;
+    color: white;
+    font-size: smaller;
+    margin: 15px;
+    font-family: "Nunito", sans-serif;
+}
