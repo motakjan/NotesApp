@@ -20,32 +20,13 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 12,
+    ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: [
-    'react',
-    '@typescript-eslint',
-    'prefer-arrow',
-    'prettier',
-    'react-hooks',
-  ],
+  plugins: ['react', '@typescript-eslint', 'prefer-arrow', 'prettier', 'react-hooks'],
   ignorePatterns: ['src/assets/images/*', 'src/assets/fonts/*'],
   rules: {
-    'object-curly-newline': [
-      'error',
-      {
-        ObjectExpression: 'always',
-        ObjectPattern: {
-          multiline: true,
-        },
-        ImportDeclaration: 'never',
-        ExportDeclaration: {
-          multiline: true,
-          minProperties: 3,
-        },
-      },
-    ],
+    'object-curly-newline': 0,
     'no-tabs': 0,
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
@@ -57,7 +38,7 @@ module.exports = {
     'react/jsx-filename-extension': [
       1,
       {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        extensions: ['.ts', '.tsx'],
       },
     ],
     'object-curly-spacing': ['error', 'always'],
@@ -74,19 +55,14 @@ module.exports = {
       },
     ],
     'prettier/prettier': [
-      0,
+      'error',
       {
-        semi: true,
-        singleQuote: true,
-        trailingComma: 'es5',
-        printWidth: 100,
-        tabWidth: 2,
-        arrowParens: 'avoid',
-        jsxSingleQuote: false,
-        jsxBracketSameLine: true,
+        endOfLine: 'auto',
+      },
+      {
+        usePrettierrc: true,
       },
     ],
-    semi: 0,
     eqeqeq: [1, 'always'],
     quotes: [1, 'single'],
     'jsx-quotes': [2, 'prefer-double'],
@@ -110,17 +86,7 @@ module.exports = {
       },
     ],
     'arrow-body-style': [2, 'as-needed'],
-    'no-extra-parens': [
-      'warn',
-      'all',
-      {
-        conditionalAssign: false,
-        nestedBinaryExpressions: false,
-        ignoreJSX: 'multi-line',
-        enforceForArrowConditionals: false,
-      },
-    ],
-    'no-param-reassign': 0,
+    'no-param-reassign': 'error',
     'prefer-template': 0,
     'prefer-promise-reject-errors': 0,
     'no-script-url': 0,
@@ -155,8 +121,14 @@ module.exports = {
         prop: 'ignore',
       },
     ],
-    'react/jsx-indent': 0,
-    indent: ['error', 2],
+    'react/jsx-indent': 2,
+    indent: [
+      'error',
+      2,
+      {
+        SwitchCase: 1,
+      },
+    ],
     'react/jsx-boolean-value': 0,
     'react/jsx-closing-tag-location': 0,
     'react/jsx-closing-bracket-location': [1, 'line-aligned'],
@@ -166,7 +138,8 @@ module.exports = {
     'react/jsx-max-props-per-line': [
       2,
       {
-        maximum: 1,
+        maximum: 2,
+        when: 'multiline',
       },
     ],
     'react/jsx-tag-spacing': [
@@ -183,7 +156,7 @@ module.exports = {
     'react/require-default-props': 0,
     'react/display-name': 0,
     'react/jsx-first-prop-new-line': [2, 'multiline'],
-    'react/jsx-props-no-spreading': 0,
+    'react/jsx-props-no-spreading': 'off',
     'react/static-property-placement': 0,
     'react/state-in-constructor': 0,
     '@typescript-eslint/indent': 0,
@@ -192,11 +165,8 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 0,
     '@typescript-eslint/member-delimiter-style': 0,
     '@typescript-eslint/no-unused-vars': 0,
-    '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/no-explicit-any': ['warn'],
     '@typescript-eslint/explicit-member-accessibility': 0,
     '@typescript-eslint/no-angle-bracket-type-assertion': 0,
-    // TODO: enable the lines below when refactoring
-    // "react-hooks/rules-of-hooks": 1,
-    // "react-hooks/exhaustive-deps": 1
   },
 };

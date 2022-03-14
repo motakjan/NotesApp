@@ -8,11 +8,7 @@ import { Login } from '../../components/Authentication/Login';
 import { GradientBox } from '../../components/UI/GradientBox/GradientBox';
 
 export const Authentication = () => {
-  const { data, mutate } = useMutation<
-    GetAuthResType,
-    AxiosError,
-    LoginDataType
-  >('login', authApi.loginUser);
+  const { data, mutate } = useMutation<GetAuthResType, AxiosError, LoginDataType>('login', authApi.loginUser);
   const navigate = useNavigate();
 
   useEffect(() => {

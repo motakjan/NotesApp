@@ -30,20 +30,17 @@ import { useNavigate } from 'react-router';
 import { useQueryClient } from 'react-query';
 import _ from 'lodash';
 
-const tasksIcons = [<EventNoteIcon />, <NoteAddRoundedIcon />, <AssignmentReturnedIcon /> ];
+const tasksIcons = [<EventNoteIcon />, <NoteAddRoundedIcon />, <AssignmentReturnedIcon />];
 const profileIcons = [<DateRangeIcon />, <MailIcon />, <PersonIcon />, <SettingsIcon />];
 
 export const Layout: React.FC<React.ReactNode> = ({ children }) => {
   const { mode, toggleColorMode } = useColorMode();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const queryClient = useQueryClient();
-  const cachedIsLoggedIn: any = queryClient.getQueryData('isLoggedIn');
+  const cachedIsLoggedIn: { isLoggedIn: boolean } = queryClient.getQueryData('isLoggedIn');
   const navigate = useNavigate();
-  
-  const theme = React.useMemo(
-    () => createTheme(getCurrentTheme(mode)),
-    [mode]
-  );
+
+  const theme = React.useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);
 
   useEffect(() => {
     if (cachedIsLoggedIn && !cachedIsLoggedIn.errors) {
@@ -51,7 +48,7 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
     } else {
       setIsLoggedIn(false);
     }
-  },[cachedIsLoggedIn]);
+  }, [cachedIsLoggedIn]);
 
   const [open, setOpen] = React.useState(false);
 
@@ -67,25 +64,22 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
     localStorage.setItem('auth-token', '');
     setIsLoggedIn(false);
     navigate('/login');
-  }
+  };
 
   const handleLogin = () => {
     navigate('/login');
-  }
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box
         sx={{
-          display: 'flex' 
+          display: 'flex',
         }}
       >
         <CssBaseline />
-        <AppBar
-          position="fixed"
-          open={open}
-        >
+        <AppBar position="fixed" open={open}>
           <Toolbar>
             <IconButton
               color="inherit"
@@ -94,9 +88,9 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
               edge="start"
               sx={{
                 marginRight: '36px',
-                ...open && {
+                ...(open && {
                   display: 'none',
-                },
+                }),
               }}
             >
               <MenuIcon />
@@ -105,16 +99,13 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
               src={mode === 'dark' ? '/logoDark.svg' : '/logo.svg'}
               alt="logo"
               style={{
-                width: '4rem'
+                width: '4rem',
               }}
             />
-            <Tooltip 
-              title={'Switch to ' + (mode === 'light' ? 'dark' : 'light') + ' theme'} 
-              placement="bottom-start"
-            >
+            <Tooltip title={'Switch to ' + (mode === 'light' ? 'dark' : 'light') + ' theme'} placement="bottom-start">
               <IconButton
                 sx={{
-                  ml: 'auto' 
+                  ml: 'auto',
                 }}
                 onClick={toggleColorMode}
                 color="inherit"
@@ -122,65 +113,36 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
                 {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
               </IconButton>
             </Tooltip>
-            <Tooltip
-              title={isLoggedIn ? 'Logout' : 'Login'}
-              color="inherit"
-            >
+            <Tooltip title={isLoggedIn ? 'Logout' : 'Login'} color="inherit">
               <IconButton onClick={isLoggedIn ? handleLogout : handleLogin}>
-                {isLoggedIn ?<LogoutIcon /> : <LoginIcon /> }
+                {isLoggedIn ? <LogoutIcon /> : <LoginIcon />}
               </IconButton>
             </Tooltip>
           </Toolbar>
         </AppBar>
-        <Drawer
-          variant="permanent"
-          open={open} 
-        >
+        <Drawer variant="permanent" open={open}>
           <DrawerHeader>
             <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'rtl' ? 
-                <ChevronRightIcon />
-                : 
-                <ChevronLeftIcon />
-              }
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
             </IconButton>
           </DrawerHeader>
           <Divider />
           <List>
-            {['Dashboard', 'Add Task', 'Join Task'].map(
-              (text, index) => (
-                <Tooltip 
-                  key={`optionsMenu1-${text}`}
-                  title={text} 
-                  placement="right-start"
-                >
-                  <ListItem
-                    button
-                    onClick={() => navigate(`/${_.snakeCase(text)}`)}
-                  >
-                    <ListItemIcon >                          
-                      { tasksIcons[index] }
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                </Tooltip>
-              )
-            )}
+            {['Dashboard', 'Add Task', 'Join Task'].map((text, index) => (
+              <Tooltip key={`optionsMenu1-${text}`} title={text} placement="right-start">
+                <ListItem button onClick={() => navigate(`/${_.snakeCase(text)}`)}>
+                  <ListItemIcon>{tasksIcons[index]}</ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItem>
+              </Tooltip>
+            ))}
           </List>
           <Divider />
           <List>
             {['Calendar', 'Inbox', 'Profile', 'Settings'].map((text, index) => (
-              <Tooltip 
-                key={`optionsMenu2-${text}`}
-                title={text} 
-                placement="right-start"
-              >
-                <ListItem
-                  button
-                >
-                  <ListItemIcon>
-                    {profileIcons[index]}
-                  </ListItemIcon>
+              <Tooltip key={`optionsMenu2-${text}`} title={text} placement="right-start">
+                <ListItem button>
+                  <ListItemIcon>{profileIcons[index]}</ListItemIcon>
                   <ListItemText primary={text} />
                 </ListItem>
               </Tooltip>
@@ -190,7 +152,8 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
         <Box
           component="main"
           sx={{
-            flexGrow: 1, p: 3 
+            flexGrow: 1,
+            p: 3,
           }}
         >
           <DrawerHeader />

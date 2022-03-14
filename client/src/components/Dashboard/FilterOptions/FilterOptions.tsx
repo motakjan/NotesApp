@@ -7,17 +7,16 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 export const FilterOptions: React.FC = () => {
   const [cardSize, setCardSize] = React.useState<string | null>('small');
 
-  const handleCardSizeChange = (_event: React.MouseEvent<HTMLElement>,
-    newCardSize: string | null,) => {
+  const handleCardSizeChange = (_event: React.MouseEvent<HTMLElement>, newCardSize: string | null) => {
     setCardSize(newCardSize);
-  }
+  };
 
   return (
     <Box
       sx={{
         display: 'flex',
         justifyContent: 'end',
-        p: '0.8rem 0.5rem'
+        p: '0.8rem 0.5rem',
       }}
     >
       <Box
@@ -26,9 +25,7 @@ export const FilterOptions: React.FC = () => {
           display: 'inline',
         }}
       >
-        <Tooltip
-          title="Refresh"
-        >
+        <Tooltip title="Refresh">
           <IconButton>
             <RefreshIcon fontSize="small" />
           </IconButton>
@@ -45,34 +42,20 @@ export const FilterOptions: React.FC = () => {
         onChange={handleCardSizeChange}
         aria-label="text alignment"
         sx={{
-          marginRight: '1rem'
+          marginRight: '1rem',
         }}
       >
-        <ToggleButton
-          value="small"
-          size="small"
-          aria-label="left aligned"
-        >
+        <ToggleButton value="small" size="small" aria-label="left aligned">
           Small
         </ToggleButton>
-        <ToggleButton
-          value="large"
-          size="small"
-          aria-label="centered"
-        >
+        <ToggleButton value="large" size="small" aria-label="centered">
           Large
         </ToggleButton>
       </ToggleButtonGroup>
 
-      <Button
-        size="small"
-        variant="contained"
-        disableElevation
-        color="secondary"
-        startIcon={<ManageSearchIcon />}
-      >
-      Filter Tasks
+      <Button size="small" variant="contained" disableElevation color="secondary" startIcon={<ManageSearchIcon />}>
+        Filter Tasks
       </Button>
     </Box>
-  )
-}
+  );
+};

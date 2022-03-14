@@ -1,16 +1,18 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 export const instance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: import.meta.env.VITE_API_URL as string,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// eslint-disable-next-line func-names
-instance.interceptors.request.use(function (config: any) {
-  const token = localStorage.getItem('auth-token') || '';
-  config.headers['auth-token'] = token;
+instance.interceptors.request.use((config: AxiosRequestConfig) => {
+  const configParams = {
+    ...config,
+  };
+  if (!configParams.headers) return null;
+  configParams.headers['auth-token'] = localStorage.getItem('auth-token') || '';
 
-  return config;
+  return configParams;
 });

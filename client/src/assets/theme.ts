@@ -1,20 +1,17 @@
 import { PaletteMode } from '@mui/material';
-
+// prettier-ignore
 export const getCurrentTheme = (mode: PaletteMode) => ({
   typography: {
-    fontFamily: [
-      '"Nunito"',
-      '"Segoe UI Emoji"',
-    ].join(','),
+    fontFamily: ['"Nunito"', '"Segoe UI Emoji"'].join(','),
   },
-  palette: {  
+  palette: {
     mode,
-    ...mode === 'light'
+    ...(mode === 'light'
       ? {
         primary: {
           main: '#ffffff',
-          dark: '#062843', 
-          light: '#ffffff'
+          dark: '#062843',
+          light: '#ffffff',
         },
         secondary: {
           main: '#FFB500',
@@ -36,7 +33,7 @@ export const getCurrentTheme = (mode: PaletteMode) => ({
           default: '#091c2b',
           paper: '#00101c',
         },
-      },
+      }),
   },
   components: {
     MuiAvatar: {
@@ -52,11 +49,10 @@ export const getCurrentTheme = (mode: PaletteMode) => ({
       styleOverrides: {
         root: {
           '&:last-child': {
-            paddingBottom: '1px'
-          }
-        }
-      }
-    }
-  }
+            paddingBottom: '1px',
+          },
+        },
+      },
+    },
+  },
 });
-

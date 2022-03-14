@@ -8,7 +8,7 @@ export const openedMixin = (theme: Theme): CSSObject => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
-  overflowX: 'hidden', 
+  overflowX: 'hidden',
 });
 
 export const closedMixin = (theme: Theme): CSSObject => ({
@@ -18,13 +18,13 @@ export const closedMixin = (theme: Theme): CSSObject => ({
   }),
   overflowX: 'hidden',
   width: `calc(${theme.spacing(5)} + 1px)`,
-  '.MuiListItem-root' : {
-    paddingLeft: '9px'
+  '.MuiListItem-root': {
+    paddingLeft: '9px',
   },
   [theme.breakpoints.up('sm')]: {
     width: `calc(${theme.spacing(7)} + 1px)`,
-    '.MuiListItem-root' : {
-      paddingLeft: '16px'
-    }
+    '.MuiListItem-root': {
+      paddingLeft: '16px',
+    },
   },
 });
