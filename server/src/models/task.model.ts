@@ -1,6 +1,6 @@
-import * as mongoose from 'mongoose';
+import * as mongoose from "mongoose";
 
-const TaskSchema:any = new mongoose.Schema(
+const TaskSchema: any = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -8,17 +8,19 @@ const TaskSchema:any = new mongoose.Schema(
     description: {
       type: String,
     },
-    tags: [{
-     type: String,
-     text: String,
-    }],
-    start:{
+    tags: [
+      {
+        type: String,
+        text: String,
+      },
+    ],
+    start: {
       type: Date,
     },
-    end:{
+    end: {
       type: Date,
     },
-    priority:{
+    priority: {
       type: Number,
     },
     users: [String],
@@ -26,7 +28,6 @@ const TaskSchema:any = new mongoose.Schema(
   { timestamps: true }
 );
 
-
-const TaskModel = mongoose.model('Task', TaskSchema);
+const TaskModel = mongoose.model("Task", TaskSchema);
 
 export default TaskModel;
