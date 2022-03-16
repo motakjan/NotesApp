@@ -9,6 +9,7 @@ import connect from './utils/connect';
 import userRoute from './routes/user.routes';
 import authRoute from './routes/auth.routes';
 import postRoute from './routes/post.routes';
+import taskRoute from './routes/task.routes';
 
 // Middleware imports
 import verify from './middlewares/verifyToken';
@@ -25,6 +26,7 @@ app.use(morganMiddleware);
 app.use(cors());
 
 app.use('/api/auth', authRoute);
+app.use('/api/tasks', verify, taskRoute);
 app.use('/api/users', verify, userRoute);
 app.use('/api/posts', verify, postRoute);
 

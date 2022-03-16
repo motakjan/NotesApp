@@ -27,6 +27,6 @@ const TaskSchema:any = new mongoose.Schema(
 );
 
 
-const TaskModel = mongoose.model('Card', TaskSchema);
+const TaskModel = mongoose.model('Task', TaskSchema);
 
 export default TaskModel;

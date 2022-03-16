@@ -26,10 +26,6 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
-    todos: {
-      type: Array,
-      default: [],
-    },
   },
   { timestamps: true },
 );
