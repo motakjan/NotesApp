@@ -1,0 +1,12 @@
+.loginGradientBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 0;
+  background: radial-gradient(circle at top left, rgba(37, 37, 37, 0.35), rgba(0, 0, 0, 0.47) 27%),
+    radial-gradient(circle at top right, rgba(78, 26, 74, 0.33), rgba(0, 0, 0, 0.47) 25%),
+    radial-gradient(at bottom left, rgba(76, 0, 255, 0.6), rgba(0, 0, 0, 0.55) 55%),
+    radial-gradient(at bottom right, rgba(55, 64, 202, 0.9), rgba(0, 0, 0, 0.55) 50%);
+  width: 100vw;
+  height: 100vh;
+}
