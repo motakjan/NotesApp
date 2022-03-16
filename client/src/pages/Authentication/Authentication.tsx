@@ -37,7 +37,7 @@ export const Authentication = () => {
         display: 'flex',
         justifyContent: 'space-around',
         backgroundImage:
-          'url(https://media2.giphy.com/media/l3c64PElUdwpdbDPO/giphy.gif?cid=ecf05e47aze445q2nnkv7dtohlkb3rpo8v0sta8mfax8f4lr&rid=giphy.gif&ct=g)',
+          'url(https://media4.giphy.com/media/GYqIFQvPgVBo4/giphy.gif?cid=ecf05e47a1lezjyiqz8rexre346zmyb1wsu2mzjecxpznj9y&rid=giphy.gif&ct=g)',
         backgroundSize: 'cover',
         width: '100vw',
         height: '100vh',

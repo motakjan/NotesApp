@@ -11,7 +11,7 @@ import Container from '@mui/material/Container';
 import { LoginWithButton } from '../UI/LoginWithButton/LoginWithButton';
 import { Divider } from '@mui/material';
 import { NappLogo } from '../UI/NappLogo/NappLogo';
-import { motion } from 'framer-motion';
+import { AnimatedBox } from '../UI/FramerMotion/AnimatedDiv';
 
 type LoginPropsType = {
   login: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -19,11 +19,11 @@ type LoginPropsType = {
 
 const formVariants = {
   hidden: { opacity: 0, y: -20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 2 } },
+  visible: { opacity: 1, y: 0, transition: { type: 'spring', duration: 2, bounce: 0.6 } },
 };
 
 export const Login: React.FC<LoginPropsType> = ({ login }) => (
-  <motion.div initial="hidden" animate="visible" variants={formVariants}>
+  <AnimatedBox initial="hidden" animate="visible" variants={formVariants}>
     <Container
       component="main"
       maxWidth={false}
@@ -148,5 +148,5 @@ export const Login: React.FC<LoginPropsType> = ({ login }) => (
         </Box>
       </Box>
     </Container>
-  </motion.div>
+  </AnimatedBox>
 );

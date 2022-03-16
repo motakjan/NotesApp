@@ -7,8 +7,8 @@ export const LoginInfo = () => {
   const [registerOpened, setRegisterOpened] = useState(false);
 
   const registerVariants = {
-    hidden: { opacity: 0, x: -5000 },
-    visible: registerOpened ? { opacity: 1, x: 0, transition: { duration: 1 } } : {},
+    hidden: { opacity: 0, width: '0vw' },
+    visible: registerOpened ? { opacity: 1, width: '100vw', transition: { duration: 1 } } : {},
   };
 
   const textVariants = {
@@ -18,7 +18,11 @@ export const LoginInfo = () => {
 
   const buttonVariants = {
     hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0, transition: { delay: 1.5, duration: 0.5 } },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { delay: 1.5, duration: 0.5, type: 'spring', damping: 10, mass: 0.75, stiffness: 100 },
+    },
   };
 
   const registerButtonClicked = () => {
