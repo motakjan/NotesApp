@@ -12,18 +12,14 @@ import { LoginWithButton } from '../UI/LoginWithButton/LoginWithButton';
 import { Divider } from '@mui/material';
 import { NappLogo } from '../UI/NappLogo/NappLogo';
 import { AnimatedBox } from '../UI/FramerMotion/AnimatedDiv';
+import { LOGIN_FORM_VARIANTS } from '../../utils/framerMotion/variants';
 
-type LoginPropsType = {
+interface ILoginProps {
   login: (event: React.FormEvent<HTMLFormElement>) => void;
-};
+}
 
-const formVariants = {
-  hidden: { opacity: 0, y: -20 },
-  visible: { opacity: 1, y: 0, transition: { type: 'spring', duration: 2, bounce: 0.6 } },
-};
-
-export const Login: React.FC<LoginPropsType> = ({ login }) => (
-  <AnimatedBox initial="hidden" animate="visible" variants={formVariants}>
+export const Login: React.FC<ILoginProps> = ({ login }) => (
+  <AnimatedBox initial="hidden" animate="visible" variants={LOGIN_FORM_VARIANTS}>
     <Container
       component="main"
       maxWidth={false}
