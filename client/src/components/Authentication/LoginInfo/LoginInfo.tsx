@@ -30,7 +30,17 @@ export const LoginInfo = () => {
   };
 
   return (
-    <Box sx={{ padding: '1.5rem', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+    <Box
+      sx={{
+        padding: '1.5rem',
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
+        '@media screen and (max-width: 920px)': {
+          display: 'none',
+        },
+      }}
+    >
       <AnimatedNappLogo />
       <AnimatedBox
         sx={{
@@ -56,6 +66,10 @@ export const LoginInfo = () => {
             width: '12rem',
             fontFamily: 'Nunito',
             fontWeight: 700,
+            '&:hover': {
+              backgroundColor: 'darkorange',
+              color: 'black',
+            },
           }}
           onClick={() => registerButtonClicked()}
         >

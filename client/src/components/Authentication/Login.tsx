@@ -28,11 +28,12 @@ export const Login: React.FC<LoginPropsType> = ({ login }) => (
       component="main"
       maxWidth={false}
       sx={{
+        width: 'auto',
         backgroundColor: 'white',
         p: '10px 2rem 2rem 2rem',
         boxShadow: 'rgba(0, 0, 0, 0.1) 0px 10px 50px;',
         borderRadius: '6px',
-        m: '0.5rem',
+        m: '1rem',
         maxWidth: '400px',
       }}
     >
@@ -107,6 +108,10 @@ export const Login: React.FC<LoginPropsType> = ({ login }) => (
               height: '2.8rem',
               backgroundColor: '#020102 ',
               fontFamily: 'Nunito',
+              '&:hover': {
+                backgroundColor: '#e7e7e7',
+                color: 'black',
+              },
             }}
           >
             Sign In
