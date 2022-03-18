@@ -1,0 +1,34 @@
+import express from 'express';
+import * as {{titleCase name}}Controller from '../controllers/{{snakeCase name}}.controller';
+import { validate } from '../middlewares/validate';
+import {
+  actionOneSchema,
+  createOneSchema,
+  updateOneSchema,
+} from '../validators/{{snakeCase name}}.schemas';
+
+const {{snakeCase name}}Router = express.Router();
+
+{{snakeCase name}}Router.get('/', {{titleCase name}}Controller.get{{titleCase name}}sHandler);
+{{snakeCase name}}Router.post(
+  '/',
+  validate(createOneSchema),
+  {{titleCase name}}Controller.create{{titleCase name}}Handler
+);
+{{snakeCase name}}Router.put(
+  '/:id',
+  validate(updateOneSchema),
+  {{titleCase name}}Controller.update{{titleCase name}}Handler
+);
+{{snakeCase name}}Router.get(
+  '/:id',
+  validate(actionOneSchema),
+  {{titleCase name}}Controller.get{{titleCase name}}Handler
+);
+{{snakeCase name}}Router.delete(
+  '/:id',
+  validate(actionOneSchema),
+  {{titleCase name}}Controller.delete{{titleCase name}}Handler
+);
+
+export default {{snakeCase name}}Router;

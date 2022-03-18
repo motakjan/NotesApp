@@ -1,0 +1,29 @@
+import * as yup from 'yup';
+import mongoose from 'mongoose';
+
+export const actionOneSchema = yup.object({
+  params: yup.object({
+    id: yup
+      .string()
+      .test('invalid_id', 'Invalid {{titleCase name}} ID', (id: any) =>
+        mongoose.Types.ObjectId.isValid(id)
+      )
+      .required(),
+  }),
+});
+
+export const createOneSchema = yup.object({
+  body: yup.object({}),
+});
+
+export const updateOneSchema = yup.object({
+  params: yup.object({
+    id: yup
+      .string()
+      .test('invalid_id', 'Invalid {{titleCase name}} ID', (id: any) =>
+        mongoose.Types.ObjectId.isValid(id)
+      )
+      .required(),
+  }),
+  body: yup.object({}),
+});
