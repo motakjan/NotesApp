@@ -67,7 +67,8 @@ export const Login: React.FC<ILoginProps> = ({ login }) => (
         >
           <TextField
             margin="normal"
-            variant="outlined"
+            color="secondary"
+            variant="standard"
             required
             fullWidth
             id="email"
@@ -82,7 +83,8 @@ export const Login: React.FC<ILoginProps> = ({ login }) => (
           />
           <TextField
             margin="normal"
-            variant="outlined"
+            color="secondary"
+            variant="standard"
             required
             fullWidth
             name="password"
@@ -99,16 +101,16 @@ export const Login: React.FC<ILoginProps> = ({ login }) => (
             type="submit"
             fullWidth
             variant="contained"
-            sx={{
+            sx={(theme: any) => ({
               mt: 3,
               height: '2.8rem',
               backgroundColor: '#020102 ',
               fontFamily: 'Nunito',
               '&:hover': {
-                backgroundColor: '#e7e7e7',
-                color: 'black',
+                backgroundColor: theme.palette.secondary.main,
+                color: 'white',
               },
-            }}
+            })}
           >
             Sign In
           </Button>
