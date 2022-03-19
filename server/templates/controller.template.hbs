@@ -1,0 +1,50 @@
+import { Request, Response } from 'express';
+import { findAll, findOne, createOne, updateOne, deleteOne } from '../services/{{snakeCase name}}.service';
+
+export const get{{titleCase name}}sHandler = async (req: Request, res: Response) => {
+  const {{snakeCase name}}s = await findAll();
+  return res.status(200).json({{snakeCase name}}s);
+};
+
+export const get{{titleCase name}}Handler = async (req: Request, res: Response) => {
+  try {
+    const {{snakeCase name}} = await findOne(req.params.id);
+    if (!{{snakeCase name}}) return res.status(404).json({ errorMessage: '{{titleCase name}} not found.' });
+
+    return res.status(200).json({{snakeCase name}});
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+};
+
+export const create{{titleCase name}}Handler = async (req: Request, res: Response) => {
+  try {
+    const {{snakeCase name}} = await createOne(req.body);
+
+    return res.status(200).json({{snakeCase name}});
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+};
+
+export const update{{titleCase name}}Handler = async (req: Request, res: Response) => {
+  try {
+    const {{snakeCase name}} = await updateOne(req.params.id, req.body);
+    if (!{{snakeCase name}}) return res.status(404).json({ errorMessage: '{{titleCase name}} not found.' });
+
+    return res.status(200).json({{snakeCase name}});
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+};
+
+export const delete{{titleCase name}}Handler = async (req: Request, res: Response) => {
+  try {
+    const {{snakeCase name}} = await deleteOne(req.params.id);
+
+    if (!{{snakeCase name}}) return res.status(404).json({ errorMessage: '{{titleCase name}} not found.' });
+    return res.status(200).json({{snakeCase name}});
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+};
