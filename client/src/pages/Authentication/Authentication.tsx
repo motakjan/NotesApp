@@ -5,7 +5,9 @@ import { useMutation } from 'react-query';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Login } from '../../components/Authentication/Login';
-import { GradientBox } from '../../components/UI/GradientBox/GradientBox';
+import { Box } from '@mui/material';
+import { LoginInfo } from '../../components/Authentication/LoginInfo/LoginInfo';
+import './Authentication.css';
 
 export const Authentication = () => {
   const { data, mutate } = useMutation<GetAuthResType, AxiosError, LoginDataType>('login', authApi.loginUser);
@@ -30,14 +32,21 @@ export const Authentication = () => {
   };
 
   return (
-    <GradientBox
+    <Box
       sx={{
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: 'space-around',
+        backgroundImage:
+          'url(https://media4.giphy.com/media/GYqIFQvPgVBo4/giphy.gif?cid=ecf05e47a1lezjyiqz8rexre346zmyb1wsu2mzjecxpznj9y&rid=giphy.gif&ct=g)',
+        backgroundSize: 'cover',
+        width: '100vw',
+        height: '100vh',
       }}
     >
-      <Login login={onSubmit} />
-    </GradientBox>
+      <Box className="loginGradientBox">
+        <LoginInfo />
+        <Login login={onSubmit} />
+      </Box>
+    </Box>
   );
 };
