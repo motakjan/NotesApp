@@ -1,6 +1,6 @@
 import * as mongoose from "mongoose";
 
-const TaskSchema: any = new mongoose.Schema(
+const TodoSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -10,8 +10,8 @@ const TaskSchema: any = new mongoose.Schema(
     },
     tags: [
       {
-        type: String,
-        text: String,
+        tagType: String,
+        tagText: String,
       },
     ],
     start: {
@@ -28,6 +28,6 @@ const TaskSchema: any = new mongoose.Schema(
   { timestamps: true }
 );
 
-const TaskModel = mongoose.model("Task", TaskSchema);
+const TodoModel = mongoose.model("Todo", TodoSchema);
 
-export default TaskModel;
+export default TodoModel;
