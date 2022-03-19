@@ -13,6 +13,7 @@ import { Divider } from '@mui/material';
 import { NappLogo } from '../UI/NappLogo/NappLogo';
 import { AnimatedBox } from '../UI/FramerMotion/AnimatedDiv';
 import { LOGIN_FORM_VARIANTS } from '../../utils/framerMotion/variants';
+import { Theme } from '@mui/material/styles';
 
 interface ILoginProps {
   login: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -101,7 +102,7 @@ export const Login: React.FC<ILoginProps> = ({ login }) => (
             type="submit"
             fullWidth
             variant="contained"
-            sx={(theme: any) => ({
+            sx={(theme: Theme) => ({
               mt: 3,
               height: '2.8rem',
               backgroundColor: '#020102 ',
