@@ -25,7 +25,7 @@ export const TaskCard: React.FC<TaskCardPropsType> = ({ title, priority, tags, t
         cursor: 'default',
         width: '99%',
         borderLeft: `6px solid ${PRIORITY_TASK_CARD_COLORS[priority]}`,
-        backgroundColor: theme.palette.background.cardColor,
+        backgroundColor: theme.palette.custom.cardColor,
       }}
     >
       <CardActionsArea title={title} tags={tags} handleClick={handleCardClick} text={text} />

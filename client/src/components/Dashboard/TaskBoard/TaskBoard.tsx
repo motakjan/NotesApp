@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   DragDropContext,
   Draggable,
@@ -10,14 +10,12 @@ import {
   DropResult,
 } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
-import { Box, Typography } from '@mui/material';
+import { Box, createTheme, Typography } from '@mui/material';
 import { TaskCard } from '../TaskCard/TaskCard';
 import { useColorMode } from '../../../context/ColorModeContext';
 import { columnsFromBacked, onDragEnd } from '../../../utils/dashboardHelpers';
 import { IItem } from '../../../types/Dashboard';
 import { TaskCardTagType } from '../../../types/taskCardTypes';
-import { createTheme } from '@mui/material';
-import React from 'react';
 import { getCurrentTheme } from '../../../assets/theme';
 
 export const TaskBoard = () => {
@@ -69,7 +67,7 @@ export const TaskBoard = () => {
                       minWidth: '100%',
                       p: '10px',
                       backgroundColor: snapshot.isDraggingOver
-                        ? theme.palette.custom.light
+                        ? theme.palette.custom.dashboardDrag
                         : theme.palette.background.paper,
                     }}
                   >
