@@ -17,7 +17,7 @@ export const DashboardActions = () => (
     <Button sx={{ textTransform: 'none' }} startIcon={<TimelineIcon />}>
       Activity
     </Button>
-    <Button sx={{ textTransform: 'none' }} variant="contained" startIcon={<AddIcon />}>
+    <Button sx={{ textTransform: 'none' }} variant="outlined" startIcon={<AddIcon />}>
       Add To Board
     </Button>
     <IconButton aria-label="more actions" component="span">

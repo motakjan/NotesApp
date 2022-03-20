@@ -29,6 +29,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router';
 import { useQueryClient } from 'react-query';
 import _ from 'lodash';
+import { NappLogo } from '../UI/NappLogo/NappLogo';
 
 const tasksIcons = [<EventNoteIcon />, <NoteAddRoundedIcon />, <AssignmentReturnedIcon />];
 const profileIcons = [<DateRangeIcon />, <MailIcon />, <PersonIcon />, <SettingsIcon />];
@@ -79,7 +80,7 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
         }}
       >
         <CssBaseline />
-        <AppBar position="fixed" open={open}>
+        <AppBar open={open}>
           <Toolbar>
             <IconButton
               color="inherit"
@@ -95,13 +96,7 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
             >
               <MenuIcon />
             </IconButton>
-            <img
-              src={mode === 'dark' ? '/logoDark.svg' : '/logoDark.svg'}
-              alt="logo"
-              style={{
-                width: '4rem',
-              }}
-            />
+            <NappLogo width="32px" height="32px" fill="white" />
             <Tooltip title={'Switch to ' + (mode === 'light' ? 'dark' : 'light') + ' theme'} placement="bottom-start">
               <IconButton
                 sx={{

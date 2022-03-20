@@ -20,5 +20,5 @@ export type CardActionsAreaType = {
   title: string;
   tags: TaskCardTagType[];
   handleClick: () => void;
-  text: string;
+  text: string | undefined;
 };
