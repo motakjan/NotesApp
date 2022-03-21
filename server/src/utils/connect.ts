@@ -1,7 +1,8 @@
 import logger from './loggers/winston.logger';
+
 const mongoose = require('mongoose');
 
-const connect = async () => {	
+const connect = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URL, () => {
       logger.info('Connected to MongoDB');
