@@ -30,6 +30,7 @@ import { useNavigate } from 'react-router';
 import { useQueryClient } from 'react-query';
 import _ from 'lodash';
 import { NappLogo } from '../UI/NappLogo/NappLogo';
+import { AxiosError } from 'axios';
 
 const tasksIcons = [<EventNoteIcon />, <NoteAddRoundedIcon />, <AssignmentReturnedIcon />];
 const profileIcons = [<DateRangeIcon />, <MailIcon />, <PersonIcon />, <SettingsIcon />];
@@ -38,7 +39,7 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
   const { mode, toggleColorMode } = useColorMode();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const queryClient = useQueryClient();
-  const cachedIsLoggedIn: { isLoggedIn: boolean } = queryClient.getQueryData('isLoggedIn');
+  const cachedIsLoggedIn: { isLoggedIn: boolean; errors: AxiosError } = queryClient.getQueryData('isLoggedIn')!;
   const navigate = useNavigate();
 
   const theme = React.useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);

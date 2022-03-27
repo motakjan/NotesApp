@@ -25,11 +25,12 @@ export const TaskBoard = () => {
 
   return (
     <Box
-      style={{
+      sx={{
         display: 'flex',
         height: '100%',
         minHeight: '65vh',
         minWidth: '100rem',
+        pt: 2,
       }}
     >
       <DragDropContext onDragEnd={(result: DropResult) => onDragEnd(result, columns, setColumns)}>

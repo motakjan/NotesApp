@@ -1,62 +1,29 @@
-import { Box, Button, IconButton, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
-
+import { Box, Button } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import SortIcon from '@mui/icons-material/Sort';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import React from 'react';
-import RefreshIcon from '@mui/icons-material/Refresh';
 
-export const FilterOptions: React.FC = () => {
-  const [cardSize, setCardSize] = React.useState<string | null>('small');
-
-  const handleCardSizeChange = (_event: React.MouseEvent<HTMLElement>, newCardSize: string | null) => {
-    setCardSize(newCardSize);
-  };
-
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'end',
-        p: '0.8rem 0.5rem',
-      }}
-    >
-      <Box
-        sx={{
-          marginRight: '1rem',
-          display: 'inline',
-        }}
-      >
-        <Tooltip title="Refresh">
-          <IconButton>
-            <RefreshIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Filter">
-          <IconButton>
-            <FilterAltIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-      </Box>
-      <ToggleButtonGroup
-        value={cardSize}
-        exclusive
-        onChange={handleCardSizeChange}
-        aria-label="text alignment"
-        sx={{
-          marginRight: '1rem',
-        }}
-      >
-        <ToggleButton value="small" size="small" aria-label="left aligned">
-          Small
-        </ToggleButton>
-        <ToggleButton value="large" size="small" aria-label="centered">
-          Large
-        </ToggleButton>
-      </ToggleButtonGroup>
-
-      <Button size="small" variant="contained" disableElevation color="secondary" startIcon={<ManageSearchIcon />}>
-        Filter Tasks
-      </Button>
-    </Box>
-  );
-};
+export const FilterOptions: React.FC = () => (
+  <Box
+    sx={{
+      p: '0.5rem 0',
+      gap: '0.5rem',
+      display: 'flex',
+    }}
+  >
+    <Button startIcon={<SearchIcon />} sx={{ textTransform: 'none' }} variant="text">
+      Search
+    </Button>
+    <Button startIcon={<AccountCircleIcon />} sx={{ textTransform: 'none' }} variant="text">
+      Person
+    </Button>
+    <Button startIcon={<FilterAltIcon />} sx={{ textTransform: 'none' }} variant="text">
+      Filter
+    </Button>
+    <Button startIcon={<SortIcon />} sx={{ textTransform: 'none' }} variant="text">
+      Sort
+    </Button>
+  </Box>
+);
