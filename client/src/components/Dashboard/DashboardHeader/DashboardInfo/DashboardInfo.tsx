@@ -14,7 +14,7 @@ export const DashboardInfo: React.FC<IDashboardInfo> = ({ title, description, is
   const handleStarClicked = () => setIsFavourite((prevState: boolean) => !prevState);
 
   return (
-    <>
+    <Box>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Typography component="h1" variant="h4" sx={{ fontWeight: '600' }}>
           {title}
@@ -26,6 +26,6 @@ export const DashboardInfo: React.FC<IDashboardInfo> = ({ title, description, is
       <Typography component="p" variant="body2" sx={{ color: '#7c7c7c', ml: '6px' }}>
         {description}
       </Typography>
-    </>
+    </Box>
   );
 };

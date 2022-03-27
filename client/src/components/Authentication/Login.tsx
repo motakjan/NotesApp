@@ -39,7 +39,7 @@ export const Login: React.FC<ILoginProps> = ({ login }) => (
       <Box
         sx={{
           marginTop: 3,
-          fontFamily: 'Nunito',
+          fontFamily: 'Quicksand',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -51,7 +51,7 @@ export const Login: React.FC<ILoginProps> = ({ login }) => (
           variant="h5"
           sx={{
             mt: '5px',
-            fontFamily: 'Nunito',
+            fontFamily: 'Quicksand',
           }}
         >
           Sign in
@@ -63,7 +63,7 @@ export const Login: React.FC<ILoginProps> = ({ login }) => (
           noValidate
           sx={{
             mt: 1,
-            fontFamily: 'Nunito',
+            fontFamily: 'Quicksand',
           }}
         >
           <TextField
@@ -76,9 +76,9 @@ export const Login: React.FC<ILoginProps> = ({ login }) => (
             label="Email Address"
             name="email"
             inputProps={{
-              style: { fontFamily: 'Nunito' },
+              style: { fontFamily: 'Quicksand' },
             }}
-            InputLabelProps={{ style: { fontFamily: 'Nunito' } }}
+            InputLabelProps={{ style: { fontFamily: 'Quicksand' } }}
             autoComplete="email"
             autoFocus
           />
@@ -91,9 +91,9 @@ export const Login: React.FC<ILoginProps> = ({ login }) => (
             name="password"
             label="Password"
             inputProps={{
-              style: { fontFamily: 'Nunito' },
+              style: { fontFamily: 'Quicksand' },
             }}
-            InputLabelProps={{ style: { fontFamily: 'Nunito' } }}
+            InputLabelProps={{ style: { fontFamily: 'Quicksand' } }}
             type="password"
             id="password"
             autoComplete="current-password"
@@ -106,7 +106,7 @@ export const Login: React.FC<ILoginProps> = ({ login }) => (
               mt: 3,
               height: '2.8rem',
               backgroundColor: '#020102 ',
-              fontFamily: 'Nunito',
+              fontFamily: 'Quicksand',
               '&:hover': {
                 backgroundColor: theme.palette.secondary.main,
                 color: 'white',

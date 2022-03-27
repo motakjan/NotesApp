@@ -10,32 +10,95 @@ export const getCurrentTheme = (mode: PaletteMode) => ({
     ...(mode === 'light'
       ? {
         primary: {
-          main: '#0c427a',
-          dark: '#062843',
-          light: '#ffffff',
+          main: '#170b4a',
+          light: '#49507f',
+          dark: '#0c1135',
         },
         secondary: {
-          main: '#FFB500',
-          dark: '#ffc83e',
-          light: '#f9c049',
+          main: '#e80050',
+          light: '#ec3373',
+          dark: '#a20038',
         },
+        text: {
+          primary: '#0c0c0c',
+          secondary: '#0c0c0c',
+          disabled: '#b9b9b9',
+        },
+        error: {
+          main: '#ff2f1e',
+          light: '#ff5447',
+          dark: '#ad1d12',
+        },
+        warning: {
+          main: '#ff9800',
+          light: '#ffab36',
+          dark: '#af6b09',
+        },
+        info: {
+          main: '#2296f3',
+          light: '#4fabf3',
+          dark: '#196bad',
+        },
+        success: {
+          main: '#48ad4c',
+          light: '#71c374',
+          dark: '#317734',
+        },
+        background: {
+          default: '#fff',
+          paper: '#f8f8f8',
+        },
+        custom: {
+          dashboardDrag: '#170b4a18',
+          cardColor: '#fff',
+        }
       }
       : {
         primary: {
-          main: '#011a2d',
-          dark: '#062843',
+          main: '#ffffff',
+          light: '#dedede',
+          dark: '#afafaf',
         },
         secondary: {
-          main: '#FFB500',
-          dark: '#ffc83e',
-          light: '#f9c049',
+          main: '#e80050',
+          light: '#ec3373',
+          dark: '#a20038',
+        },
+        text: {
+          primary: '#ececec',
+          secondary: '#e4e4e4',
+          disabled: '#b9b9b9',
+        },
+        error: {
+          main: '#ff2f1e',
+          light: '#ff5447',
+          dark: '#ad1d12',
+        },
+        warning: {
+          main: '#ff9800',
+          light: '#ffab36',
+          dark: '#af6b09',
+        },
+        info: {
+          main: '#2296f3',
+          light: '#4fabf3',
+          dark: '#196bad',
+        },
+        success: {
+          main: '#48ad4c',
+          light: '#71c374',
+          dark: '#317734',
         },
         background: {
-          default: '#091c2b',
-          paper: '#00101c',
+          default: '#1a1a1a',
+          paper: '#141414',
         },
+        custom: {
+          dashboardDrag: '#170b4a18',
+          cardColor: '#fff',
+        }
       }),
-  },
+  },  
   components: {
     MuiAvatar: {
       styleOverrides: {
