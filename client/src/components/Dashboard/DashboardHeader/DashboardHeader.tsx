@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { DashboardActions } from './DashboardActions/DashboardActions';
 
 export const DashboardHeader = () => {
-  const text = 'Task Board';
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
 
   return (
