@@ -54,6 +54,13 @@ export const TaskBoard = () => {
                 variant="h5"
                 sx={{
                   fontSize: 'small',
+                  borderTopRightRadius: '4px',
+                  borderTopLeftRadius: '4px',
+                  background: theme.palette.primary.light,
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: '600',
+                  textTransform: 'uppercase',
                 }}
               >
                 {column.name}
@@ -93,7 +100,7 @@ export const TaskBoard = () => {
                               title={item.title}
                               text={item.text}
                               tags={item.tags as Array<TaskCardTagType>}
-                              priority={2}
+                              type="meeting"
                             />
                           </Box>
                         )}

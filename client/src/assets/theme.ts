@@ -56,7 +56,7 @@ export const getCurrentTheme = (mode: PaletteMode) => ({
       : {
         primary: {
           main: '#ffffff',
-          light: '#dedede',
+          light: '#292929',
           dark: '#afafaf',
         },
         secondary: {
@@ -94,8 +94,8 @@ export const getCurrentTheme = (mode: PaletteMode) => ({
           paper: '#141414',
         },
         custom: {
-          dashboardDrag: '#170b4a18',
-          cardColor: '#fff',
+          dashboardDrag: '#2b262855',
+          cardColor: '#0e0e0e',
         }
       }),
   },  

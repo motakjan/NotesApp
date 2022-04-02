@@ -4,11 +4,11 @@ import { createTheme, Divider } from '@mui/material';
 import { TaskCardPropsType } from '../../../types/taskCardTypes';
 import { CardAction } from './CardActions/CardActions';
 import { CardActionsArea } from './CardActions/CardActionsArea';
-import { PRIORITY_TASK_CARD_COLORS } from '../../../utils/constVariables';
+import { TASK_TYPE_COLORS } from '../../../utils/constVariables';
 import { getCurrentTheme } from '../../../assets/theme';
 import { useColorMode } from '../../../context/ColorModeContext';
 
-export const TaskCard: React.FC<TaskCardPropsType> = ({ title, priority, tags, text }) => {
+export const TaskCard: React.FC<TaskCardPropsType> = ({ title, type, tags, text }) => {
   const [showActions, setShowActions] = useState<boolean>(false);
   const [checked, setChecked] = useState(false);
   const { mode } = useColorMode();
@@ -24,7 +24,7 @@ export const TaskCard: React.FC<TaskCardPropsType> = ({ title, priority, tags, t
       sx={{
         cursor: 'default',
         width: '99%',
-        borderLeft: `6px solid ${PRIORITY_TASK_CARD_COLORS[priority]}`,
+        borderLeft: `6px solid ${TASK_TYPE_COLORS[type]}`,
         backgroundColor: theme.palette.custom.cardColor,
       }}
     >
