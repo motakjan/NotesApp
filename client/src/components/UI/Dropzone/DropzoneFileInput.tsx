@@ -19,19 +19,18 @@ export const DropzoneFileInput = ({ control, name }: { control: Control<any>; na
                 textAlign: 'center',
                 cursor: 'pointer',
                 color: '#333',
-                padding: '10px',
                 marginTop: '20px',
-                width: '80%',
+                padding: '20px',
               }}
               {...getRootProps()}
             >
-              <CloudUpload sx={{ marginTop: '16px', color: '#888888', fontSize: '42px' }} />
+              <CloudUpload sx={{ marginTop: '8px', color: '#888888', fontSize: '42px' }} />
               <input {...getInputProps()} name={name} onBlur={onBlur} />
               <p>Drag n drop files here, or click to select files</p>
             </Paper>
           )}
         </Dropzone>
-        <List>
+        <List sx={{ wordWrap: 'break-word' }}>
           {value.map((f: any) => (
             <ListItem key={f.name}>
               <ListItemIcon>

@@ -45,6 +45,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
+    'react/forbid-prop-types': 0,
     '@typescript-eslint/ban-types': [
       'error',
       {

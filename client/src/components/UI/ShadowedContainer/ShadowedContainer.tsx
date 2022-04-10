@@ -13,7 +13,7 @@ export const ShadowedContainer: React.FC<IShadowedContainer> = ({ children, sx }
       backgroundColor: '#ffffff',
       boxShadow: 'rgba(0, 0, 0, 0.15) 0px 3px 3px 0px',
       width: '100%',
-      minHeight: '88vh',
+      minHeight: 'calc(100vh - 64px)',
       p: '1rem',
       ...sx,
     }}

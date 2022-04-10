@@ -14,7 +14,10 @@ export const NappPersonModal: React.FC<INappPersonModal> = ({ buttonText, button
   <NappModal buttonText={buttonText} buttonSx={buttonSx}>
     <TextField placeholder="Search Person" color="secondary" sx={{ width: '100%' }} size="small" focused />
     {options.map((option: any) => (
-      <Box sx={{ display: 'flex', backgroundColor: '#f5f5f5', p: '0.2rem 0.4rem', gap: '10px', fontSize: '14px' }}>
+      <Box
+        key={`${option}-option`}
+        sx={{ display: 'flex', backgroundColor: '#f5f5f5', p: '0.2rem 0.4rem', gap: '10px', fontSize: '14px' }}
+      >
         <Avatar alt="Remy Sharp" src={`https://avatars.dicebear.com/api/initials/option${option}.svg`} /> option{' '}
         {option}
       </Box>

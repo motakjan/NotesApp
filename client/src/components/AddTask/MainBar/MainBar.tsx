@@ -1,4 +1,4 @@
-import { Box, Button, MenuItem, TextField, Typography } from '@mui/material';
+import { Box, Breadcrumbs, Button, Link, MenuItem, TextField, Typography } from '@mui/material';
 import { ShadowedContainer } from '../../UI/ShadowedContainer/ShadowedContainer';
 import RSelect from 'react-select';
 import styles from './MainBar.module.css';
@@ -7,9 +7,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import { NappPersonModal } from '../../UI/Modals/NappPersonModal';
 import { DropzoneFileInput } from '../../UI/Dropzone/DropzoneFileInput';
-import { Controller, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
+import { Controller, Control, SubmitHandler } from 'react-hook-form';
 import { ControlledTextField } from '../../UI/ControlledTextField/ControlledTextField';
 
 const colourOptions = [
@@ -54,32 +52,13 @@ const priorities = [
   },
 ];
 
-const validationSchema = Yup.object().shape({
-  dropzone: Yup.array(),
-  taskType: Yup.string().required(),
-  taskTitle: Yup.string().required(),
-  taskDescription: Yup.string().required(),
-  taskPriority: Yup.string().required(),
-});
+interface IMainBar {
+  control: Control<any>;
+  handleSubmit: any;
+  errors: any;
+}
 
-export const MainBar = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(validationSchema),
-    defaultValues: {
-      taskType: '',
-      taskTitle: '',
-      taskDescription: '',
-      taskPriority: '',
-      dateFrom: '',
-      dateTo: '',
-      taskSelectLabel: colourOptions[0],
-      dropzone: [],
-    },
-  });
+export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors }) => {
   const onSubmit = (data: any) => console.log(data);
   return (
     <ShadowedContainer>
@@ -97,7 +76,7 @@ export const MainBar = () => {
           gap: '1rem',
         }}
       >
-        <ControlledTextField label={'Type'} select errors={errors?.taskType} name={'taskType'} control={control}>
+        <ControlledTextField label="Type" select errors={errors?.taskType} name="taskType" control={control}>
           {taskTypes.map(option => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
@@ -105,26 +84,26 @@ export const MainBar = () => {
           ))}
         </ControlledTextField>
         <ControlledTextField
-          label={'Title'}
+          label="Title"
           errors={errors?.taskTitle}
-          name={'taskTitle'}
+          name="taskTitle"
           InputLabelProps={{ shrink: true }}
           control={control}
         />
         <ControlledTextField
-          label={'Description'}
+          label="Description"
           multiline
           rows={8}
           errors={errors?.taskDescription}
-          name={'taskDescription'}
+          name="taskDescription"
           InputLabelProps={{ shrink: true }}
           control={control}
         />
         <ControlledTextField
-          label={'Priority'}
+          label="Priority"
           select
           errors={errors?.taskPriority}
-          name={'taskPriority'}
+          name="taskPriority"
           control={control}
         >
           {priorities.map(option => (
@@ -142,7 +121,14 @@ export const MainBar = () => {
               render={({ field: { ref, ...rest } }) => (
                 <DateTimePicker
                   renderInput={(props: any) => (
-                    <TextField sx={{ width: '39.5%' }} size="small" color="secondary" {...props} />
+                    <TextField
+                      {...props}
+                      sx={{ width: '39.5%' }}
+                      size="small"
+                      color="secondary"
+                      error={!!errors.dateFrom}
+                      helperText={errors?.dateFrom?.message}
+                    />
                   )}
                   label="From"
                   {...rest}
@@ -155,7 +141,14 @@ export const MainBar = () => {
               render={({ field: { ref, ...rest } }) => (
                 <DateTimePicker
                   renderInput={(props: any) => (
-                    <TextField sx={{ width: '39.5%' }} size="small" color="secondary" {...props} />
+                    <TextField
+                      {...props}
+                      sx={{ width: '39.5%' }}
+                      size="small"
+                      color="secondary"
+                      error={!!errors.dateTo}
+                      helperText={errors?.dateTo?.message}
+                    />
                   )}
                   label="To"
                   {...rest}
@@ -182,9 +175,8 @@ export const MainBar = () => {
             />
           )}
         />
-        <DropzoneFileInput control={control} name="dropzone" />
         <NappPersonModal buttonText="Open Modal" buttonSx={{ width: '80%' }} />
-        <Button sx={{ width: '80%' }} onClick={handleSubmit(onSubmit)} color="secondary" variant="outlined">
+        <Button sx={{ width: '80%' }} onClick={handleSubmit(onSubmit)} color="error" variant="contained">
           Submit
         </Button>
       </Box>
