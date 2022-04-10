@@ -1,12 +1,16 @@
-import { Box, MenuItem, TextField, Typography } from '@mui/material';
+import { Box, Button, MenuItem, TextField, Typography } from '@mui/material';
 import { ShadowedContainer } from '../../UI/ShadowedContainer/ShadowedContainer';
 import RSelect from 'react-select';
 import styles from './MainBar.module.css';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import { useState } from 'react';
 import { NappPersonModal } from '../../UI/Modals/NappPersonModal';
+import { DropzoneFileInput } from '../../UI/Dropzone/DropzoneFileInput';
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+import { ControlledTextField } from '../../UI/ControlledTextField/ControlledTextField';
 
 const colourOptions = [
   { value: 'chocolate', label: 'Chocolate' },
@@ -50,19 +54,33 @@ const priorities = [
   },
 ];
 
+const validationSchema = Yup.object().shape({
+  dropzone: Yup.array(),
+  taskType: Yup.string().required(),
+  taskTitle: Yup.string().required(),
+  taskDescription: Yup.string().required(),
+  taskPriority: Yup.string().required(),
+});
+
 export const MainBar = () => {
-  const [value, setValue] = useState<Date | null>(new Date());
-  const [taskType, setTaskType] = useState('task');
-  const [priority, setPriority] = useState('1');
-
-  const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTaskType(event.target.value);
-  };
-
-  const handlePriorityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTaskType(event.target.value);
-  };
-
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+    defaultValues: {
+      taskType: '',
+      taskTitle: '',
+      taskDescription: '',
+      taskPriority: '',
+      dateFrom: '',
+      dateTo: '',
+      taskSelectLabel: colourOptions[0],
+      dropzone: [],
+    },
+  });
+  const onSubmit = (data: any) => console.log(data);
   return (
     <ShadowedContainer>
       <Typography variant="h5" component="h1">
@@ -70,7 +88,7 @@ export const MainBar = () => {
       </Typography>
       <Box
         component="form"
-        onSubmit={() => console.log('yo')}
+        onSubmit={handleSubmit(onSubmit)}
         noValidate
         sx={{
           mt: 2,
@@ -79,95 +97,96 @@ export const MainBar = () => {
           gap: '1rem',
         }}
       >
-        <TextField
-          select
-          label="Type"
-          value={taskType}
-          onChange={handleTypeChange}
-          variant="outlined"
-          color="secondary"
-          sx={{ width: '80%' }}
-          size="small"
-        >
+        <ControlledTextField label={'Type'} select errors={errors?.taskType} name={'taskType'} control={control}>
           {taskTypes.map(option => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
           ))}
-        </TextField>
-        <TextField
+        </ControlledTextField>
+        <ControlledTextField
+          label={'Title'}
+          errors={errors?.taskTitle}
+          name={'taskTitle'}
           InputLabelProps={{ shrink: true }}
-          id="title"
-          label="Title"
-          variant="outlined"
-          size="small"
-          color="secondary"
-          sx={{ width: '80%' }}
+          control={control}
         />
-        <TextField
-          InputLabelProps={{ shrink: true }}
-          id="description"
-          label="Description"
+        <ControlledTextField
+          label={'Description'}
           multiline
           rows={8}
-          variant="outlined"
-          size="small"
-          color="secondary"
-          sx={{ width: '80%' }}
+          errors={errors?.taskDescription}
+          name={'taskDescription'}
+          InputLabelProps={{ shrink: true }}
+          control={control}
         />
-        <TextField
+        <ControlledTextField
+          label={'Priority'}
           select
-          label="Priority"
-          value={priority}
-          onChange={handlePriorityChange}
-          variant="outlined"
-          color="secondary"
-          sx={{ width: '80%' }}
-          size="small"
+          errors={errors?.taskPriority}
+          name={'taskPriority'}
+          control={control}
         >
           {priorities.map(option => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
           ))}
-        </TextField>
+        </ControlledTextField>
+
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Box sx={{ display: 'flex', gap: '1%' }}>
-            <DateTimePicker
-              renderInput={(props: any) => (
-                <TextField sx={{ width: '39.5%' }} size="small" color="secondary" {...props} />
+            <Controller
+              name="dateFrom"
+              control={control}
+              render={({ field: { ref, ...rest } }) => (
+                <DateTimePicker
+                  renderInput={(props: any) => (
+                    <TextField sx={{ width: '39.5%' }} size="small" color="secondary" {...props} />
+                  )}
+                  label="From"
+                  {...rest}
+                />
               )}
-              label="From"
-              value={value}
-              onChange={(newValue: any) => {
-                setValue(newValue);
-              }}
             />
-            <DateTimePicker
-              renderInput={(props: any) => (
-                <TextField sx={{ width: '39.5%' }} size="small" color="secondary" {...props} />
+            <Controller
+              name="dateTo"
+              control={control}
+              render={({ field: { ref, ...rest } }) => (
+                <DateTimePicker
+                  renderInput={(props: any) => (
+                    <TextField sx={{ width: '39.5%' }} size="small" color="secondary" {...props} />
+                  )}
+                  label="To"
+                  {...rest}
+                />
               )}
-              label="To"
-              value={value}
-              onChange={(newValue: any) => {
-                setValue(newValue);
-              }}
             />
           </Box>
         </LocalizationProvider>
         {/* consider researching cx option https://react-select.com/styles */}
-        <RSelect
-          defaultValue={[colourOptions[2], colourOptions[3]]}
-          className={styles.multiSelect}
-          isMulti
-          name="colors"
-          closeMenuOnSelect={false}
-          options={colourOptions}
-          hideSelectedOptions={false}
-          isSearchable
-          classNamePrefix="select"
+
+        <Controller
+          name="taskSelectLabel"
+          control={control}
+          render={({ field }) => (
+            <RSelect
+              className={styles.multiSelect}
+              isMulti
+              {...field}
+              closeMenuOnSelect={false}
+              options={colourOptions}
+              hideSelectedOptions={false}
+              isSearchable
+              classNamePrefix="select"
+            />
+          )}
         />
+        <DropzoneFileInput control={control} name="dropzone" />
         <NappPersonModal buttonText="Open Modal" buttonSx={{ width: '80%' }} />
+        <Button sx={{ width: '80%' }} onClick={handleSubmit(onSubmit)} color="secondary" variant="outlined">
+          Submit
+        </Button>
       </Box>
     </ShadowedContainer>
   );
