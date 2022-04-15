@@ -29,6 +29,6 @@ app.use("/api/todo", verify, todoRoute);
 app.use("/api/user", verify, userRoute);
 
 app.listen(1337, async () => {
-  logger.info("Backend server is running!");
+  logger.info('Backend server is running!');
   await connect();
 });

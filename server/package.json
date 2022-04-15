@@ -6,7 +6,11 @@
     "scripts": {
         "dev": "nodemon ./src/index.ts --ignore '../client/",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "gen": "plop"
+        "gen": "plop",
+        "format:check": "prettier --check .",
+        "format:write": "prettier --write .",
+        "lint:check": "eslint \"**/*.{ts,tsx}\"",
+        "lint": "eslint --fix \"**/*.{ts,tsx}\""
     },
     "author": "",
     "license": "ISC",
@@ -34,6 +38,14 @@
         "@types/mongoose": "^5.11.97",
         "@types/morgan": "^1.9.3",
         "@types/node": "^16.11.11",
-        "plop": "^3.0.5"
+        "eslint-import-resolver-typescript": "^2.5.0",
+        "@typescript-eslint/eslint-plugin": "^5.15.0",
+        "@typescript-eslint/parser": "^5.15.0",
+        "eslint": "^8.11.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-import": "^2.25.4",
+        "plop": "^3.0.5",
+        "prettier": "^2.6.0"
     }
 }
