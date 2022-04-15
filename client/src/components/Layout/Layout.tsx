@@ -153,7 +153,6 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
           component="main"
           sx={{
             flexGrow: 1,
-            p: 3,
           }}
         >
           <DrawerHeader />

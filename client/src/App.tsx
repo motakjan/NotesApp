@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { WithLayout } from './components/Layout/WithLayout';
+import { AddTask } from './pages/AddTask/AddTask';
 import { Authentication } from './pages/Authentication';
 import { Dashboard } from './pages/Dashboard/Dashboard';
 
@@ -10,7 +11,7 @@ export const App: React.FC = () => (
       <Route path="/login" element={<Authentication />} />
       <Route path="/dashboard" element={<WithLayout page={<Dashboard />} />} />
       <Route path="/" element={<Navigate to="/dashboard" />} />
-      <Route path="/add_task" element={<WithLayout page={<div>add_task</div>} />} />
+      <Route path="/add_task" element={<WithLayout page={<AddTask />} />} />
       <Route path="/join_task" element={<WithLayout page={<div>join_task</div>} />} />
       <Route path="*" element={<WithLayout page={<div>NOT FOUND</div>} />} />
     </Routes>
