@@ -1,11 +1,11 @@
 import  {{titleCase name}}Model from '../models/{{snakeCase name}}.model';
 
 export const findAll = async () => {
-  return {{titleCase name}}Model.find();
+  return await {{titleCase name}}Model.find();
 };
 
 export const findOne = async (id: string) => {
-  return {{titleCase name}}Model.findById(id);
+  return await {{titleCase name}}Model.findById(id);
 };
 
 export const createOne = async (data: any) => {
@@ -17,13 +17,13 @@ export const createOne = async (data: any) => {
 };
 
 export const updateOne = async (id: string, data: any) => {
-  return {{titleCase name}}Model.findByIdAndUpdate(id, data, {
+  return await {{titleCase name}}Model.findByIdAndUpdate(id, data, {
     new: true,
   });
 };
 
 export const deleteOne = async (id: string) => {
-  return {{titleCase name}}Model.findByIdAndDelete(id);
+  return await {{titleCase name}}Model.findByIdAndDelete(id);
 };
 
 
