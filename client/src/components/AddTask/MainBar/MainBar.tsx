@@ -175,7 +175,6 @@ export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors }) =
             />
           )}
         />
-        <NappPersonModal buttonText="Open Modal" buttonSx={{ width: '80%' }} />
         <Button sx={{ width: '80%' }} onClick={handleSubmit(onSubmit)} color="error" variant="contained">
           Submit
         </Button>
