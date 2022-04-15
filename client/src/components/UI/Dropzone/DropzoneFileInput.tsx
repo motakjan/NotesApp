@@ -15,10 +15,10 @@ export const DropzoneFileInput = ({ control, name }: { control: Control<any>; na
             <Paper
               variant="outlined"
               sx={{
-                backgroundColor: '#eee',
+                backgroundColor: 'custom.dashboardDrag',
                 textAlign: 'center',
                 cursor: 'pointer',
-                color: '#333',
+                color: 'text.primary',
                 marginTop: '20px',
                 padding: '20px',
               }}
@@ -26,7 +26,7 @@ export const DropzoneFileInput = ({ control, name }: { control: Control<any>; na
             >
               <CloudUpload sx={{ marginTop: '8px', color: '#888888', fontSize: '42px' }} />
               <input {...getInputProps()} name={name} onBlur={onBlur} />
-              <p>Drag n drop files here, or click to select files</p>
+              <p>Drag and drop files here, or click to select files</p>
             </Paper>
           )}
         </Dropzone>

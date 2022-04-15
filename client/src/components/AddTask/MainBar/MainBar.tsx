@@ -1,14 +1,14 @@
-import { Box, Breadcrumbs, Button, Link, MenuItem, TextField, Typography } from '@mui/material';
+import { Box, Button, MenuItem, TextField, Typography } from '@mui/material';
 import { ShadowedContainer } from '../../UI/ShadowedContainer/ShadowedContainer';
 import RSelect from 'react-select';
 import styles from './MainBar.module.css';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import { NappPersonModal } from '../../UI/Modals/NappPersonModal';
-import { DropzoneFileInput } from '../../UI/Dropzone/DropzoneFileInput';
 import { Controller, Control, SubmitHandler } from 'react-hook-form';
 import { ControlledTextField } from '../../UI/ControlledTextField/ControlledTextField';
+import SendRoundedIcon from '@mui/icons-material/SendRounded';
+import DeleteSweepRoundedIcon from '@mui/icons-material/DeleteSweepRounded';
 
 const colourOptions = [
   { value: 'chocolate', label: 'Chocolate' },
@@ -56,14 +56,18 @@ interface IMainBar {
   control: Control<any>;
   handleSubmit: any;
   errors: any;
+  reset: any;
 }
 
-export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors }) => {
+export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors, reset }) => {
   const onSubmit = (data: any) => console.log(data);
   return (
     <ShadowedContainer>
-      <Typography variant="h5" component="h1">
-        Create a new task
+      <Typography component="h1" variant="h4" sx={{ fontWeight: '600' }}>
+        Create Task
+      </Typography>
+      <Typography component="p" variant="body2" sx={{ color: '#7c7c7c', ml: '6px' }}>
+        Creating a task for dashboard: TaskBoard
       </Typography>
       <Box
         component="form"
@@ -123,7 +127,7 @@ export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors }) =
                   renderInput={(props: any) => (
                     <TextField
                       {...props}
-                      sx={{ width: '39.5%' }}
+                      sx={{ width: '49.5%' }}
                       size="small"
                       color="secondary"
                       error={!!errors.dateFrom}
@@ -143,7 +147,7 @@ export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors }) =
                   renderInput={(props: any) => (
                     <TextField
                       {...props}
-                      sx={{ width: '39.5%' }}
+                      sx={{ width: '49.5%' }}
                       size="small"
                       color="secondary"
                       error={!!errors.dateTo}
@@ -175,9 +179,26 @@ export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors }) =
             />
           )}
         />
-        <Button sx={{ width: '80%' }} onClick={handleSubmit(onSubmit)} color="error" variant="contained">
-          Submit
-        </Button>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', justifyContent: 'flex-end' }}>
+          <Button
+            sx={{ width: '25%' }}
+            onClick={() => reset()}
+            color="secondary"
+            variant="contained"
+            endIcon={<DeleteSweepRoundedIcon />}
+          >
+            Clear
+          </Button>
+          <Button
+            sx={{ width: '25%', color: 'text.dark' }}
+            onClick={handleSubmit(onSubmit)}
+            color="primary"
+            variant="contained"
+            endIcon={<SendRoundedIcon />}
+          >
+            Create
+          </Button>
+        </Box>
       </Box>
     </ShadowedContainer>
   );

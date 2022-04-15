@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
+import { Paper } from '@mui/material';
 
 interface INappModal {
   children: React.ReactNode;
@@ -11,10 +12,9 @@ interface INappModal {
 }
 
 const style = {
-  position: 'absolute' as const,
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: 'absolute',
+  top: '38%',
+  left: '38%',
   width: 500,
   bgcolor: 'background.paper',
   boxShadow: 24,
@@ -31,7 +31,7 @@ export const NappModal: React.FC<INappModal> = ({ children, buttonText, buttonSx
         {buttonText}
       </Button>
       <Modal open={open} onClose={handleClose}>
-        <Box sx={style}>{children}</Box>
+        <Paper sx={style}>{children}</Paper>
       </Modal>
     </>
   );

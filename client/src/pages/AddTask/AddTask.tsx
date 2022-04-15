@@ -26,6 +26,7 @@ export const AddTask = () => {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(validationSchema),
     defaultValues: {
@@ -40,9 +41,9 @@ export const AddTask = () => {
     },
   });
   return (
-    <Grid container spacing={3} sx={{ backgroundColor: '#f0f0f0', padding: '0 24px 0 12px' }}>
+    <Grid container spacing={3} sx={{ backgroundColor: 'background.paper', padding: '0 24px 0 12px' }}>
       <Grid item md={9} xs={12}>
-        <MainBar control={control} handleSubmit={handleSubmit} errors={errors} />
+        <MainBar control={control} handleSubmit={handleSubmit} errors={errors} reset={reset} />
       </Grid>
       <Grid item md={3} xs={12}>
         <RightBar control={control} />

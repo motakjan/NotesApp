@@ -12,7 +12,7 @@ export const ControlledTextField: React.FC<any> = ({ control, name, children, er
         {...props}
         error={!!errors}
         helperText={errors?.message}
-        sx={{ width: '80%' }}
+        sx={{ width: '100%' }}
         variant="outlined"
         color="secondary"
         size="small"

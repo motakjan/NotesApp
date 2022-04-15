@@ -1,5 +1,4 @@
-import { Avatar, TextField } from '@mui/material';
-import { Box } from '@mui/system';
+import { Avatar, Paper, TextField } from '@mui/material';
 import React, { ChangeEvent, useState } from 'react';
 import useDebounce from '../../../hooks/useDebounce';
 import { NappModal } from './NappModal';
@@ -30,7 +29,7 @@ export const NappPersonModal: React.FC<INappPersonModal> = ({ buttonText, button
 
   return (
     <NappModal buttonText={buttonText} buttonSx={buttonSx} buttonSize={buttonSize}>
-      <Box sx={{ p: '6px' }}>
+      <Paper sx={{ p: '6px' }}>
         <TextField
           placeholder="Search Person"
           variant="filled"
@@ -47,22 +46,22 @@ export const NappPersonModal: React.FC<INappPersonModal> = ({ buttonText, button
           onChange={handleChange}
           focused
         />
-      </Box>
+      </Paper>
 
       {options
         .filter(person => person.toLowerCase().includes(debouncedValue.toLowerCase()))
         .map((option: any) => (
-          <Box
+          <Paper
             key={`${uuidv4()}-option`}
             sx={{
               display: 'flex',
-              backgroundColor: '#f5f5f5',
+              backgroundColor: 'background.default',
               p: '0.25rem 0.5rem',
               gap: '10px',
               fontSize: '11.5px',
               cursor: 'pointer',
               '&:hover': {
-                backgroundColor: '#e5e5e5',
+                backgroundColor: 'background.paper',
               },
             }}
           >
@@ -72,7 +71,7 @@ export const NappPersonModal: React.FC<INappPersonModal> = ({ buttonText, button
               sx={{ width: '1.2rem', height: '1.2rem' }}
             />
             {option}
-          </Box>
+          </Paper>
         ))}
     </NappModal>
   );
