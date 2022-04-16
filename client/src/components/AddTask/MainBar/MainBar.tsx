@@ -1,21 +1,20 @@
-import { Box, Button, MenuItem, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, Chip, MenuItem, Switch, TextField, Typography } from '@mui/material';
 import { ShadowedContainer } from '../../UI/ShadowedContainer/ShadowedContainer';
-import RSelect from 'react-select';
-import styles from './MainBar.module.css';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import { Controller, Control, SubmitHandler } from 'react-hook-form';
+import { Controller, Control } from 'react-hook-form';
 import { ControlledTextField } from '../../UI/ControlledTextField/ControlledTextField';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import DeleteSweepRoundedIcon from '@mui/icons-material/DeleteSweepRounded';
+import { styled } from '@mui/material/styles';
 
 const colourOptions = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-  { value: 'coffee', label: 'Coffee' },
-  { value: 'orange', label: 'Orange' },
+  { id: 1, name: 'Chocolate' },
+  { id: 2, name: 'Strawberry' },
+  { id: 3, name: 'Vanilla' },
+  { id: 4, name: 'Coffee' },
+  { id: 5, name: 'Orange' },
 ];
 
 const taskTypes = [
@@ -59,6 +58,39 @@ interface IMainBar {
   reset: any;
 }
 
+const Android12Switch = styled(Switch)(({ theme }) => ({
+  padding: 8,
+  '& .MuiSwitch-track': {
+    borderRadius: 22 / 2,
+    '&:before, &:after': {
+      content: '""',
+      position: 'absolute',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      width: 16,
+      height: 16,
+    },
+    '&:before': {
+      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
+        theme.palette.getContrastText(theme.palette.primary.main)
+      )}" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
+      left: 12,
+    },
+    '&:after': {
+      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
+        theme.palette.getContrastText(theme.palette.primary.main)
+      )}" d="M19,13H5V11H19V13Z" /></svg>')`,
+      right: 12,
+    },
+  },
+  '& .MuiSwitch-thumb': {
+    boxShadow: 'none',
+    width: 16,
+    height: 16,
+    margin: 2,
+  },
+}));
+
 export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors, reset }) => {
   const onSubmit = (data: any) => console.log(data);
   return (
@@ -80,7 +112,15 @@ export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors, res
           gap: '1rem',
         }}
       >
-        <ControlledTextField label="Type" select errors={errors?.taskType} name="taskType" control={control}>
+        <ControlledTextField
+          label="Type"
+          errors={errors?.taskType}
+          name="taskType"
+          control={control}
+          InputLabelProps={{ shrink: true }}
+          helperTextMessage="Select a task type that represents your task"
+          select
+        >
           {taskTypes.map(option => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
@@ -93,6 +133,7 @@ export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors, res
           name="taskTitle"
           InputLabelProps={{ shrink: true }}
           control={control}
+          helperTextMessage="Input title that describes your task"
         />
         <ControlledTextField
           label="Description"
@@ -102,12 +143,52 @@ export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors, res
           name="taskDescription"
           InputLabelProps={{ shrink: true }}
           control={control}
+          helperTextMessage="Input description that describes your task"
+        />
+
+        <Controller
+          name="taskSelectLabel"
+          control={control}
+          render={({ field: { onChange } }) => (
+            <Autocomplete
+              onChange={(_, data) => {
+                onChange(data);
+                return data;
+              }}
+              id="tags-filled"
+              size="small"
+              options={colourOptions}
+              getOptionLabel={option => option.name}
+              renderTags={(value: readonly any[], getTagProps) =>
+                value.map((option: any, index: number) => (
+                  <Chip variant="outlined" size="small" label={option.name} {...getTagProps({ index })} />
+                ))
+              }
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  color="secondary"
+                  variant="outlined"
+                  size="small"
+                  label="Tags"
+                  helperText="Select tags that match your task"
+                  placeholder="Please choose tags describing your task"
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              multiple
+              freeSolo
+              disableCloseOnSelect
+            />
+          )}
         />
         <ControlledTextField
           label="Priority"
           select
+          InputLabelProps={{ shrink: true }}
           errors={errors?.taskPriority}
           name="taskPriority"
+          helperTextMessage="Select a task priority"
           control={control}
         >
           {priorities.map(option => (
@@ -130,8 +211,9 @@ export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors, res
                       sx={{ width: '49.5%' }}
                       size="small"
                       color="secondary"
+                      InputLabelProps={{ shrink: true }}
                       error={!!errors.dateFrom}
-                      helperText={errors?.dateFrom?.message}
+                      helperText={errors?.dateFrom?.message || 'Select task start date and time'}
                     />
                   )}
                   label="From"
@@ -150,8 +232,9 @@ export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors, res
                       sx={{ width: '49.5%' }}
                       size="small"
                       color="secondary"
+                      InputLabelProps={{ shrink: true }}
                       error={!!errors.dateTo}
-                      helperText={errors?.dateTo?.message}
+                      helperText={errors?.dateTo?.message || 'Select task end date and time'}
                     />
                   )}
                   label="To"
@@ -161,24 +244,13 @@ export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors, res
             />
           </Box>
         </LocalizationProvider>
-        {/* consider researching cx option https://react-select.com/styles */}
 
         <Controller
-          name="taskSelectLabel"
+          name="isPrivate"
           control={control}
-          render={({ field }) => (
-            <RSelect
-              className={styles.multiSelect}
-              isMulti
-              {...field}
-              closeMenuOnSelect={false}
-              options={colourOptions}
-              hideSelectedOptions={false}
-              isSearchable
-              classNamePrefix="select"
-            />
-          )}
+          render={({ field: { ref, ...rest } }) => <Android12Switch {...rest} />}
         />
+
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', justifyContent: 'flex-end' }}>
           <Button
             sx={{ width: '25%' }}

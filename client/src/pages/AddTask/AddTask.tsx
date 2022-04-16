@@ -36,7 +36,8 @@ export const AddTask = () => {
       taskPriority: '',
       dateFrom: '',
       dateTo: '',
-      taskSelectLabel: { value: 'chocolate', label: 'Chocolate' },
+      isPrivate: false,
+      taskSelectLabel: {},
       dropzone: [],
     },
   });

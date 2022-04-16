@@ -51,6 +51,7 @@ export const getCurrentTheme = (mode: PaletteMode) => ({
         custom: {
           dashboardDrag: '#170b4a18',
           cardColor: '#fff',
+          addTaskCard: '#fff'
         }
       }
       : {
@@ -96,6 +97,7 @@ export const getCurrentTheme = (mode: PaletteMode) => ({
         custom: {
           dashboardDrag: '#2b262855',
           cardColor: '#0e0e0e',
+          addTaskCard: '#090909'
         }
       }),
   },  
