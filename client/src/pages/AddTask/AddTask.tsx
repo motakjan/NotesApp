@@ -2,24 +2,21 @@ import { Grid } from '@mui/material';
 import { MainBar } from '../../components/AddTask/MainBar/MainBar';
 import { RightBar } from '../../components/AddTask/RightBar/RightBar';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
+import { taskFormValidator } from './formValidator';
+import { ITaskFormValues } from '../../types/AddTask/addTaskTypes';
 
-const validationSchema = Yup.object().shape({
-  dropzone: Yup.array(),
-  taskType: Yup.string().required(),
-  taskTitle: Yup.string().required(),
-  taskDescription: Yup.string().required(),
-  taskPriority: Yup.string().required(),
-  dateFrom: Yup.date()
-    .nullable()
-    .transform((curr, orig) => (orig === '' ? null : curr))
-    .typeError('Please input a valid date'),
-  dateTo: Yup.date()
-    .nullable()
-    .transform((curr, orig) => (orig === '' ? null : curr))
-    .typeError('Please input a valid date'),
-});
+const DEFAULT_VALUES = {
+  taskType: '',
+  taskTitle: '',
+  taskDescription: '',
+  taskPriority: '',
+  dateFrom: '',
+  dateTo: '',
+  isPrivate: false,
+  taskSelectLabel: {},
+  dropzone: [],
+};
 
 export const AddTask = () => {
   const {
@@ -27,20 +24,11 @@ export const AddTask = () => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({
-    resolver: yupResolver(validationSchema),
-    defaultValues: {
-      taskType: '',
-      taskTitle: '',
-      taskDescription: '',
-      taskPriority: '',
-      dateFrom: '',
-      dateTo: '',
-      isPrivate: false,
-      taskSelectLabel: {},
-      dropzone: [],
-    },
+  } = useForm<ITaskFormValues>({
+    resolver: yupResolver(taskFormValidator),
+    defaultValues: DEFAULT_VALUES,
   });
+
   return (
     <Grid container spacing={3} sx={{ backgroundColor: 'background.paper', padding: '0 24px 0 12px' }}>
       <Grid item md={9} xs={12}>

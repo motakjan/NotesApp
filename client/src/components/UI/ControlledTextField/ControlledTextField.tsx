@@ -2,7 +2,14 @@ import { Controller } from 'react-hook-form';
 import { TextField } from '@mui/material';
 import React from 'react';
 
-export const ControlledTextField: React.FC<any> = ({ control, name, children, errors, ...props }) => (
+export const ControlledTextField: React.FC<any> = ({
+  control,
+  name,
+  children,
+  helperTextMessage,
+  errors,
+  ...props
+}) => (
   <Controller
     name={name}
     control={control}
@@ -11,7 +18,7 @@ export const ControlledTextField: React.FC<any> = ({ control, name, children, er
         {...field}
         {...props}
         error={!!errors}
-        helperText={errors?.message}
+        helperText={errors?.message || helperTextMessage}
         sx={{ width: '100%' }}
         variant="outlined"
         color="secondary"

@@ -1,13 +1,23 @@
-import { Autocomplete, Box, Button, Chip, MenuItem, Switch, TextField, Typography } from '@mui/material';
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Chip,
+  FormControlLabel,
+  MenuItem,
+  Switch,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { ShadowedContainer } from '../../UI/ShadowedContainer/ShadowedContainer';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import { Controller, Control } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { ControlledTextField } from '../../UI/ControlledTextField/ControlledTextField';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import DeleteSweepRoundedIcon from '@mui/icons-material/DeleteSweepRounded';
-import { styled } from '@mui/material/styles';
+import { IMainBar } from '../../../types/AddTask/addTaskTypes';
 
 const colourOptions = [
   { id: 1, name: 'Chocolate' },
@@ -50,46 +60,6 @@ const priorities = [
     label: '2',
   },
 ];
-
-interface IMainBar {
-  control: Control<any>;
-  handleSubmit: any;
-  errors: any;
-  reset: any;
-}
-
-const Android12Switch = styled(Switch)(({ theme }) => ({
-  padding: 8,
-  '& .MuiSwitch-track': {
-    borderRadius: 22 / 2,
-    '&:before, &:after': {
-      content: '""',
-      position: 'absolute',
-      top: '50%',
-      transform: 'translateY(-50%)',
-      width: 16,
-      height: 16,
-    },
-    '&:before': {
-      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-        theme.palette.getContrastText(theme.palette.primary.main)
-      )}" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
-      left: 12,
-    },
-    '&:after': {
-      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-        theme.palette.getContrastText(theme.palette.primary.main)
-      )}" d="M19,13H5V11H19V13Z" /></svg>')`,
-      right: 12,
-    },
-  },
-  '& .MuiSwitch-thumb': {
-    boxShadow: 'none',
-    width: 16,
-    height: 16,
-    margin: 2,
-  },
-}));
 
 export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors, reset }) => {
   const onSubmit = (data: any) => console.log(data);
@@ -244,16 +214,30 @@ export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors, res
             />
           </Box>
         </LocalizationProvider>
-
-        <Controller
-          name="isPrivate"
-          control={control}
-          render={({ field: { ref, ...rest } }) => <Android12Switch {...rest} />}
+        <FormControlLabel
+          value="start"
+          control={
+            <Controller
+              name="isPrivate"
+              control={control}
+              render={({ field: { ref, ...rest } }) => <Switch color="secondary" {...rest} />}
+            />
+          }
+          label="Private"
+          labelPlacement="start"
+          sx={{ marginRight: 'auto', marginLeft: '5px' }}
         />
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', justifyContent: 'flex-end' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            justifyContent: { md: 'flex-end', xs: 'space-between', xl: 'flex-end' },
+          }}
+        >
           <Button
-            sx={{ width: '25%' }}
+            sx={{ width: { xl: '25%', md: '25%', xs: '48%' } }}
             onClick={() => reset()}
             color="secondary"
             variant="contained"
@@ -262,7 +246,7 @@ export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors, res
             Clear
           </Button>
           <Button
-            sx={{ width: '25%', color: 'text.dark' }}
+            sx={{ width: { xl: '25%', md: '25%', xs: '48%' }, color: 'text.dark' }}
             onClick={handleSubmit(onSubmit)}
             color="primary"
             variant="contained"

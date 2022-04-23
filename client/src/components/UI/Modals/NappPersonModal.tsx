@@ -8,6 +8,8 @@ interface INappPersonModal {
   buttonText: string;
   buttonSx?: React.CSSProperties;
   buttonSize: 'small' | 'medium' | 'large';
+  userListData: any[];
+  setSelectedUsers: (users: any[]) => void;
 }
 
 const options = [
@@ -19,12 +21,26 @@ const options = [
   'Snow Smith (psmith@gmail.com)',
 ];
 
-export const NappPersonModal: React.FC<INappPersonModal> = ({ buttonText, buttonSx, buttonSize }) => {
+export const NappPersonModal: React.FC<INappPersonModal> = ({
+  buttonText,
+  buttonSx,
+  buttonSize,
+  userListData,
+  setSelectedUsers,
+}) => {
   const [value, setValue] = useState<string>('');
   const debouncedValue = useDebounce<string>(value, 500);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
+  };
+
+  const handleUserClick = (user: any) => {
+    setSelectedUsers((prevUsers: any) => {
+      const isUserInArray = prevUsers.some((prevUser: any) => prevUser.id === user.id);
+      const newUsers = prevUsers.filter((prevUser: any) => prevUser.id !== user.id);
+      return newUsers.concat(isUserInArray ? [] : [user]);
+    });
   };
 
   return (
@@ -48,11 +64,12 @@ export const NappPersonModal: React.FC<INappPersonModal> = ({ buttonText, button
         />
       </Paper>
 
-      {options
-        .filter(person => person.toLowerCase().includes(debouncedValue.toLowerCase()))
-        .map((option: any) => (
+      {userListData
+        .filter(user => user.mainText.toLowerCase().includes(debouncedValue.toLowerCase()))
+        .map((user: any) => (
           <Paper
             key={`${uuidv4()}-option`}
+            onClick={() => handleUserClick(user)}
             sx={{
               display: 'flex',
               backgroundColor: 'background.default',
@@ -65,12 +82,8 @@ export const NappPersonModal: React.FC<INappPersonModal> = ({ buttonText, button
               },
             }}
           >
-            <Avatar
-              alt="Remy Sharp"
-              src={`https://avatars.dicebear.com/api/big-ears-neutral/${option}.svg`}
-              sx={{ width: '1.2rem', height: '1.2rem' }}
-            />
-            {option}
+            <Avatar alt="Remy Sharp" src={user.avatar.src} sx={{ width: '1.2rem', height: '1.2rem' }} />
+            {user.mainText}
           </Paper>
         ))}
     </NappModal>
