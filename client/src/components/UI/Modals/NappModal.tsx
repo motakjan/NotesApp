@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import { Paper } from '@mui/material';
@@ -17,7 +16,7 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: '75%',
-  maxWidth: '500px',
+  maxWidth: '700px',
   bgcolor: 'background.paper',
   boxShadow: 24,
 };

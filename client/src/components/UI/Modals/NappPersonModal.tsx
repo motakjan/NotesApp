@@ -1,31 +1,25 @@
-import { Avatar, Paper, TextField } from '@mui/material';
+import { Avatar, Paper, TextField, Typography } from '@mui/material';
 import React, { ChangeEvent, useState } from 'react';
 import useDebounce from '../../../hooks/useDebounce';
 import { NappModal } from './NappModal';
 import { v4 as uuidv4 } from 'uuid';
+import { Box } from '@mui/system';
 
 interface INappPersonModal {
   buttonText: string;
   buttonSx?: React.CSSProperties;
   buttonSize: 'small' | 'medium' | 'large';
-  userListData: any[];
-  setSelectedUsers: (users: any[]) => void;
+  userListData: any;
+  selectedUsers: any;
+  setSelectedUsers: (users: any) => void;
 }
-
-const options = [
-  'Peter Smith (psmith@gmail.com)',
-  'Martin Smith (psmith@gmail.com)',
-  'Jan Smith (psmith@gmail.com)',
-  'John Smith (psmith@gmail.com)',
-  'Lopes Smith (psmith@gmail.com)',
-  'Snow Smith (psmith@gmail.com)',
-];
 
 export const NappPersonModal: React.FC<INappPersonModal> = ({
   buttonText,
   buttonSx,
   buttonSize,
   userListData,
+  selectedUsers,
   setSelectedUsers,
 }) => {
   const [value, setValue] = useState<string>('');
@@ -45,11 +39,10 @@ export const NappPersonModal: React.FC<INappPersonModal> = ({
 
   return (
     <NappModal buttonText={buttonText} buttonSx={buttonSx} buttonSize={buttonSize}>
-      <Paper sx={{ p: '6px' }}>
+      <Paper square sx={{ p: '6px' }}>
         <TextField
           placeholder="Search Person"
           variant="filled"
-          color="info"
           sx={{ width: '100%' }}
           inputProps={{
             style: {
@@ -65,27 +58,38 @@ export const NappPersonModal: React.FC<INappPersonModal> = ({
       </Paper>
 
       {userListData
-        .filter(user => user.mainText.toLowerCase().includes(debouncedValue.toLowerCase()))
-        .map((user: any) => (
-          <Paper
-            key={`${uuidv4()}-option`}
-            onClick={() => handleUserClick(user)}
-            sx={{
-              display: 'flex',
-              backgroundColor: 'background.default',
-              p: '0.25rem 0.5rem',
-              gap: '10px',
-              fontSize: '11.5px',
-              cursor: 'pointer',
-              '&:hover': {
-                backgroundColor: 'background.paper',
-              },
-            }}
-          >
-            <Avatar alt="Remy Sharp" src={user.avatar.src} sx={{ width: '1.2rem', height: '1.2rem' }} />
-            {user.mainText}
-          </Paper>
-        ))}
+        .filter((user: any) => user.mainText.toLowerCase().includes(debouncedValue.toLowerCase()))
+        .map((user: any) => {
+          const isUserSelected = selectedUsers.some((selectedUser: any) => selectedUser.id === user.id);
+          return (
+            <Paper
+              elevation={0}
+              key={`${uuidv4()}-option`}
+              square
+              onClick={() => handleUserClick(user)}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                backgroundColor: isUserSelected ? 'nappPersonModal.addTaskUserModalSelected' : 'background.default',
+                p: '0.25rem 0.5rem',
+                gap: '10px',
+                fontSize: '11.5px',
+                cursor: 'pointer',
+                '&:hover': {
+                  backgroundColor: 'nappPersonModal.addTaskUserModalHover',
+                },
+              }}
+            >
+              <Avatar alt="Remy Sharp" src={user.avatar.src} sx={{ width: '2rem', height: '2rem' }} />
+              <Box>
+                <Typography sx={{ fontSize: '0.8rem', color: 'primary.main' }}>{user.mainText}</Typography>
+                <Typography sx={{ fontSize: '0.6rem', color: '#727272' }} variant="caption">
+                  {user.email}
+                </Typography>
+              </Box>
+            </Paper>
+          );
+        })}
     </NappModal>
   );
 };

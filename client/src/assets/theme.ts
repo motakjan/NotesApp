@@ -51,7 +51,11 @@ export const getCurrentTheme = (mode: PaletteMode) => ({
         custom: {
           dashboardDrag: '#170b4a18',
           cardColor: '#fff',
-          addTaskCard: '#fff'
+          addTaskCard: '#fff',
+        },
+        nappPersonModal: {
+          addTaskUserModalHover: '#efefef',
+          addTaskUserModalSelected: '#dddddd',
         }
       }
       : {
@@ -97,10 +101,14 @@ export const getCurrentTheme = (mode: PaletteMode) => ({
         custom: {
           dashboardDrag: '#2b262855',
           cardColor: '#0e0e0e',
-          addTaskCard: '#090909'
+          addTaskCard: '#090909',
+        },
+        nappPersonModal: {
+          addTaskUserModalHover: '#131313',
+          addTaskUserModalSelected: '#141414',
         }
       }),
-  },  
+  },    
   components: {
     MuiAvatar: {
       styleOverrides: {
