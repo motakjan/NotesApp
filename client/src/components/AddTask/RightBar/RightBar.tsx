@@ -1,11 +1,9 @@
-import { Box, IconButton } from '@mui/material';
+import { Box } from '@mui/material';
 import { DropzoneFileInput } from '../../UI/Dropzone/DropzoneFileInput';
 import { NappPersonModal } from '../../UI/Modals/NappPersonModal';
 import { IRightBar } from '../../../types/AddTask/addTaskTypes';
 import { RightBarCard } from './RightBarCard/RightBarCard';
 import { NappList } from '../../UI/NappList/NappList';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useState } from 'react';
 
 const PEOPLE_MOCK_DATA = [
@@ -49,19 +47,7 @@ export const RightBar: React.FC<IRightBar> = ({ control }) => {
   return (
     <Box>
       <RightBarCard title="Add People">
-        <NappList
-          data={selectedUsers}
-          actions={
-            <Box>
-              <IconButton aria-label="delete" size="large" color="error">
-                <DeleteForeverIcon fontSize="small" />
-              </IconButton>
-              <IconButton aria-label="more" size="large">
-                <MoreHorizIcon fontSize="small" />
-              </IconButton>
-            </Box>
-          }
-        />
+        <NappList setSelectedUsers={setSelectedUsers} data={selectedUsers} more deletable />
         <NappPersonModal
           buttonText="Select People"
           selectedUsers={selectedUsers}
