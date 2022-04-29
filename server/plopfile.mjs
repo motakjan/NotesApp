@@ -17,27 +17,27 @@ export default function (
     actions: [
       {
         type: 'add',
-        path: 'src/models/{{name}}.model.ts',
+        path: 'src/models/{{snakeCase name}}.model.ts',
         templateFile: 'templates/model.template.hbs',
       },
       {
         type: 'add',
-        path: 'src/routes/{{name}}.routes.ts',
+        path: 'src/routes/{{snakeCase name}}.routes.ts',
         templateFile: 'templates/routes.template.hbs',
       },
       {
         type: 'add',
-        path: 'src/validators/{{name}}.schemas.ts',
+        path: 'src/validators/{{snakeCase name}}.schemas.ts',
         templateFile: 'templates/schemas.template.hbs',
       },
       {
         type: 'add',
-        path: 'src/controllers/{{name}}.controller.ts',
+        path: 'src/controllers/{{snakeCase name}}.controller.ts',
         templateFile: 'templates/controller.template.hbs',
       },
       {
         type: 'add',
-        path: 'src/services/{{name}}.service.ts',
+        path: 'src/services/{{snakeCase name}}.service.ts',
         templateFile: 'templates/service.template.hbs',
       },
     ], // array of actions

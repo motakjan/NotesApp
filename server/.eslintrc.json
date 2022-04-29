@@ -14,9 +14,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": [
-    "@typescript-eslint"
-  ],
+  "plugins": ["import", "react", "@typescript-eslint"],
   "rules": {
     "no-console": "error",
     "import/prefer-default-export": 0,
@@ -35,7 +33,7 @@
     "import/resolver": {
       "typescript": {
         "alwaysTryTypes": true,
-        "project": "./tsconfig.json"
+        "project": "**/tsconfig.json"
       }
     }
   },

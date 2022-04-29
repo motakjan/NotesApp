@@ -1,33 +1,32 @@
 import express from 'express';
 import * as {{titleCase name}}Controller from '../controllers/{{snakeCase name}}.controller';
-import { validate } from '../middlewares/validate';
-import {
-  actionOneSchema,
-  createOneSchema,
-  updateOneSchema,
-} from '../validators/{{snakeCase name}}.schemas';
+import { processRequest } from 'zod-express-middleware';
+import { actionOneSchema, createOneSchema, updateOneSchema } from '../validators/{{snakeCase name}}.schemas';
 
 const {{snakeCase name}}Router = express.Router();
 
 {{snakeCase name}}Router.get('/', {{titleCase name}}Controller.get{{titleCase name}}sHandler);
+{{snakeCase name}}Router.get(
+  '/:id',
+  processRequest({ params: actionOneSchema.params }),
+  {{titleCase name}}Controller.get{{titleCase name}}Handler
+);
 {{snakeCase name}}Router.post(
   '/',
-  validate(createOneSchema),
+  processRequest({ body: createOneSchema.body }),
   {{titleCase name}}Controller.create{{titleCase name}}Handler
 );
 {{snakeCase name}}Router.put(
   '/:id',
-  validate(updateOneSchema),
+  processRequest({
+    body: updateOneSchema.body,
+    params: updateOneSchema.params,
+  }),
   {{titleCase name}}Controller.update{{titleCase name}}Handler
-);
-{{snakeCase name}}Router.get(
-  '/:id',
-  validate(actionOneSchema),
-  {{titleCase name}}Controller.get{{titleCase name}}Handler
 );
 {{snakeCase name}}Router.delete(
   '/:id',
-  validate(actionOneSchema),
+  processRequest({ params: actionOneSchema.params }),
   {{titleCase name}}Controller.delete{{titleCase name}}Handler
 );
 
