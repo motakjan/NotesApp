@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   DragDropContext,
   Draggable,
@@ -10,24 +10,27 @@ import {
   DropResult,
 } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
-import { Box, Typography } from '@mui/material';
+import { Box, createTheme, Typography } from '@mui/material';
 import { TaskCard } from '../TaskCard/TaskCard';
 import { useColorMode } from '../../../context/ColorModeContext';
-import { columnsFromBacked, getBGColor, onDragEnd } from '../../../utils/dashboardHelpers';
+import { columnsFromBacked, onDragEnd } from '../../../utils/dashboardHelpers';
 import { IItem } from '../../../types/Dashboard';
 import { TaskCardTagType } from '../../../types/taskCardTypes';
+import { getCurrentTheme } from '../../../assets/theme';
 
 export const TaskBoard = () => {
   const [columns, setColumns] = useState(columnsFromBacked);
   const { mode } = useColorMode();
+  const theme = React.useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);
 
   return (
     <Box
-      style={{
+      sx={{
         display: 'flex',
         height: '100%',
         minHeight: '65vh',
         minWidth: '100rem',
+        pt: 2,
       }}
     >
       <DragDropContext onDragEnd={(result: DropResult) => onDragEnd(result, columns, setColumns)}>
@@ -51,6 +54,13 @@ export const TaskBoard = () => {
                 variant="h5"
                 sx={{
                   fontSize: 'small',
+                  borderTopRightRadius: '4px',
+                  borderTopLeftRadius: '4px',
+                  background: theme.palette.primary.light,
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: '600',
+                  textTransform: 'uppercase',
                 }}
               >
                 {column.name}
@@ -65,8 +75,8 @@ export const TaskBoard = () => {
                       minWidth: '100%',
                       p: '10px',
                       backgroundColor: snapshot.isDraggingOver
-                        ? getBGColor(mode, '#0e2a40', 'lightblue')
-                        : getBGColor(mode, '#00101c', '#e2e2e2'),
+                        ? theme.palette.custom.dashboardDrag
+                        : theme.palette.background.paper,
                     }}
                   >
                     {column.items.map((item: IItem, index: number) => (
@@ -90,7 +100,7 @@ export const TaskBoard = () => {
                               title={item.title}
                               text={item.text}
                               tags={item.tags as Array<TaskCardTagType>}
-                              priority={2}
+                              type="meeting"
                             />
                           </Box>
                         )}

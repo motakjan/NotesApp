@@ -6,7 +6,7 @@ import { Layout } from './Layout';
 import { AxiosError } from 'axios';
 
 export const WithLayout = ({ page }: { page: JSX.Element }) => {
-  const { status } = useQuery<{ isLoggedIn: boolean }, AxiosError>('isLoggedIn', authApi.isLoggedIn, {
+  const { status } = useQuery<{ isLoggedIn: boolean; errors: AxiosError }>('isLoggedIn', authApi.isLoggedIn, {
     retry: false,
   });
   const navigate = useNavigate();

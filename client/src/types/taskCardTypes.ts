@@ -6,7 +6,7 @@ export type TaskCardTagType = {
 
 export type TaskCardPropsType = {
   title: string;
-  priority: number;
+  type: 'appointment' | 'task' | 'meeting' | 'note' | 'other';
   tags: TaskCardTagType[];
   text?: string;
 };
@@ -20,5 +20,5 @@ export type CardActionsAreaType = {
   title: string;
   tags: TaskCardTagType[];
   handleClick: () => void;
-  text: string;
+  text: string | undefined;
 };

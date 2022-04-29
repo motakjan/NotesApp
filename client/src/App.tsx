@@ -4,6 +4,8 @@ import { WithLayout } from './components/Layout/WithLayout';
 import { AddTask } from './pages/AddTask/AddTask';
 import { Authentication } from './pages/Authentication';
 import { Dashboard } from './pages/Dashboard/Dashboard';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 export const App: React.FC = () => (
   <BrowserRouter>
@@ -15,5 +17,6 @@ export const App: React.FC = () => (
       <Route path="/join_task" element={<WithLayout page={<div>join_task</div>} />} />
       <Route path="*" element={<WithLayout page={<div>NOT FOUND</div>} />} />
     </Routes>
+    <ToastContainer />
   </BrowserRouter>
 );
