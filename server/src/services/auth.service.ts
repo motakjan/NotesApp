@@ -15,9 +15,8 @@ export const createUser = async (userData: any, hashedPassword: string) => {
   return await newUser.save();
 };
 
-export const findUser = async (email: string, username: string) => {
+export const findUser = async (email: string) => {
   let user = await UserModel.findOne({ email });
-  if (!user) user = await UserModel.findOne({ username });
   if (!user) return false;
 
   return user;

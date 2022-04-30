@@ -5,7 +5,7 @@ import {
   actionOneSchema,
   createOneSchema,
   updateOneSchema,
-} from "../validators/todo.schemas";
+} from "../schemas/todo.schemas";
 
 const todoRouter = express.Router();
 

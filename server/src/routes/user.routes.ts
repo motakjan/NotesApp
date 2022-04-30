@@ -1,8 +1,28 @@
 import express from 'express';
-import * as UsersController from '../controllers/user.controller';
+import { processRequest } from 'zod-express-middleware';
+import * as UserController from '../controllers/user.controller';
+import { actionOneSchema, createOneSchema, updateOneSchema } from '../schemas/user.schemas';
 
-const usersRouter = express.Router();
+const userRouter = express.Router();
 
-usersRouter.get('/', UsersController.getUsersHandler);
+userRouter.get('/', UserController.getUsersHandler);
+userRouter.get(
+  '/:id',
+  processRequest({ params: actionOneSchema.params }),
+  UserController.getUserHandler
+);
+userRouter.put(
+  '/:id',
+  processRequest({
+    body: updateOneSchema.body,
+    params: updateOneSchema.params,
+  }),
+  UserController.updateUserHandler
+);
+userRouter.delete(
+  '/:id',
+  processRequest({ params: actionOneSchema.params }),
+  UserController.deleteUserHandler
+);
 
-export default usersRouter;
+export default userRouter;
