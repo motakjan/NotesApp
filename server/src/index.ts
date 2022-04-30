@@ -9,7 +9,6 @@ import { connectToDatabase, disconnectFromDatabase } from './utils/database';
 import userRoute from './routes/user.routes';
 import authRoute from './routes/auth.routes';
 import todoRoute from './routes/todo.routes';
-
 // Middleware imports
 import verify from './middlewares/verifyToken';
 
@@ -33,12 +32,12 @@ const server = app.listen(1337, async () => {
   await connectToDatabase();
 });
 
-const signals = ["SIGTERM", "SIGINT"];
+const signals = ['SIGTERM', 'SIGINT'];
 
 function gracefulShutdown(signal: string) {
   process.on(signal, async () => {
-    logger.info('Exiting server')
-    
+    logger.info('Exiting server');
+
     server.close();
 
     await disconnectFromDatabase();
