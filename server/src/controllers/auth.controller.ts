@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
 
 import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import { createUser, findUser, hashPassword, isPasswordValid } from '../services/auth.service';
 import { generateErrorObject, validatePassword } from '../utils/helpers';
 import { LoginUserBody, RegisterUserBody } from '../schemas/auth.schemas';
-import { StatusCodes } from 'http-status-codes';
 
 export const registerHandler = async (req: Request<{}, {}, RegisterUserBody>, res: Response) => {
   try {

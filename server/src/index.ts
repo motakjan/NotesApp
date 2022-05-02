@@ -12,13 +12,13 @@ import todoRoute from './routes/todo.routes';
 // Middleware imports
 import verify from './middlewares/verifyToken';
 
-// App starting point
 const app = express();
 
 dotenv.config();
 
 // Middleware
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 app.use(helmet());
 app.use(morganMiddleware);
 app.use(cors());

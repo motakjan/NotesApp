@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { findAll, findOne, updateOne, deleteOne } from '../services/user.service';
+import { findAll, findOne, updateOne, deleteOne, addUserAvatar } from '../services/user.service';
 import { TActionOneParams, TUpdateOneBody, TUpdateOneParams } from '../schemas/user.schemas';
 
 export const getUsersHandler = async (req: Request, res: Response) => {
@@ -39,4 +39,15 @@ export const deleteUserHandler = async (req: Request<TUpdateOneParams>, res: Res
   } catch (err) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(err);
   }
+};
+
+export const uploadImageHandler = async (req: Request<TActionOneParams>, res: Response) => {
+  if (!req.file)
+    return res
+      .status(StatusCodes.NOT_ACCEPTABLE)
+      .json({ errorMessage: 'Incorrect image extension use image/png or image/jpeg' });
+
+  const userUpdated = await addUserAvatar(req.params.id, req.file.path);
+  if (!userUpdated) return res.status(StatusCodes.NOT_FOUND).json({ errorMessage: 'User not found.' });
+  return res.status(StatusCodes.OK).json({ user: userUpdated });
 };

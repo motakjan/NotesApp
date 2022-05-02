@@ -1,16 +1,13 @@
 import express from 'express';
 import { processRequest } from 'zod-express-middleware';
 import * as UserController from '../controllers/user.controller';
-import { actionOneSchema, createOneSchema, updateOneSchema } from '../schemas/user.schemas';
+import { actionOneSchema, updateOneSchema } from '../schemas/user.schemas';
+import { avatarUpload } from '../utils/multer';
 
 const userRouter = express.Router();
 
 userRouter.get('/', UserController.getUsersHandler);
-userRouter.get(
-  '/:id',
-  processRequest({ params: actionOneSchema.params }),
-  UserController.getUserHandler
-);
+userRouter.get('/:id', processRequest({ params: actionOneSchema.params }), UserController.getUserHandler);
 userRouter.put(
   '/:id',
   processRequest({
@@ -19,10 +16,12 @@ userRouter.put(
   }),
   UserController.updateUserHandler
 );
-userRouter.delete(
-  '/:id',
+userRouter.delete('/:id', processRequest({ params: actionOneSchema.params }), UserController.deleteUserHandler);
+userRouter.post(
+  '/uploadImage/:id',
   processRequest({ params: actionOneSchema.params }),
-  UserController.deleteUserHandler
+  avatarUpload.single('image'),
+  UserController.uploadImageHandler
 );
 
 export default userRouter;
