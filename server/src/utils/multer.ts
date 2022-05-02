@@ -1,5 +1,5 @@
 import multer, { FileFilterCallback } from 'multer';
-import { Request } from 'express';
+import { Request, Express } from 'express';
 import { customAlphabet } from 'nanoid';
 import fs from 'fs';
 import mime from 'mime-types';
