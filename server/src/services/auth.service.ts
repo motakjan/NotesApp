@@ -3,7 +3,7 @@ import UserModel from '../models/user.model';
 
 export const hashPassword = async (password: string) => {
   const salt = await bcrypt.genSalt(10);
-  return await bcrypt.hash(password, salt);
+  return bcrypt.hash(password, salt);
 };
 
 export const createUser = async (userData: any, hashedPassword: string) => {
@@ -12,7 +12,7 @@ export const createUser = async (userData: any, hashedPassword: string) => {
     password: hashedPassword,
   });
 
-  return await newUser.save();
+  return newUser.save();
 };
 
 export const findUser = async (email: string) => {
@@ -23,4 +23,4 @@ export const findUser = async (email: string) => {
 };
 
 export const isPasswordValid = async (storedPassword: string, inputPassword: string) =>
-  await bcrypt.compare(inputPassword, storedPassword);
+  bcrypt.compare(inputPassword, storedPassword);

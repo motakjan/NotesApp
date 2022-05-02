@@ -45,6 +45,6 @@ function gracefulShutdown(signal: string) {
   });
 }
 
-for (let i = 0; i < signals.length; i++) {
+for (let i = 0; i < signals.length; i += 1) {
   gracefulShutdown(signals[i]);
 }

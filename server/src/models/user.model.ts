@@ -7,24 +7,24 @@ export class User {
   @prop({ required: true })
   public password: string;
 
-  @prop({ required: true})
+  @prop({ required: true })
   public email: string;
 
-  @prop({ required: true})
+  @prop({ required: true })
   public firstName: string;
 
-  @prop({ required: true})
+  @prop({ required: true })
   public lastName: string;
 
   @prop()
   public image?: string;
 
-  @prop({ 
+  @prop({
     default() {
-      return `${this.firstName} ${this.lastName}`
-    }
+      return `${this.firstName} ${this.lastName}`;
+    },
   })
-  public fullName?: string
+  public fullName?: string;
 
   /*
   @prop({ ref: () => Task})

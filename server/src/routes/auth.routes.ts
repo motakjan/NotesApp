@@ -5,8 +5,8 @@ import { loginUserSchema, registerUserSchema } from '../schemas/auth.schemas';
 
 const authRouter = express.Router();
 
-authRouter.post('/register', processRequest({body: registerUserSchema.body}), AuthController.registerHandler);
-authRouter.post('/login', processRequest({body: loginUserSchema.body}), AuthController.loginHandler);
+authRouter.post('/register', processRequest({ body: registerUserSchema.body }), AuthController.registerHandler);
+authRouter.post('/login', processRequest({ body: loginUserSchema.body }), AuthController.loginHandler);
 authRouter.get('/isLoggedIn', AuthController.isLoggedInHandler);
 
 export default authRouter;

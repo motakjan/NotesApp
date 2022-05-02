@@ -1,9 +1,7 @@
+import mongoose from 'mongoose';
 import logger from './loggers/winston.logger';
 
-const mongoose = require('mongoose');
-
-const DB_CONNECTION_STRING =
-  process.env.MONGO_URL || "mongodb://localhost:27017/notes-app";
+const DB_CONNECTION_STRING = process.env.MONGO_URL || 'mongodb://localhost:27017/notes-app';
 
 export const connectToDatabase = async () => {
   try {
@@ -18,8 +16,5 @@ export const connectToDatabase = async () => {
 
 export const disconnectFromDatabase = async () => {
   await mongoose.connection.close();
-  logger.info("Disconnected from database");
-  
-}
-
-
+  logger.info('Disconnected from database');
+};

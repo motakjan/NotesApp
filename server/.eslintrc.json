@@ -13,13 +13,13 @@
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": "./server/tsconfig.eslint.json"
+    "project": "./tsconfig.eslint.json"
   },
   "plugins": ["@typescript-eslint", "eslint-comments", "promise", "import", "prettier"],
   "rules": {
     "prettier/prettier": "error",
     "import/prefer-default-export": "off",
-    "import/no-default-export": "error",
+    "import/no-default-export": "off",
     "no-use-before-define": [
       "error",
       {
@@ -29,6 +29,7 @@
       }
     ],
     "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/no-use-before-define": [
       "error",
       {
@@ -44,7 +45,7 @@
     "import/resolver": {
       "typescript": {
         "alwaysTryTypes": true,
-        "project": "./server/tsconfig.json"
+        "project": "./tsconfig.json"
       }
     }
   },
