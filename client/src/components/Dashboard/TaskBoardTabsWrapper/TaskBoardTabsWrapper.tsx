@@ -1,5 +1,10 @@
-import { Tab, Tabs } from '@mui/material';
+import { SportsCricketTwoTone } from '@mui/icons-material';
+import { Button, Tab, Tabs } from '@mui/material';
+import { Box } from '@mui/system';
 import { useState } from 'react';
+import { DashboardHeader } from '../DashboardHeader/DashboardHeader';
+import { FilterOptions } from '../FilterOptions/FilterOptions';
+import { TaskBoard } from '../TaskBoard/TaskBoard';
 import { TabPanel } from './TabPanel/TabPanel';
 
 function a11yProps(index: number) {
@@ -18,20 +23,32 @@ export const TaskBoardTabsWrapper = ({ boards }: { boards: any }) => {
 
   return (
     <>
-      <Tabs
-        textColor="secondary"
-        indicatorColor="secondary"
-        value={value}
-        onChange={handleChange}
-        aria-label="basic tabs example"
-      >
-        {boards.map((board: any, index: number) => (
-          <Tab sx={{ textTransform: 'none' }} key={`tab-board-${board.id}`} label={board.name} {...a11yProps(index)} />
-        ))}
-      </Tabs>
+      <Box sx={{ display: 'flex' }}>
+        <Tabs
+          textColor="secondary"
+          indicatorColor="secondary"
+          variant="scrollable"
+          scrollButtons="auto"
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+          sx={{ mb: 2 }}
+        >
+          {boards.map((board: any, index: number) => (
+            <Tab
+              sx={{ textTransform: 'none', pl: 2 }}
+              key={`tab-board-${board._id}`}
+              label={board.title}
+              {...a11yProps(index)}
+            />
+          ))}
+        </Tabs>
+      </Box>
+      <DashboardHeader title={boards[value].title} description={boards[value].description} />
+      <FilterOptions />
       {boards.map((board: any, index: number) => (
-        <TabPanel key={`board-in-tab-${board.id}`} value={value} index={index}>
-          {board.component}
+        <TabPanel key={`board-in-tab-${board._id}`} value={value} index={index}>
+          <TaskBoard />
         </TabPanel>
       ))}
     </>

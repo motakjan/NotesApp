@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@emotion/react';
-import { createTheme, CssBaseline, Tooltip } from '@mui/material';
+import { createTheme, CssBaseline, ListItemButton, Tooltip } from '@mui/material';
 import { getCurrentTheme } from '../../assets/theme';
 import { useColorMode } from '../../context/ColorModeContext';
 import React, { useEffect, useState } from 'react';
@@ -11,29 +11,24 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
-import EventNoteIcon from '@mui/icons-material/EventNote';
-import NoteAddRoundedIcon from '@mui/icons-material/NoteAddRounded';
-import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import DateRangeIcon from '@mui/icons-material/DateRange';
+import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { AppBar, Drawer, DrawerHeader } from './LayoutStyledComponents';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router';
 import { useQueryClient } from 'react-query';
 import _ from 'lodash';
 import { NappLogo } from '../UI/NappLogo/NappLogo';
 import { AxiosError } from 'axios';
-
-const tasksIcons = [<EventNoteIcon />, <NoteAddRoundedIcon />, <AssignmentReturnedIcon />];
-const profileIcons = [<DateRangeIcon />, <MailIcon />, <PersonIcon />, <SettingsIcon />];
+import { DrawerIcon } from './DrawerIcon';
 
 export const Layout: React.FC<React.ReactNode> = ({ children }) => {
   const { mode, toggleColorMode } = useColorMode();
@@ -68,10 +63,6 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
     navigate('/login');
   };
 
-  const handleLogin = () => {
-    navigate('/login');
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -89,7 +80,7 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
               onClick={handleDrawerOpen}
               edge="start"
               sx={{
-                marginRight: '36px',
+                marginRight: 5,
                 ...(open && {
                   display: 'none',
                 }),
@@ -98,21 +89,20 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
               <MenuIcon />
             </IconButton>
             <NappLogo width="32px" height="32px" fill="white" />
-            <Tooltip title={'Switch to ' + (mode === 'light' ? 'dark' : 'light') + ' theme'} placement="bottom-start">
-              <IconButton
-                sx={{
-                  ml: 'auto',
-                }}
-                onClick={toggleColorMode}
-                color="inherit"
-              >
-                {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-              </IconButton>
+            <Tooltip title="Notifications" placement="bottom">
+              <ListItemButton sx={{ maxWidth: '55px', ml: 'auto', borderRadius: '60px' }}>
+                <ListItemIcon>
+                  <NotificationsActiveIcon />
+                </ListItemIcon>
+              </ListItemButton>
             </Tooltip>
-            <Tooltip title={isLoggedIn ? 'Logout' : 'Login'} color="inherit">
-              <IconButton onClick={isLoggedIn ? handleLogout : handleLogin}>
-                {isLoggedIn ? <LogoutIcon /> : <LoginIcon />}
-              </IconButton>
+            <Tooltip title="Profile" placement="bottom">
+              <ListItemButton sx={{ borderRadius: '60px', maxWidth: 'fit-content', padding: '3px 12px' }}>
+                <ListItemIcon sx={{ minWidth: '34px' }}>
+                  <PersonIcon />
+                </ListItemIcon>
+                <ListItemText primary="Jan Moták" />
+              </ListItemButton>
             </Tooltip>
           </Toolbar>
         </AppBar>
@@ -124,25 +114,25 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
           </DrawerHeader>
           <Divider />
           <List>
-            {['Dashboard', 'Add Task', 'Join Task'].map((text, index) => (
-              <Tooltip key={`optionsMenu1-${text}`} title={text} placement="right-start">
-                <ListItem button onClick={() => navigate(`/${_.snakeCase(text)}`)}>
-                  <ListItemIcon>{tasksIcons[index]}</ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItem>
-              </Tooltip>
-            ))}
+            <DrawerIcon title="Dashboard" onClick={() => navigate('/dashboard')} icon={<DashboardIcon />} open={open} />
+            <DrawerIcon
+              title="Add Dashboard"
+              onClick={() => navigate('/add_dashboard')}
+              icon={<DashboardCustomizeIcon />}
+              open={open}
+            />
           </List>
           <Divider />
           <List>
-            {['Calendar', 'Inbox', 'Profile', 'Settings'].map((text, index) => (
-              <Tooltip key={`optionsMenu2-${text}`} title={text} placement="right-start">
-                <ListItem button>
-                  <ListItemIcon>{profileIcons[index]}</ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItem>
-              </Tooltip>
-            ))}
+            <DrawerIcon title="Calendar" onClick={() => console.log('calendar')} icon={<DateRangeIcon />} open={open} />
+            <DrawerIcon
+              title={'Switch to ' + (mode === 'light' ? 'dark' : 'light') + ' theme'}
+              onClick={toggleColorMode}
+              icon={mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+              open={open}
+            />
+            <DrawerIcon title="Logout" onClick={handleLogout} icon={<LogoutIcon />} open={open} />
+            <DrawerIcon title="Settings" onClick={() => console.log('settings')} icon={<SettingsIcon />} open={open} />
           </List>
         </Drawer>
         <Box
