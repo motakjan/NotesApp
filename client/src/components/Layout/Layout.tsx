@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@emotion/react';
-import { createTheme, CssBaseline, ListItemButton, Tooltip } from '@mui/material';
+import { Badge, createTheme, CssBaseline, ListItemButton, Tooltip } from '@mui/material';
 import { getCurrentTheme } from '../../assets/theme';
 import { useColorMode } from '../../context/ColorModeContext';
 import React, { useEffect, useState } from 'react';
@@ -29,6 +29,7 @@ import _ from 'lodash';
 import { NappLogo } from '../UI/NappLogo/NappLogo';
 import { AxiosError } from 'axios';
 import { DrawerIcon } from './DrawerIcon';
+import { grey } from '@mui/material/colors';
 
 export const Layout: React.FC<React.ReactNode> = ({ children }) => {
   const { mode, toggleColorMode } = useColorMode();
@@ -92,14 +93,16 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
             <Tooltip title="Notifications" placement="bottom">
               <ListItemButton sx={{ maxWidth: '55px', ml: 'auto', borderRadius: '60px' }}>
                 <ListItemIcon>
-                  <NotificationsActiveIcon />
+                  <Badge badgeContent={1} color="error">
+                    <NotificationsActiveIcon sx={{ color: grey[50] }} />
+                  </Badge>
                 </ListItemIcon>
               </ListItemButton>
             </Tooltip>
             <Tooltip title="Profile" placement="bottom">
               <ListItemButton sx={{ borderRadius: '60px', maxWidth: 'fit-content', padding: '3px 12px' }}>
                 <ListItemIcon sx={{ minWidth: '34px' }}>
-                  <PersonIcon />
+                  <PersonIcon sx={{ color: grey[50] }} />
                 </ListItemIcon>
                 <ListItemText primary="Jan Moták" />
               </ListItemButton>
