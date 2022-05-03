@@ -1,10 +1,11 @@
-import { getModelForClass, prop } from '@typegoose/typegoose';
+import { Severity, getModelForClass, modelOptions, prop } from '@typegoose/typegoose';
 
 interface ITag {
   tagType: string;
   tagText: string;
 }
 
+@modelOptions({ options: { allowMixed: Severity.ALLOW } })
 export class Task {
   @prop({ required: true })
   public title: string;

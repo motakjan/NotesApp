@@ -1,15 +1,15 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import helmet from 'helmet';
-import cors from 'cors';
-import morganMiddleware from './utils/loggers/morgan.logger';
-import logger from './utils/loggers/winston.logger';
 import { connectToDatabase, disconnectFromDatabase } from './utils/database';
-// Model Routes
-import userRoute from './routes/user.routes';
+
 import authRoute from './routes/auth.routes';
+import cors from 'cors';
+import dashboardRoute from './routes/dashboard.routes';
+import dotenv from 'dotenv';
+import express from 'express';
+import helmet from 'helmet';
+import logger from './utils/loggers/winston.logger';
+import morganMiddleware from './utils/loggers/morgan.logger';
 import taskRoute from './routes/task.routes';
-// Middleware imports
+import userRoute from './routes/user.routes';
 import verify from './middlewares/verifyToken';
 
 const app = express();
@@ -26,6 +26,7 @@ app.use(cors());
 app.use('/api/auth', authRoute);
 app.use('/api/task', verify, taskRoute);
 app.use('/api/user', verify, userRoute);
+app.use('/api/dashboard', verify, dashboardRoute);
 
 const server = app.listen(1337, async () => {
   logger.info('Backend server is running!');

@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
 import logger from './loggers/winston.logger';
+import mongoose from 'mongoose';
 
 const DB_CONNECTION_STRING = process.env.MONGO_URL || 'mongodb://localhost:27017/notes-app';
 

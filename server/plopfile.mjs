@@ -27,7 +27,7 @@ export default function (
       },
       {
         type: 'add',
-        path: 'src/validators/{{snakeCase name}}.schemas.ts',
+        path: 'src/schemas/{{snakeCase name}}.schemas.ts',
         templateFile: 'templates/schemas.template.hbs',
       },
       {
