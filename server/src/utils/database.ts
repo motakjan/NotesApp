@@ -1,11 +1,9 @@
 import logger from './loggers/winston.logger';
 import mongoose from 'mongoose';
 
-const DB_CONNECTION_STRING = process.env.MONGO_URL || 'mongodb://localhost:27017/notes-app';
-
 export const connectToDatabase = async () => {
   try {
-    await mongoose.connect(DB_CONNECTION_STRING, () => {
+    await mongoose.connect(process.env.MONGO_URL!, () => {
       logger.info('🚀 Connected to MongoDB 🚀');
     });
   } catch (err) {
