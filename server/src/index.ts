@@ -8,7 +8,7 @@ import { connectToDatabase, disconnectFromDatabase } from './utils/database';
 // Model Routes
 import userRoute from './routes/user.routes';
 import authRoute from './routes/auth.routes';
-import todoRoute from './routes/todo.routes';
+import taskRoute from './routes/task.routes';
 // Middleware imports
 import verify from './middlewares/verifyToken';
 
@@ -24,7 +24,7 @@ app.use(morganMiddleware);
 app.use(cors());
 
 app.use('/api/auth', authRoute);
-app.use('/api/todo', verify, todoRoute);
+app.use('/api/task', verify, taskRoute);
 app.use('/api/user', verify, userRoute);
 
 const server = app.listen(1337, async () => {

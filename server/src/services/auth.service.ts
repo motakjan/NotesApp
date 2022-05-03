@@ -1,12 +1,12 @@
 import bcrypt from 'bcrypt';
-import UserModel from '../models/user.model';
+import UserModel, { User } from '../models/user.model';
 
-export const hashPassword = async (password: string) => {
+export const hashPassword = async (password: User['password']) => {
   const salt = await bcrypt.genSalt(10);
   return bcrypt.hash(password, salt);
 };
 
-export const createUser = async (userData: any, hashedPassword: string) => {
+export const createUser = async (userData: User, hashedPassword: string) => {
   const newUser = new UserModel({
     ...userData,
     password: hashedPassword,
@@ -15,12 +15,12 @@ export const createUser = async (userData: any, hashedPassword: string) => {
   return newUser.save();
 };
 
-export const findUser = async (email: string) => {
+export const findUser = async (email: User['email']) => {
   const user = await UserModel.findOne({ email });
   if (!user) return false;
 
   return user;
 };
 
-export const isPasswordValid = async (storedPassword: string, inputPassword: string) =>
+export const isPasswordValid = async (storedPassword: User['password'], inputPassword: User['password']) =>
   bcrypt.compare(inputPassword, storedPassword);
