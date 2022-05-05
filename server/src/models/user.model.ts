@@ -1,39 +1,41 @@
-import * as mongoose from 'mongoose';
+import { prop, getModelForClass } from '@typegoose/typegoose';
 
-const UserSchema = new mongoose.Schema(
-  {
-    email: {
-      type: String,
-      lowercase: true,
-      unique: true,
+export class User {
+  @prop({ required: true })
+  public username: string;
+
+  @prop({ required: true })
+  public password: string;
+
+  @prop({ required: true })
+  public email: string;
+
+  @prop({ required: true })
+  public firstName: string;
+
+  @prop({ required: true })
+  public lastName: string;
+
+  @prop()
+  public image?: string;
+
+  @prop({
+    default() {
+      return `${this.firstName} ${this.lastName}`;
     },
-    password: {
-      type: String,
-    },
-    confirmPassword: {
-      type: String,
-    },
-    username: {
-      type: String,
-      default: '',
-      unique: true,
-    },
-    name: {
-      first: String,
-      last: String,
-    },
-    profilePicture: {
-      type: String,
-      default: '',
-    },
-    todos: {
-      type: Array,
-      default: [],
-    },
+  })
+  public fullName?: string;
+
+  /*
+  @prop({ ref: () => Task})
+  public tasks?: Ref<Task>[];
+  */
+}
+
+const UserModel = getModelForClass(User, {
+  schemaOptions: {
+    timestamps: true,
   },
-  { timestamps: true }
-);
-
-const UserModel = mongoose.model('User', UserSchema);
+});
 
 export default UserModel;

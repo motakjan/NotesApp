@@ -69,6 +69,7 @@ module.exports = {
     'jsx-quotes': [2, 'prefer-double'],
     'no-undef': 0,
     'no-console': 1,
+    'no-underscore-dangle': 0,
     'no-unused-vars': 0,
     'no-mixed-operators': [
       1,

@@ -14,7 +14,7 @@ export const Loading: React.FC<LoadingPropsType> = ({ status }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Fade in={status === 'loading'} timeout={4000}>
+      <Fade in={status === 'loading'}>
         <Paper
           sx={{
             width: '100vw',

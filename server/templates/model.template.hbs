@@ -1,12 +1,14 @@
-import * as mongoose from 'mongoose';
+import { prop, getModelForClass } from '@typegoose/typegoose';
 
-const {{titleCase name}}Schema = new mongoose.Schema(
-    {
+export class {{titleCase name}} {
+  @prop({ required: true })
+  public username: string;
+}
 
-    },
-    { timestamps: true }
-);
-
-const {{titleCase name}}Model = mongoose.model('{{titleCase name}}', {{titleCase name}}Schema);
+const {{titleCase name}}Model = getModelForClass({{titleCase name}}, {
+  schemaOptions: {
+    timestamps: true,
+  },
+});
 
 export default {{titleCase name}}Model;

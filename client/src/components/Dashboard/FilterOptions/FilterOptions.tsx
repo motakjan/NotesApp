@@ -8,7 +8,7 @@ import React from 'react';
 export const FilterOptions: React.FC = () => (
   <Box
     sx={{
-      p: '0.5rem 0',
+      p: '0.5rem 0 0.5rem 10px',
       gap: '0.5rem',
       display: 'flex',
     }}

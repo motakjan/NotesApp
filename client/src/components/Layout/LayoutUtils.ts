@@ -18,13 +18,7 @@ export const closedMixin = (theme: Theme): CSSObject => ({
   }),
   overflowX: 'hidden',
   width: `calc(${theme.spacing(5)} + 1px)`,
-  '.MuiListItem-root': {
-    paddingLeft: '9px',
-  },
   [theme.breakpoints.up('sm')]: {
     width: `calc(${theme.spacing(7)} + 1px)`,
-    '.MuiListItem-root': {
-      paddingLeft: '16px',
-    },
   },
 });

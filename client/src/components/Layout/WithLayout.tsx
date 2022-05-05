@@ -15,6 +15,10 @@ export const WithLayout = ({ page }: { page: JSX.Element }) => {
     navigate('/login');
   }
 
+  if (status === 'loading') {
+    return <Loading status={status} />;
+  }
+
   return (
     <>
       <Layout>{status === 'loading' ? <Loading status={status} /> : page}</Layout>
