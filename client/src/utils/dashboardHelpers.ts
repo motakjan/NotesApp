@@ -1,4 +1,4 @@
-import { IOnDragEnd } from '../types/Dashboard';
+import { IDashboard, IOnDragEnd } from '../types/Dashboard';
 import { v4 as uuidv4 } from 'uuid';
 
 export const onDragEnd: IOnDragEnd = (result, columns, setColumns) => {
@@ -123,29 +123,31 @@ const itemsFromBackend = [
   },
 ];
 
-export const columnsFromBacked = {
+const getTasksForColumn = (id: number, board: IDashboard) => board.tasks.filter(el => el.column === id);
+
+export const generateColumns = (board: IDashboard) => ({
   [uuidv4()]: {
     name: 'Unassigned',
-    items: [],
+    items: getTasksForColumn(1, board),
   },
   [uuidv4()]: {
     name: 'Todo',
-    items: [],
+    items: getTasksForColumn(2, board),
   },
   [uuidv4()]: {
     name: 'Requested',
-    items: itemsFromBackend,
+    items: getTasksForColumn(3, board),
   },
   [uuidv4()]: {
     name: 'In Progress',
-    items: [],
+    items: getTasksForColumn(4, board),
   },
   [uuidv4()]: {
     name: 'Done',
-    items: [],
+    items: getTasksForColumn(5, board),
   },
   [uuidv4()]: {
     name: 'Old',
-    items: [],
+    items: getTasksForColumn(6, board),
   },
-};
+});

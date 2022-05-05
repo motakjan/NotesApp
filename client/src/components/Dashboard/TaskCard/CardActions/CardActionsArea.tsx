@@ -50,20 +50,16 @@ export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, ha
                   height: '20px',
                   padding: '0px 3px',
                 }}
-                variant={tag.type === 'tag' ? 'outlined' : 'filled'}
-                color={tag.color}
+                variant="outlined"
+                color="info"
                 size="small"
                 icon={
-                  tag.type === 'tag' ? (
-                    <CircleIcon
-                      sx={{
-                        width: '10px',
-                        height: '10px',
-                      }}
-                    />
-                  ) : (
-                    <></>
-                  )
+                  <CircleIcon
+                    sx={{
+                      width: '10px',
+                      height: '10px',
+                    }}
+                  />
                 }
                 label={
                   <Typography
@@ -73,7 +69,7 @@ export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, ha
                       fontSize: '0.6rem',
                     }}
                   >
-                    {tag.name}
+                    {tag}
                   </Typography>
                 }
               />
@@ -97,12 +93,6 @@ export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, ha
             >
               updated 2022-08-05 15:00
             </Typography>
-            <AvatarGroup max={3} variant="rounded">
-              <Avatar alt="Remy Sharp" src="https://avatars.dicebear.com/api/adventurer-neutral/yarosla.svg" />
-              <Avatar alt="Remy Sharp" src="https://avatars.dicebear.com/api/adventurer-neutral/yaro.svg" />
-              <Avatar alt="Remy Sharp" src="https://avatars.dicebear.com/api/adventurer-neutral/yaroslav1.svg" />
-              <Avatar alt="Remy" src="https://avatars.dicebear.com/api/adventurer-neutral/ya1.svg" />
-            </AvatarGroup>
           </Box>
         </Box>
       </CardContent>

@@ -13,15 +13,30 @@ import { v4 as uuidv4 } from 'uuid';
 import { Box, createTheme, Typography } from '@mui/material';
 import { TaskCard } from '../TaskCard/TaskCard';
 import { useColorMode } from '../../../context/ColorModeContext';
-import { columnsFromBacked, onDragEnd } from '../../../utils/dashboardHelpers';
-import { IItem } from '../../../types/Dashboard';
+import { generateColumns, onDragEnd } from '../../../utils/dashboardHelpers';
+import { IDashboard, IItem, ITaskBoard } from '../../../types/Dashboard';
 import { TaskCardTagType } from '../../../types/taskCardTypes';
 import { getCurrentTheme } from '../../../assets/theme';
+import { useQuery } from 'react-query';
+import { dashboardApi } from '../../../api/dashboard';
 
-export const TaskBoard = () => {
-  const [columns, setColumns] = useState(columnsFromBacked);
+export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
+  const [columns, setColumns] = useState(generateColumns(board));
   const { mode } = useColorMode();
   const theme = React.useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);
+  const { data, status } = useQuery<IDashboard, Error>(
+    [`dashboard-${board._id}`, { id: board?._id }],
+    () => dashboardApi.getDashboardData(board._id),
+    { retry: 1, onSuccess: (fetched: any) => setColumns(generateColumns(fetched)) }
+  );
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (status === 'error') {
+    return <div>Error</div>;
+  }
 
   return (
     <Box

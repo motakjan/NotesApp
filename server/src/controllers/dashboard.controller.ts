@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
-import { TActionOneParams, TCreateOneBody, TUpdateOneBody, TUpdateOneParams } from '../schemas/dashboard.schemas';
-import { createOne, deleteOne, findAll, findOne, updateOne } from '../services/dashboard.service';
-
 import { StatusCodes } from 'http-status-codes';
+import { TActionOneParams, TCreateOneBody, TUpdateOneBody, TUpdateOneParams } from '../schemas/dashboard.schemas';
+import { createOne, deleteOne, findAll, findOneExtended, findOne, updateOne } from '../services/dashboard.service';
 
 export const getDashboardsHandler = async (req: Request, res: Response) => {
   const dashboards = await findAll();
@@ -14,7 +13,9 @@ export const getDashboardHandler = async (req: Request<TActionOneParams>, res: R
     const dashboard = await findOne(req.params.id);
     if (!dashboard) return res.status(StatusCodes.NOT_FOUND).json({ errorMessage: 'Dashboard not found.' });
 
-    return res.status(StatusCodes.OK).json(dashboard);
+    const extendedDashboards = await findOneExtended(dashboard);
+
+    return res.status(StatusCodes.OK).json(extendedDashboards);
   } catch (err) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(err);
   }

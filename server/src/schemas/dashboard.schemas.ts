@@ -1,4 +1,4 @@
-import { TypeOf, array, object, string } from 'zod';
+import { TypeOf, array, object, string, number } from 'zod';
 
 import mongoose from 'mongoose';
 
@@ -28,9 +28,15 @@ export const createOneSchema = {
       })
     ),
     tasks: array(
-      string().refine(user => mongoose.Types.ObjectId.isValid(user), {
-        path: ['id'],
-        message: 'Invalid ObjectID in tasks array',
+      object({
+        id: string({
+          required_error: 'id is required',
+        }).refine(user => mongoose.Types.ObjectId.isValid(user), {
+          path: ['id'],
+          message: 'Invalid ObjectID in tasks array',
+        }),
+        position: number().optional(),
+        column: number().optional(),
       })
     ),
   }),
@@ -56,9 +62,15 @@ export const updateOneSchema = {
       })
     ),
     tasks: array(
-      string().refine(user => mongoose.Types.ObjectId.isValid(user), {
-        path: ['id'],
-        message: 'Invalid ObjectID in tasks array',
+      object({
+        id: string({
+          required_error: 'id is required',
+        }).refine(user => mongoose.Types.ObjectId.isValid(user), {
+          path: ['id'],
+          message: 'Invalid ObjectID in tasks array',
+        }),
+        position: number().optional(),
+        column: number().optional(),
       })
     ),
   }),
