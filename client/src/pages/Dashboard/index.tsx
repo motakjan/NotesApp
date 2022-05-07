@@ -3,16 +3,22 @@ import { useQuery } from 'react-query';
 import { dashboardApi } from '../../api/dashboard';
 import { TaskBoardTabsWrapper } from '../../components/Dashboard/TaskBoardTabsWrapper/TaskBoardTabsWrapper';
 import { IDashboard } from '../../types/Dashboard';
+import { useNavigate } from 'react-router';
+import { Loading } from '../Loading';
 
 export const Dashboard = () => {
-  const { data: boards, status } = useQuery<IDashboard[] | undefined, Error>('groups', dashboardApi.getDashboards);
+  const navigate = useNavigate();
+  const { data: boards, status } = useQuery<IDashboard[] | undefined, Error>(
+    'dashboards-initial',
+    dashboardApi.getDashboards
+  );
 
   if (status === 'loading') {
-    return <div>Loading...</div>;
+    return <Loading status={status} />;
   }
 
   if (status === 'error') {
-    return <div>Error!</div>;
+    navigate('/not_found');
   }
 
   return (

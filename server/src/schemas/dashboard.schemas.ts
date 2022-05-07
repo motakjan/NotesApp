@@ -49,18 +49,14 @@ export const updateOneSchema = {
     }),
   }).refine(data => mongoose.Types.ObjectId.isValid(data.id), { path: ['id'], message: 'Invalid ObjectID in params' }),
   body: object({
-    title: string({
-      required_error: 'title is required',
-    }),
-    description: string({
-      required_error: 'title is required',
-    }),
+    title: string().optional(),
+    description: string().optional(),
     users: array(
       string().refine(user => mongoose.Types.ObjectId.isValid(user), {
         path: ['id'],
         message: 'Invalid ObjectID in users array',
       })
-    ),
+    ).optional(),
     tasks: array(
       object({
         id: string({
@@ -72,7 +68,7 @@ export const updateOneSchema = {
         position: number().optional(),
         column: number().optional(),
       })
-    ),
+    ).optional(),
   }),
 };
 

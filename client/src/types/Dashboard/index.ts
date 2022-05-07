@@ -11,23 +11,29 @@ export interface IItem {
   }>;
 }
 
-export interface IColumns {
-  [key: string]: {
-    name: string;
-    items: Array<IItem>;
-  };
-}
-
 export interface ITask {
   id: string;
   position: number;
   column: number;
+  description?: string;
+  title?: string;
+  tags?: Array<{
+    tagType: string;
+    tagText: string;
+  }>;
+}
+
+export interface IColumns {
+  [key: string]: {
+    name: string;
+    items: Array<ITask>;
+  };
 }
 
 export interface IDashboard {
   title: string;
   description: string;
-  users: any[];
+  users: string[];
   tasks: ITask[];
   _id: string;
   createdAt: Date;

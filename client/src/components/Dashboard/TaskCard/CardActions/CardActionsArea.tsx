@@ -1,4 +1,4 @@
-import { Avatar, AvatarGroup, Chip } from '@mui/material';
+import { Chip } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';

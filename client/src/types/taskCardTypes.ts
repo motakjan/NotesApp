@@ -1,11 +1,10 @@
 export type TaskCardTagType = {
-  name?: string;
-  color: 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' | undefined;
-  type: 'tag' | 'filledTag';
+  tagType: string;
+  tagText: string;
 };
 
 export type TaskCardPropsType = {
-  title: string;
+  title?: string;
   type: 'appointment' | 'task' | 'meeting' | 'note' | 'other';
   tags: TaskCardTagType[];
   text?: string;
@@ -17,8 +16,8 @@ export type CardActionPropsType = {
 };
 
 export type CardActionsAreaType = {
-  title: string;
-  tags: TaskCardTagType[];
+  title?: string;
+  tags?: TaskCardTagType[];
   handleClick: () => void;
-  text: string | undefined;
+  text?: string;
 };

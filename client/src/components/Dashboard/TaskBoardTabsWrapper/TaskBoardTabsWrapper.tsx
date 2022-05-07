@@ -1,5 +1,4 @@
-import { SportsCricketTwoTone } from '@mui/icons-material';
-import { Button, Tab, Tabs } from '@mui/material';
+import { Tab, Tabs } from '@mui/material';
 import { Box } from '@mui/system';
 import { useState } from 'react';
 import { IDashboard, ITaskBoardTabsWrapper } from '../../../types/Dashboard';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   DragDropContext,
   Draggable,
@@ -9,126 +9,185 @@ import {
   DroppableStateSnapshot,
   DropResult,
 } from 'react-beautiful-dnd';
-import { v4 as uuidv4 } from 'uuid';
 import { Box, createTheme, Typography } from '@mui/material';
-import { TaskCard } from '../TaskCard/TaskCard';
 import { useColorMode } from '../../../context/ColorModeContext';
 import { generateColumns, onDragEnd } from '../../../utils/dashboardHelpers';
-import { IDashboard, IItem, ITaskBoard } from '../../../types/Dashboard';
-import { TaskCardTagType } from '../../../types/taskCardTypes';
+import { IColumns, IDashboard, ITask, ITaskBoard } from '../../../types/Dashboard';
 import { getCurrentTheme } from '../../../assets/theme';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { dashboardApi } from '../../../api/dashboard';
+import { useNavigate } from 'react-router-dom';
+import { Loading } from '../../../pages/Loading';
+import { NappSnackbar } from '../../UI/NappSnackbar';
+import { TaskCard } from '../TaskCard/TaskCard';
+import { TaskCardTagType } from '../../../types/taskCardTypes';
+import { v4 as uuidv4 } from 'uuid';
 
 export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
-  const [columns, setColumns] = useState(generateColumns(board));
   const { mode } = useColorMode();
+  const queryClient = useQueryClient();
+  const [columns, setColumns] = useState(generateColumns(board));
+  const [staticData, setStaticData] = useState<any>([]);
+  const [changedDashboard, setChangedDashboard] = useState<any>([]);
+  const [dashboardChanged, setDashboardChanged] = useState<boolean>(false);
+  const navigate = useNavigate();
   const theme = React.useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);
-  const { data, status } = useQuery<IDashboard, Error>(
+  const { status } = useQuery<IDashboard, Error>(
     [`dashboard-${board._id}`, { id: board?._id }],
     () => dashboardApi.getDashboardData(board._id),
-    { retry: 1, onSuccess: (fetched: any) => setColumns(generateColumns(fetched)) }
+    {
+      refetchOnWindowFocus: false,
+      retry: 1,
+      onSuccess: (fetched: IDashboard) => {
+        setColumns(generateColumns(fetched));
+        const clearedDefaultData = fetched.tasks.map((element: any) => {
+          const { title, description, users, tags, ...rest } = element;
+          return rest;
+        });
+        setStaticData(clearedDefaultData);
+      },
+    }
   );
+  const { mutate } = useMutation(`update-dashboard-${board._id}`, dashboardApi.putDashboardData, {
+    onSuccess: () => {
+      setDashboardChanged(false);
+      queryClient.invalidateQueries(`dashboard-${board._id}`);
+    },
+  });
+
+  useEffect(() => {
+    const columnsItems = Object.keys(columns).map(key => columns[key].items);
+    const clearedColumnsData = columnsItems.flatMap(el =>
+      el?.map((element: IColumns, index: number) => {
+        const { title, description, users, tags, ...rest } = element;
+        return { ...rest, position: index };
+      })
+    );
+    setChangedDashboard(clearedColumnsData);
+    setDashboardChanged(JSON.stringify(clearedColumnsData) !== JSON.stringify(staticData));
+  }, [columns]);
+
+  const handleSaveSnack = () => {
+    mutate({ data: changedDashboard, id: board._id });
+  };
+  const handleCloseSnack = (_event: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    queryClient.invalidateQueries(`dashboard-${board._id}`);
+    setDashboardChanged(false);
+  };
 
   if (status === 'loading') {
-    return <div>Loading...</div>;
+    return <Loading status={status} />;
   }
 
   if (status === 'error') {
-    return <div>Error</div>;
+    navigate('/not_found');
   }
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        height: '100%',
-        minHeight: '65vh',
-        minWidth: '100rem',
-        pt: 2,
-      }}
-    >
-      <DragDropContext onDragEnd={(result: DropResult) => onDragEnd(result, columns, setColumns)}>
-        {Object.entries(columns).map(([id, column]) => (
-          <Box
-            key={`${uuidv4()}-column`}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              height: '100%',
-              minWidth: '16.66666%',
-            }}
-          >
+    <>
+      {staticData.length > 0 && (
+        <NappSnackbar
+          mode={mode}
+          handleClose={handleCloseSnack}
+          handleSave={handleSaveSnack}
+          open={dashboardChanged}
+          setOpen={setDashboardChanged}
+        />
+      )}
+      <Box
+        sx={{
+          display: 'flex',
+          height: '100%',
+          minHeight: '65vh',
+          minWidth: '100rem',
+          pt: 2,
+        }}
+      >
+        <DragDropContext onDragEnd={(result: DropResult) => onDragEnd(result, columns, setColumns, staticData)}>
+          {Object.entries(columns).map(([id, column]) => (
             <Box
+              key={`${uuidv4()}-column`}
               sx={{
-                m: '8px',
+                display: 'flex',
+                flexDirection: 'column',
                 height: '100%',
+                minWidth: '16.66666%',
               }}
             >
-              <Typography
-                variant="h5"
+              <Box
                 sx={{
-                  fontSize: 'small',
-                  borderTopRightRadius: '4px',
-                  borderTopLeftRadius: '4px',
-                  background: theme.palette.primary.light,
-                  color: 'white',
-                  textAlign: 'center',
-                  fontWeight: '600',
-                  textTransform: 'uppercase',
+                  m: '8px',
+                  height: '100%',
                 }}
               >
-                {column.name}
-              </Typography>
-              <Droppable droppableId={id} key={id}>
-                {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
-                  <Box
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                    sx={{
-                      height: '100%',
-                      minWidth: '100%',
-                      p: '10px',
-                      backgroundColor: snapshot.isDraggingOver
-                        ? theme.palette.custom.dashboardDrag
-                        : theme.palette.background.paper,
-                    }}
-                  >
-                    {column.items.map((item: IItem, index: number) => (
-                      <Draggable key={item.id} draggableId={item.id} index={index}>
-                        {/* eslint-disable-next-line @typescript-eslint/no-shadow */}
-                        {(provided: DraggableProvided, _snapshot: DraggableStateSnapshot) => (
-                          <Box
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            ref={provided.innerRef}
-                            sx={{
-                              userSelect: 'none',
-                              margin: '0 0 8px 0',
-                              width: '100%',
-                              minHeight: '50px',
-                              textColor: 'white',
-                              ...provided.draggableProps.style,
-                            }}
-                          >
-                            <TaskCard
-                              title={item.title}
-                              text={item.text}
-                              tags={item.tags as Array<TaskCardTagType>}
-                              type="meeting"
-                            />
-                          </Box>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </Box>
-                )}
-              </Droppable>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontSize: 'small',
+                    borderTopRightRadius: '4px',
+                    borderTopLeftRadius: '4px',
+                    background: theme.palette.primary.light,
+                    color: 'white',
+                    textAlign: 'center',
+                    fontWeight: '600',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {column.name}
+                </Typography>
+                <Droppable droppableId={id} key={id}>
+                  {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
+                    <Box
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                      sx={{
+                        height: '100%',
+                        minWidth: '100%',
+                        p: '10px',
+                        backgroundColor: snapshot.isDraggingOver
+                          ? theme.palette.custom.dashboardDrag
+                          : theme.palette.background.paper,
+                      }}
+                    >
+                      {column.items.map((item: ITask, index: number) => (
+                        <Draggable key={item.id} draggableId={item.id} index={index}>
+                          {/* eslint-disable-next-line @typescript-eslint/no-shadow */}
+                          {(provided: DraggableProvided, _snapshot: DraggableStateSnapshot) => (
+                            <Box
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              ref={provided.innerRef}
+                              sx={{
+                                userSelect: 'none',
+                                margin: '0 0 8px 0',
+                                width: '100%',
+                                minHeight: '50px',
+                                textColor: 'white',
+                                ...provided.draggableProps.style,
+                              }}
+                            >
+                              <TaskCard
+                                title={item.title}
+                                text={item.description}
+                                tags={item.tags as Array<TaskCardTagType>}
+                                type="meeting"
+                              />
+                            </Box>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </Box>
+                  )}
+                </Droppable>
+              </Box>
             </Box>
-          </Box>
-        ))}
-      </DragDropContext>
-    </Box>
+          ))}
+        </DragDropContext>
+      </Box>
+    </>
   );
 };

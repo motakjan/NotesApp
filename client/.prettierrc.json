@@ -6,6 +6,6 @@
   "tabWidth": 2,
   "arrowParens": "avoid",
   "jsxSingleQuote": false,
-  "jsxBracketSameLine": false,
+  "bracketSameLine": false,
   "endOfLine": "auto"
 }
