@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import TaskModel from '../models/task.model';
 import DashboardModel from '../models/dashboard.model';
-import { findOne as findOneTask } from './task.service';
 
 export const findAll = async () => DashboardModel.find();
 
@@ -12,13 +11,16 @@ export const findOneExtended = async (dashboard: any) => {
   const results = await TaskModel.find({ _id: { $in: ids } });
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const { title, description, users, tasks, _id, updatedAt, createdAt } = dashboard;
-  const extendedTasks = tasks.map((task: any, index: number) => {
+  const extendedTasks = tasks.map((task: any) => {
+    // eslint-disable-next-line no-underscore-dangle
+    const foundTask = results.find((result: any) => result._id.toString() === task.id);
     const task2 = { ...task };
-    task2.title = results[index]?.title;
-    task2.description = results[index]?.description;
-    task2.users = results[index]?.users;
-    task2.tags = results[index]?.tags;
-    task2.updatedAt = results[index]?.updatedAt;
+    task2.title = foundTask?.title;
+    task2.description = foundTask?.description;
+    task2.users = foundTask?.users;
+    task2.tags = foundTask?.tags;
+    task2.type = foundTask?.type;
+    task2.updatedAt = foundTask?.updatedAt;
     return task2;
   });
   return { title, description, users, tasks: extendedTasks, _id, updatedAt, createdAt };

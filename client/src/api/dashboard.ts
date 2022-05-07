@@ -7,7 +7,7 @@ export const dashboardApi = {
   getDashboardData(id: string) {
     return instance.get(`/dashboard/${id}`).then(res => res.data);
   },
-  putDashboardData({ data, id }) {
+  putDashboardData({ data, id }: any) {
     const newData = {
       tasks: data,
     };
