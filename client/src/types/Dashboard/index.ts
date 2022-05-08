@@ -19,6 +19,7 @@ export interface ITask {
   title?: string;
   users?: Array<string>;
   updatedAt?: string;
+  type: 'note' | 'appointment' | 'task' | 'meeting' | 'default';
   tags?: Array<{
     tagType: string;
     tagText: string;

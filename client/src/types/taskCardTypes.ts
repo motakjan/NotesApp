@@ -5,7 +5,7 @@ export type TaskCardTagType = {
 
 export type TaskCardPropsType = {
   title?: string;
-  type: 'appointment' | 'task' | 'meeting' | 'note' | 'other';
+  type: 'appointment' | 'task' | 'meeting' | 'note' | 'default';
   tags: TaskCardTagType[];
   text?: string;
   id: string;
