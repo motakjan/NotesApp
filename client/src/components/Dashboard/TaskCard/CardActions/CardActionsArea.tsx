@@ -7,6 +7,7 @@ import CircleIcon from '@mui/icons-material/Circle';
 import './CardActionsArea.css';
 import { useColorMode } from '../../../../context/ColorModeContext';
 import { v4 as uuidv4 } from 'uuid';
+import { TAG_TYPE_COLORS } from '../../../../utils/constVariables';
 
 export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, handleClick, text, updatedAt }) => {
   const { mode } = useColorMode();
@@ -50,7 +51,7 @@ export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, ha
                   padding: '0px 3px',
                 }}
                 variant="outlined"
-                color="info"
+                color={TAG_TYPE_COLORS[tag.tagType]}
                 size="small"
                 icon={
                   <CircleIcon
@@ -68,7 +69,7 @@ export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, ha
                       fontSize: '0.6rem',
                     }}
                   >
-                    {tag}
+                    {tag.tagText}
                   </Typography>
                 }
               />

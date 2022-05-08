@@ -169,7 +169,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
                                 tags={item.tags as Array<TaskCardTagType>}
                                 id={item.id}
                                 updatedAt={item.updatedAt}
-                                type="meeting"
+                                type={item.type}
                               />
                             </Box>
                           )}

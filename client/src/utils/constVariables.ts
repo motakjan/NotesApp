@@ -11,3 +11,9 @@ export const TASK_TYPE_COLORS = {
   note: '#0049c5',
   default: '#707070',
 };
+
+export const TAG_TYPE_COLORS = {
+  event: 'error',
+  basic: 'success',
+  notification: 'info',
+};
