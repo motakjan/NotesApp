@@ -1,6 +1,5 @@
-import { IDashboard, IOnDragEnd } from '../types/Dashboard';
+import { IDashboard, IOnDragEnd, ITask } from '../types/Dashboard';
 import _ from 'lodash';
-import { v4 as uuidv4 } from 'uuid';
 
 export const onDragEnd: IOnDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
@@ -14,7 +13,6 @@ export const onDragEnd: IOnDragEnd = (result, columns, setColumns) => {
     const [removed] = sourceItems.splice(source.index, 1);
     destItems.splice(destination.index, 0, removed);
     destItems[destination.index].column = parseFloat(destination.droppableId);
-    console.log(destItems);
     setColumns({
       ...columns,
       [source.droppableId]: {
@@ -76,3 +74,12 @@ export const generateColumns = (board: IDashboard) => ({
     items: getTasksForColumn(6, board),
   },
 });
+
+export const clearItemTask = ({ element, changedProp }: { element: ITask[]; changedProp: string }) =>
+  element?.map((el: ITask, index: any) => {
+    const { title, description, users, tags, ...rest } = el;
+    if (changedProp) {
+      rest.position = index;
+    }
+    return rest;
+  });

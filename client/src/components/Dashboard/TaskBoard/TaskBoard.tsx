@@ -11,8 +11,8 @@ import {
 } from 'react-beautiful-dnd';
 import { Box, createTheme, Typography } from '@mui/material';
 import { useColorMode } from '../../../context/ColorModeContext';
-import { generateColumns, onDragEnd } from '../../../utils/dashboardHelpers';
-import { IColumns, IDashboard, ITask, ITaskBoard } from '../../../types/Dashboard';
+import { clearItemTask, generateColumns, onDragEnd } from '../../../utils/dashboardHelpers';
+import { IDashboard, ITask, ITaskBoard } from '../../../types/Dashboard';
 import { getCurrentTheme } from '../../../assets/theme';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { dashboardApi } from '../../../api/dashboard';
@@ -40,11 +40,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
       retry: 1,
       onSuccess: (fetched: IDashboard) => {
         setColumns(generateColumns(fetched));
-        const clearedDefaultData = fetched.tasks.map((element: any) => {
-          const { title, description, users, tags, ...rest } = element;
-          return rest;
-        });
-        setStaticData(clearedDefaultData);
+        setStaticData(clearItemTask({ element: fetched.tasks }));
       },
     }
   );
@@ -57,12 +53,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
 
   useEffect(() => {
     const columnsItems = Object.keys(columns).map(key => columns[key].items);
-    const clearedColumnsData = columnsItems.flatMap(el =>
-      el?.map((element: IColumns, index: number) => {
-        const { title, description, users, tags, ...rest } = element;
-        return { ...rest, position: index };
-      })
-    );
+    const clearedColumnsData = columnsItems.flatMap((el, index) => clearItemTask({ element: el, position: index }));
     setChangedDashboard(clearedColumnsData);
     setDashboardChanged(JSON.stringify(clearedColumnsData) !== JSON.stringify(staticData));
   }, [columns]);
@@ -88,7 +79,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
 
   return (
     <>
-      {staticData.length > 0 && (
+      {staticData?.length > 0 && (
         <NappSnackbar
           mode={mode}
           handleClose={handleCloseSnack}

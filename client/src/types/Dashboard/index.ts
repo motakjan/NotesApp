@@ -17,6 +17,7 @@ export interface ITask {
   column: number;
   description?: string;
   title?: string;
+  users?: Array<string>;
   tags?: Array<{
     tagType: string;
     tagText: string;
