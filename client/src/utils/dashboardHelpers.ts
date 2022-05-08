@@ -75,7 +75,7 @@ export const generateColumns = (board: IDashboard) => ({
   },
 });
 
-export const clearItemTask = ({ element, changedProp }: { element: ITask[]; changedProp: string }) =>
+export const clearItemTask = ({ element, changedProp }: { element: ITask[]; changedProp?: string }) =>
   element?.map((el: ITask, index: any) => {
     const { title, description, users, tags, ...rest } = el;
     if (changedProp) {

@@ -7,8 +7,9 @@ import { CardActionsArea } from './CardActions/CardActionsArea';
 import { TASK_TYPE_COLORS } from '../../../utils/constVariables';
 import { getCurrentTheme } from '../../../assets/theme';
 import { useColorMode } from '../../../context/ColorModeContext';
+import { NappTaskSkeleton } from '../../UI/NappTaskSkeleton/NappTaskSkeleton';
 
-export const TaskCard: React.FC<TaskCardPropsType> = ({ title, type, tags, text }) => {
+export const TaskCard: React.FC<TaskCardPropsType> = ({ title, type, tags, text, id, updatedAt }) => {
   const [showActions, setShowActions] = useState<boolean>(false);
   const [checked, setChecked] = useState(false);
   const { mode } = useColorMode();
@@ -19,6 +20,10 @@ export const TaskCard: React.FC<TaskCardPropsType> = ({ title, type, tags, text 
     setChecked((prevState: boolean) => !prevState);
   };
 
+  if (!title) {
+    return <NappTaskSkeleton />;
+  }
+
   return (
     <Card
       sx={{
@@ -28,7 +33,7 @@ export const TaskCard: React.FC<TaskCardPropsType> = ({ title, type, tags, text 
         backgroundColor: theme.palette.custom.cardColor,
       }}
     >
-      <CardActionsArea title={title} tags={tags} handleClick={handleCardClick} text={text} />
+      <CardActionsArea title={title} tags={tags} handleClick={handleCardClick} text={text} updatedAt={updatedAt} />
       <Divider />
       <CardAction showActions={showActions} checked={checked} />
     </Card>

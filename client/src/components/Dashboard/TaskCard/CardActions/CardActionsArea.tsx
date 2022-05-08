@@ -8,7 +8,7 @@ import './CardActionsArea.css';
 import { useColorMode } from '../../../../context/ColorModeContext';
 import { v4 as uuidv4 } from 'uuid';
 
-export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, handleClick }) => {
+export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, handleClick, text, updatedAt }) => {
   const { mode } = useColorMode();
 
   return (
@@ -29,8 +29,7 @@ export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, ha
           {title}
         </Typography>
         <Typography variant="caption" display="block" gutterBottom>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel reprehenderit quaerat quasi doloribus autem
-          velit consequuntur, quo inventore ...
+          {text}
         </Typography>
         <Box
           sx={{
@@ -91,7 +90,7 @@ export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, ha
               }}
               gutterBottom
             >
-              updated 2022-08-05 15:00
+              {`updated at ${new Date(updatedAt!).toLocaleString()}`}
             </Typography>
           </Box>
         </Box>

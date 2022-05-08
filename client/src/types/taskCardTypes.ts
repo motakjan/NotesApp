@@ -8,6 +8,8 @@ export type TaskCardPropsType = {
   type: 'appointment' | 'task' | 'meeting' | 'note' | 'other';
   tags: TaskCardTagType[];
   text?: string;
+  id: string;
+  updatedAt?: string;
 };
 
 export type CardActionPropsType = {
@@ -20,4 +22,5 @@ export type CardActionsAreaType = {
   tags?: TaskCardTagType[];
   handleClick: () => void;
   text?: string;
+  updatedAt?: string;
 };

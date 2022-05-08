@@ -9,5 +9,5 @@ export const TASK_TYPE_COLORS = {
   task: '#b70322',
   meeting: '#f7b924',
   note: '#0049c5',
-  other: '#707070',
+  default: '#707070',
 };

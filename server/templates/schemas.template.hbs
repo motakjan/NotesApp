@@ -24,9 +24,7 @@ export const updateOneSchema = {
     }),
   }).refine(data => mongoose.Types.ObjectId.isValid(data.id), { path: ['id'], message: 'Invalid ObjectID' }),
   body: object({
-    username: string({
-      required_error: 'username is required',
-    }),
+    username: string().optional(),
   }),
 };
 

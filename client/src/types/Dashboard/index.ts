@@ -18,6 +18,7 @@ export interface ITask {
   description?: string;
   title?: string;
   users?: Array<string>;
+  updatedAt?: string;
   tags?: Array<{
     tagType: string;
     tagText: string;
@@ -51,5 +52,5 @@ export interface ITaskBoardTabsWrapper {
 }
 
 export interface IOnDragEnd {
-  (result: DropResult, columns: IColumns, setColumns: (columns: IColumns) => void): void;
+  (result: DropResult, columns: IColumns, setColumns: (columns: any) => void): void;
 }

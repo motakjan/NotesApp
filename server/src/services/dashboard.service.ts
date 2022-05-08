@@ -18,6 +18,7 @@ export const findOneExtended = async (dashboard: any) => {
     task2.description = results[index]?.description;
     task2.users = results[index]?.users;
     task2.tags = results[index]?.tags;
+    task2.updatedAt = results[index]?.updatedAt;
     return task2;
   });
   return { title, description, users, tasks: extendedTasks, _id, updatedAt, createdAt };

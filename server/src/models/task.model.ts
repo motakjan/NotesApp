@@ -19,6 +19,9 @@ export class Task {
   @prop()
   public start?: string;
 
+  @prop({ default: 'default' })
+  public type?: string;
+
   @prop()
   public end?: string;
 
@@ -27,6 +30,9 @@ export class Task {
 
   @prop()
   public users: string[];
+
+  @prop()
+  public updatedAt?: string;
 }
 
 const TaskModel = getModelForClass(Task, {

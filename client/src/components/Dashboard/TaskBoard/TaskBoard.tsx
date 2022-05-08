@@ -22,6 +22,7 @@ import { NappSnackbar } from '../../UI/NappSnackbar';
 import { TaskCard } from '../TaskCard/TaskCard';
 import { TaskCardTagType } from '../../../types/taskCardTypes';
 import { v4 as uuidv4 } from 'uuid';
+import { useToast } from '../../../hooks/useToast';
 
 export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
   const { mode } = useColorMode();
@@ -31,6 +32,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
   const [changedDashboard, setChangedDashboard] = useState<any>([]);
   const [dashboardChanged, setDashboardChanged] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { successToast } = useToast();
   const theme = React.useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);
   const { status } = useQuery<IDashboard, Error>(
     [`dashboard-${board._id}`, { id: board?._id }],
@@ -48,12 +50,13 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
     onSuccess: () => {
       setDashboardChanged(false);
       queryClient.invalidateQueries(`dashboard-${board._id}`);
+      successToast('Dashboard layout saved');
     },
   });
 
   useEffect(() => {
     const columnsItems = Object.keys(columns).map(key => columns[key].items);
-    const clearedColumnsData = columnsItems.flatMap((el, index) => clearItemTask({ element: el, position: index }));
+    const clearedColumnsData = columnsItems.flatMap(el => clearItemTask({ element: el, changedProp: 'position' }));
     setChangedDashboard(clearedColumnsData);
     setDashboardChanged(JSON.stringify(clearedColumnsData) !== JSON.stringify(staticData));
   }, [columns]);
@@ -97,7 +100,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
           pt: 2,
         }}
       >
-        <DragDropContext onDragEnd={(result: DropResult) => onDragEnd(result, columns, setColumns, staticData)}>
+        <DragDropContext onDragEnd={(result: DropResult) => onDragEnd(result, columns, setColumns)}>
           {Object.entries(columns).map(([id, column]) => (
             <Box
               key={`${uuidv4()}-column`}
@@ -164,6 +167,8 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
                                 title={item.title}
                                 text={item.description}
                                 tags={item.tags as Array<TaskCardTagType>}
+                                id={item.id}
+                                updatedAt={item.updatedAt}
                                 type="meeting"
                               />
                             </Box>
