@@ -1,8 +1,5 @@
-import { connectToDatabase, disconnectFromDatabase } from './utils/database';
-
-import authRoute from './routes/auth.routes';
 import cors from 'cors';
-import dashboardRoute from './routes/dashboard.routes';
+
 import dotenv from 'dotenv';
 import express from 'express';
 import helmet from 'helmet';
@@ -10,7 +7,10 @@ import logger from './utils/loggers/winston.logger';
 import morganMiddleware from './utils/loggers/morgan.logger';
 import taskRoute from './routes/task.routes';
 import userRoute from './routes/user.routes';
+import authRoute from './routes/auth.routes';
+import dashboardRoute from './routes/dashboard.routes';
 import verify from './middlewares/verifyToken';
+import { connectToDatabase, disconnectFromDatabase } from './utils/database';
 
 const app = express();
 
@@ -21,7 +21,11 @@ app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 app.use(helmet());
 app.use(morganMiddleware);
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+  })
+);
 
 app.use('/api/auth', authRoute);
 app.use('/api/task', verify, taskRoute);

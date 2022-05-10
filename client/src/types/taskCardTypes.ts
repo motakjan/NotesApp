@@ -10,6 +10,7 @@ export type TaskCardPropsType = {
   text?: string;
   id: string;
   updatedAt?: string;
+  size?: 'small' | 'medium' | 'large';
 };
 
 export type CardActionPropsType = {
@@ -23,4 +24,5 @@ export type CardActionsAreaType = {
   handleClick: () => void;
   text?: string;
   updatedAt?: string;
+  size?: 'small' | 'medium' | 'large';
 };

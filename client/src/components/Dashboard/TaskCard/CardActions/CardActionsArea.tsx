@@ -9,11 +9,11 @@ import { useColorMode } from '../../../../context/ColorModeContext';
 import { v4 as uuidv4 } from 'uuid';
 import { TAG_TYPE_COLORS } from '../../../../utils/constVariables';
 
-export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, handleClick, text, updatedAt }) => {
+export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, handleClick, text, updatedAt, size }) => {
   const { mode } = useColorMode();
 
   return (
-    <Box onClick={() => handleClick()} className={`hvr-fade-${mode}`}>
+    <Box onClick={() => handleClick()} className={`hvr-fade-${mode}`} sx={{ width: '100%' }}>
       <CardContent
         sx={{
           padding: '12px 16px 2px 16px',
@@ -29,9 +29,11 @@ export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, ha
         >
           {title}
         </Typography>
-        <Typography variant="caption" display="block" gutterBottom>
-          {text}
-        </Typography>
+        {size === 'large' && (
+          <Typography variant="caption" display="block" gutterBottom>
+            {text}
+          </Typography>
+        )}
         <Box
           sx={{
             margin: '10px 0px',
@@ -42,6 +44,7 @@ export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, ha
           }}
         >
           {tags &&
+            size === 'large' &&
             tags.map((tag: TaskCardTagType) => (
               <Chip
                 key={`${uuidv4()}-chip`}

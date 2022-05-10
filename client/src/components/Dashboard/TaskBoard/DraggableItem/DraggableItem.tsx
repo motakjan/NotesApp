@@ -7,9 +7,10 @@ import { ITask } from '../../../../types/Dashboard/dashboardTypes';
 interface IDraggableItem {
   item: ITask;
   index: number;
+  itemSize?: 'small' | 'medium' | 'large';
 }
 
-const DraggableItem: React.FC<IDraggableItem> = ({ item, index }) => (
+const DraggableItem: React.FC<IDraggableItem> = ({ item, index, itemSize }) => (
   <Draggable key={item.id} draggableId={item.id} index={index}>
     {/* eslint-disable-next-line @typescript-eslint/no-shadow */}
     {(provided: DraggableProvided, _snapshot: DraggableStateSnapshot) => (
@@ -33,6 +34,7 @@ const DraggableItem: React.FC<IDraggableItem> = ({ item, index }) => (
           id={item.id}
           updatedAt={item.updatedAt}
           type={item.type}
+          size={itemSize}
         />
       </Box>
     )}
