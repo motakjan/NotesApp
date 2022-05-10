@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  DragDropContext,
-  Draggable,
-  DraggableProvided,
-  DraggableStateSnapshot,
-  Droppable,
-  DroppableProvided,
-  DroppableStateSnapshot,
-  DropResult,
-} from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DroppableProvided, DroppableStateSnapshot, DropResult } from 'react-beautiful-dnd';
 import { Box, createTheme, Typography } from '@mui/material';
 import { useColorMode } from '../../../context/ColorModeContext';
 import { clearItemTask, generateColumns, onDragEnd } from '../../../utils/dashboardHelpers';
@@ -18,10 +9,9 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { dashboardApi } from '../../../api/dashboard';
 import { Loading } from '../../../pages/Loading/Loading';
 import { NappSnackbar } from '../../UI/NappSnackbar/NappSnackbar';
-import { TaskCard } from '../TaskCard/TaskCard';
-import { TaskCardTagType } from '../../../types/taskCardTypes';
 import { v4 as uuidv4 } from 'uuid';
 import { useToast } from '../../../hooks/useToast';
+import DraggableItem from './DraggableItem/DraggableItem';
 
 export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
   const { mode } = useColorMode();
@@ -144,34 +134,8 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
                           : theme.palette.background.paper,
                       }}
                     >
-                      {column.items.map((item: ITask, index: number) => (
-                        <Draggable key={item.id} draggableId={item.id} index={index}>
-                          {/* eslint-disable-next-line @typescript-eslint/no-shadow */}
-                          {(provided: DraggableProvided, _snapshot: DraggableStateSnapshot) => (
-                            <Box
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              ref={provided.innerRef}
-                              sx={{
-                                userSelect: 'none',
-                                margin: '0 0 8px 0',
-                                width: '100%',
-                                minHeight: '50px',
-                                textColor: 'white',
-                                ...provided.draggableProps.style,
-                              }}
-                            >
-                              <TaskCard
-                                title={item.title}
-                                text={item.description}
-                                tags={item.tags as Array<TaskCardTagType>}
-                                id={item.id}
-                                updatedAt={item.updatedAt}
-                                type={item.type}
-                              />
-                            </Box>
-                          )}
-                        </Draggable>
+                      {column.items!.map((item: ITask, index: number) => (
+                        <DraggableItem item={item} index={index} />
                       ))}
                       {provided.placeholder}
                     </Box>
