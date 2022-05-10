@@ -1,9 +1,8 @@
+import express from 'express';
+import { processRequest } from 'zod-express-middleware';
 import * as DashboardController from '../controllers/dashboard.controller';
 
 import { actionOneSchema, createOneSchema, updateOneSchema } from '../schemas/dashboard.schemas';
-
-import express from 'express';
-import { processRequest } from 'zod-express-middleware';
 
 const dashboardRouter = express.Router();
 

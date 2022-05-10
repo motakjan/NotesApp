@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router';
 import { authApi } from '../../api/auth';
-import { Loading } from '../../pages/Loading';
+import { Loading } from '../../pages/Loading/Loading';
 import { Layout } from './Layout';
 import { AxiosError } from 'axios';
 

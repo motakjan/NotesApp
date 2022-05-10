@@ -12,13 +12,12 @@ import {
 import { Box, createTheme, Typography } from '@mui/material';
 import { useColorMode } from '../../../context/ColorModeContext';
 import { clearItemTask, generateColumns, onDragEnd } from '../../../utils/dashboardHelpers';
-import { IDashboard, ITask, ITaskBoard } from '../../../types/Dashboard';
+import { IDashboard, ITask, ITaskBoard } from '../../../types/Dashboard/dashboardTypes';
 import { getCurrentTheme } from '../../../assets/theme';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { dashboardApi } from '../../../api/dashboard';
-import { useNavigate } from 'react-router-dom';
-import { Loading } from '../../../pages/Loading';
-import { NappSnackbar } from '../../UI/NappSnackbar';
+import { Loading } from '../../../pages/Loading/Loading';
+import { NappSnackbar } from '../../UI/NappSnackbar/NappSnackbar';
 import { TaskCard } from '../TaskCard/TaskCard';
 import { TaskCardTagType } from '../../../types/taskCardTypes';
 import { v4 as uuidv4 } from 'uuid';
@@ -31,7 +30,6 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
   const [staticData, setStaticData] = useState<any>([]);
   const [changedDashboard, setChangedDashboard] = useState<any>([]);
   const [dashboardChanged, setDashboardChanged] = useState<boolean>(false);
-  const navigate = useNavigate();
   const { successToast } = useToast();
   const theme = React.useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);
   const { status } = useQuery<IDashboard, Error>(
@@ -59,7 +57,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
     const clearedColumnsData = columnsItems.flatMap(el => clearItemTask({ element: el, changedProp: 'position' }));
     setChangedDashboard(clearedColumnsData);
     setDashboardChanged(JSON.stringify(clearedColumnsData) !== JSON.stringify(staticData));
-  }, [columns]);
+  }, [columns, staticData]);
 
   const handleSaveSnack = () => {
     mutate({ data: changedDashboard, id: board._id });
@@ -77,7 +75,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
   }
 
   if (status === 'error') {
-    navigate('/not_found');
+    return <div>Error</div>;
   }
 
   return (
