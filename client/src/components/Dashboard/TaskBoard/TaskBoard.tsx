@@ -12,14 +12,20 @@ import { NappSnackbar } from '../../UI/NappSnackbar/NappSnackbar';
 import { v4 as uuidv4 } from 'uuid';
 import { useToast } from '../../../hooks/useToast';
 import DraggableItem from './DraggableItem/DraggableItem';
+import { NappUserPicker } from '../../UI/NappUserPicker/NappUserPicker';
+import { DashboardHeader } from '../DashboardHeader/DashboardHeader';
+import { FilterOptions } from '../FilterOptions/FilterOptions';
 
 export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
   const { mode } = useColorMode();
   const queryClient = useQueryClient();
   const [columns, setColumns] = useState(generateColumns(board));
   const [staticData, setStaticData] = useState<any>([]);
+  const [dashboardData, setDashboardData] = useState<any>([]);
   const [changedDashboard, setChangedDashboard] = useState<any>([]);
   const [dashboardChanged, setDashboardChanged] = useState<boolean>(false);
+  const [personFilterClicked, setPersonFilterClicked] = useState(false);
+  const [selectedUser, setSelectedUser] = useState('Person');
   const { successToast } = useToast();
   const theme = React.useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);
   const { status } = useQuery<IDashboard, Error>(
@@ -31,6 +37,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
       onSuccess: (fetched: IDashboard) => {
         setColumns(generateColumns(fetched));
         setStaticData(clearItemTask({ element: fetched.tasks }));
+        setDashboardData(fetched);
       },
     }
   );
@@ -68,8 +75,29 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
     return <div>Error</div>;
   }
 
+  const handleUsersPickerClose = () => {
+    setPersonFilterClicked(false);
+  };
+
+  const handleUsersPickerOpen = () => {
+    setPersonFilterClicked(true);
+  };
+
+  const handleUserListItemSelected = (user: string) => {
+    setSelectedUser(user);
+    setPersonFilterClicked(false);
+  };
+
   return (
     <>
+      {/* {dashboardData?.length > 0 && ( */}
+      <NappUserPicker
+        users={dashboardData.users}
+        open={personFilterClicked}
+        handleClose={handleUsersPickerClose}
+        setSelectedUser={handleUserListItemSelected}
+      />
+      {/* )} */}
       {staticData?.length > 0 && (
         <NappSnackbar
           mode={mode}
@@ -79,6 +107,8 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
           setOpen={setDashboardChanged}
         />
       )}
+      <DashboardHeader title={board.title} description={board.description} />
+      <FilterOptions handlePersonClicked={handleUsersPickerOpen} selectedUser={selectedUser} />
       <Box
         sx={{
           display: 'flex',

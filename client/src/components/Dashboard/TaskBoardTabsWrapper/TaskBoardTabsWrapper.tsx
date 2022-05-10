@@ -1,9 +1,7 @@
 import { Tab, Tabs } from '@mui/material';
 import { Box } from '@mui/system';
 import { useState } from 'react';
-import { IDashboard, ITaskBoardTabsWrapper } from '../../../types/Dashboard/dashboardTypes';
-import { DashboardHeader } from '../DashboardHeader/DashboardHeader';
-import { FilterOptions } from '../FilterOptions/FilterOptions';
+import { IDashboard, ITaskBoardTabsWrapper } from '../../../types/Dashboard';
 import { TaskBoard } from '../TaskBoard/TaskBoard';
 import { TabPanel } from './TabPanel/TabPanel';
 
@@ -44,8 +42,6 @@ export const TaskBoardTabsWrapper: React.FC<ITaskBoardTabsWrapper> = ({ boards }
           ))}
         </Tabs>
       </Box>
-      <DashboardHeader title={boards![value].title} description={boards![value].description} />
-      <FilterOptions />
       {boards?.map((board: IDashboard, index: number) => (
         <TabPanel key={`board-in-tab-${board._id}`} value={value} index={index}>
           <TaskBoard board={board} />
