@@ -5,7 +5,6 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import PersonIcon from '@mui/icons-material/Person';
 import { blue } from '@mui/material/colors';
 
 interface INappUserPicker {
@@ -25,8 +24,10 @@ export const NappUserPicker: React.FC<INappUserPicker> = ({ open, handleClose, u
             <Avatar
               sx={{ bgcolor: blue[100], color: blue[600] }}
               alt={user.fullName}
-              src={`http://127.0.0.1:1337/${user.image}`}
-            />
+              src={user.image && `http://127.0.0.1:1337/${user.image}`}
+            >
+              {`${user.firstName.charAt(0)}${user.lastName.charAt(0)}`}
+            </Avatar>
           </ListItemAvatar>
           <ListItemText primary={user.fullName} />
         </ListItem>

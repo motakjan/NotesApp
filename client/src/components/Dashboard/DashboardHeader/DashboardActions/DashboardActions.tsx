@@ -6,11 +6,15 @@ import AddIcon from '@mui/icons-material/Add';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useNavigate } from 'react-router';
 
-export const DashboardActions = () => {
+interface IDashboardActions {
+  boardId: string;
+}
+
+export const DashboardActions: React.FC<IDashboardActions> = ({ boardId }) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate('/add_task');
+    navigate(`/add_task/${boardId}`);
   };
 
   return (

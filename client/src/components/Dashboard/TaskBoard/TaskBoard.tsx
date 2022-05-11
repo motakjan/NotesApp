@@ -108,7 +108,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
           setOpen={setDashboardChanged}
         />
       )}
-      <DashboardHeader title={board.title} description={board.description} />
+      <DashboardHeader title={board.title} boardId={board._id} description={board.description} />
       <FilterOptions
         handlePersonClicked={handleUsersPickerOpen}
         selectedUser={selectedUser}

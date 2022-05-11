@@ -13,7 +13,7 @@ export const App: React.FC = () => (
       <Route path="/login" element={<Authentication />} />
       <Route path="/dashboard" element={<WithLayout page={<Dashboard />} />} />
       <Route path="/" element={<Navigate to="/dashboard" />} />
-      <Route path="/add_task" element={<WithLayout page={<AddTask />} />} />
+      <Route path="/add_task/:boardId" element={<WithLayout page={<AddTask />} />} />
       <Route path="/join_task" element={<WithLayout page={<div>join_task</div>} />} />
       <Route path="*" element={<WithLayout page={<div>NOT FOUND</div>} />} />
     </Routes>

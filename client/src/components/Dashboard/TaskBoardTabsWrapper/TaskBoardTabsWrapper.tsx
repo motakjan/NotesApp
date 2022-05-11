@@ -1,7 +1,7 @@
 import { Tab, Tabs } from '@mui/material';
 import { Box } from '@mui/system';
 import { useState } from 'react';
-import { IDashboard, ITaskBoardTabsWrapper } from '../../../types/Dashboard';
+import { IDashboard, ITaskBoardTabsWrapper } from '../../../types/Dashboard/dashboardTypes';
 import { TaskBoard } from '../TaskBoard/TaskBoard';
 import { TabPanel } from './TabPanel/TabPanel';
 

@@ -1,4 +1,3 @@
-import Box from '@mui/material/Box';
 import React from 'react';
 import { SxProps } from '@mui/system';
 import { Paper } from '@mui/material';
