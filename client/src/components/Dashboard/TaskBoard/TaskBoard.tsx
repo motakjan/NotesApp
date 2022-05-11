@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { DragDropContext, Droppable, DroppableProvided, DroppableStateSnapshot, DropResult } from 'react-beautiful-dnd';
-import { Box, createTheme, Typography } from '@mui/material';
-import { useColorMode } from '../../../context/ColorModeContext';
-import { clearItemTask, generateColumns, onDragEnd } from '../../../utils/dashboardHelpers';
+import { Box, Typography, createTheme } from '@mui/material';
+import { DragDropContext, DropResult, Droppable, DroppableProvided, DroppableStateSnapshot } from 'react-beautiful-dnd';
 import { IDashboard, ITask, ITaskBoard } from '../../../types/Dashboard/dashboardTypes';
-import { getCurrentTheme } from '../../../assets/theme';
+import React, { useEffect, useState } from 'react';
+import { clearItemTask, generateColumns, onDragEnd } from '../../../utils/dashboardHelpers';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { dashboardApi } from '../../../api/dashboard';
+
+import { DashboardHeader } from '../DashboardHeader/DashboardHeader';
+import DraggableItem from './DraggableItem/DraggableItem';
+import { FilterOptions } from '../FilterOptions/FilterOptions';
 import { Loading } from '../../../pages/Loading/Loading';
 import { NappSnackbar } from '../../UI/NappSnackbar/NappSnackbar';
-import { v4 as uuidv4 } from 'uuid';
-import { useToast } from '../../../hooks/useToast';
-import DraggableItem from './DraggableItem/DraggableItem';
 import { NappUserPicker } from '../../UI/NappUserPicker/NappUserPicker';
-import { DashboardHeader } from '../DashboardHeader/DashboardHeader';
-import { FilterOptions } from '../FilterOptions/FilterOptions';
+import { dashboardApi } from '../../../api/dashboard';
+import { getCurrentTheme } from '../../../assets/theme';
+import { useColorMode } from '../../../context/ColorModeContext';
+import { useToast } from '../../../hooks/useToast';
+import { v4 as uuidv4 } from 'uuid';
 
 export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
   const { mode } = useColorMode();
@@ -91,14 +92,14 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
 
   return (
     <>
-      {/* {dashboardData?.length > 0 && ( */}
-      <NappUserPicker
-        users={dashboardData.users}
-        open={personFilterClicked}
-        handleClose={handleUsersPickerClose}
-        setSelectedUser={handleUserListItemSelected}
-      />
-      {/* )} */}
+      {dashboardData && (
+        <NappUserPicker
+          users={dashboardData.users}
+          open={personFilterClicked}
+          handleClose={handleUsersPickerClose}
+          setSelectedUser={handleUserListItemSelected}
+        />
+      )}
       {staticData?.length > 0 && (
         <NappSnackbar
           mode={mode}

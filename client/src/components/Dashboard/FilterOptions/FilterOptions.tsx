@@ -1,11 +1,12 @@
-import { Avatar, Box, Button, ToggleButton, ToggleButtonGroup } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import { Avatar, Box, Button, InputAdornment, TextField, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import React, { useRef, useState } from 'react';
+
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import SortIcon from '@mui/icons-material/Sort';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import CompressIcon from '@mui/icons-material/Compress';
 import ExpandIcon from '@mui/icons-material/Expand';
-import React from 'react';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import SearchIcon from '@mui/icons-material/Search';
+import SortIcon from '@mui/icons-material/Sort';
 import { blue } from '@mui/material/colors';
 
 interface IFilterOptions {
@@ -23,6 +24,13 @@ export const FilterOptions: React.FC<IFilterOptions> = ({
 }) => {
   const handleTaskSizeChanged = (_event: React.MouseEvent<HTMLElement>, newSize: 'small' | 'medium' | 'large') =>
     setTaskSize(newSize);
+  const [searchClicked, setSearchClicked] = useState(false);
+  const searchInputRef = useRef();
+
+  const handleSearchClicked = () => {
+    searchInputRef.current.focus();
+    setSearchClicked(true);
+  };
 
   return (
     <Box
@@ -32,9 +40,26 @@ export const FilterOptions: React.FC<IFilterOptions> = ({
         display: 'flex',
       }}
     >
-      <Button startIcon={<SearchIcon />} sx={{ textTransform: 'none' }} variant="text">
-        Search
-      </Button>
+      <TextField
+        id="input-with-icon-textfield"
+        inputRef={searchInputRef}
+        onClick={handleSearchClicked}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon color="primary" />
+            </InputAdornment>
+          ),
+        }}
+        variant="standard"
+        color="primary"
+        placeholder="Search"
+        sx={{
+          width: searchClicked ? '12rem' : '6rem',
+          transition: 'width 1s',
+        }}
+        autoFocus
+      />
       <Button
         startIcon={
           selectedUser !== 'Person' ? (
