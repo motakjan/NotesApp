@@ -28,7 +28,7 @@ export const FilterOptions: React.FC<IFilterOptions> = ({
   const searchInputRef = useRef();
 
   const handleSearchClicked = () => {
-    searchInputRef.current.focus();
+    if (searchInputRef.current) searchInputRef.current.focus();
     setSearchClicked(true);
   };
 
@@ -62,11 +62,11 @@ export const FilterOptions: React.FC<IFilterOptions> = ({
       />
       <Button
         startIcon={
-          selectedUser !== 'Person' ? (
+          selectedUser !== 'All Users' ? (
             <Avatar
               sx={{ bgcolor: blue[100], color: blue[600] }}
               alt={selectedUser.fullName}
-              src={selectedUser.image && `http://127.0.0.1:1337/${selectedUser.image}`}
+              src={selectedUser.image && `${import.meta.env.VITE_BE_URL}${selectedUser.image}`}
             >
               {`${selectedUser.firstName.charAt(0)}${selectedUser.lastName.charAt(0)}`}
             </Avatar>
@@ -78,7 +78,7 @@ export const FilterOptions: React.FC<IFilterOptions> = ({
         variant="text"
         onClick={handlePersonClicked}
       >
-        {selectedUser.fullName || 'Person'}
+        {selectedUser.fullName || 'All Users'}
       </Button>
       <Button startIcon={<FilterAltIcon />} sx={{ textTransform: 'none' }} variant="text">
         Filter

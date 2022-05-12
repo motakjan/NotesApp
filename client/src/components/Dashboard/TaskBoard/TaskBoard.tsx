@@ -27,7 +27,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
   const [taskSize, setTaskSize] = useState<'small' | 'medium' | 'large'>('large');
   const [dashboardChanged, setDashboardChanged] = useState<boolean>(false);
   const [personFilterClicked, setPersonFilterClicked] = useState(false);
-  const [selectedUser, setSelectedUser] = useState('Person');
+  const [selectedUser, setSelectedUser] = useState('All Users');
   const { successToast } = useToast();
   const theme = React.useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);
   const { status } = useQuery<IDashboard, Error>(
@@ -98,6 +98,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
           open={personFilterClicked}
           handleClose={handleUsersPickerClose}
           setSelectedUser={handleUserListItemSelected}
+          theme={mode}
         />
       )}
       {staticData?.length > 0 && (
