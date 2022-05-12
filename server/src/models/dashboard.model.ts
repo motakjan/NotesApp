@@ -14,10 +14,10 @@ export class Dashboard {
   @prop({ required: true })
   public description: string;
 
-  @prop()
+  @prop({ default: [] })
   public users: string[];
 
-  @prop()
+  @prop({ default: [] })
   public tasks: ITask[];
 }
 

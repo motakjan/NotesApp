@@ -26,7 +26,7 @@ export const createOneSchema = {
         path: ['id'],
         message: 'Invalid ObjectID in users array',
       })
-    ),
+    ).optional(),
     tasks: array(
       object({
         id: string({
@@ -38,7 +38,7 @@ export const createOneSchema = {
         position: number().optional(),
         column: number().optional(),
       })
-    ),
+    ).optional(),
   }),
 };
 
