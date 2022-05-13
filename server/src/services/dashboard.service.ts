@@ -37,6 +37,8 @@ export const createOne = async (data: any) => {
   return newTest.save();
 };
 
+export const findAllByUser = async (id: string) => DashboardModel.find({ users: { $in: id.toString() } });
+
 export const updateOne = async (id: string, data: any) =>
   DashboardModel.findByIdAndUpdate(id, data, {
     new: true,

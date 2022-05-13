@@ -1,11 +1,24 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { TActionOneParams, TCreateOneBody, TUpdateOneBody, TUpdateOneParams } from '../schemas/dashboard.schemas';
-import { createOne, deleteOne, findAll, findOneExtended, findOne, updateOne } from '../services/dashboard.service';
+import {
+  createOne,
+  deleteOne,
+  findAll,
+  findOneExtended,
+  findOne,
+  updateOne,
+  findAllByUser,
+} from '../services/dashboard.service';
 
 export const getDashboardsHandler = async (req: Request, res: Response) => {
   const dashboards = await findAll();
   return res.status(StatusCodes.OK).json(dashboards);
+};
+
+export const getUserDashboardsHandler = async (req: Request, res: Response) => {
+  const userDashboards = await findAllByUser(req.params.userId ?? req.user._id);
+  return res.status(StatusCodes.OK).json(userDashboards);
 };
 
 export const getDashboardHandler = async (req: Request<TActionOneParams>, res: Response) => {

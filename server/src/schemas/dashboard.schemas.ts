@@ -13,6 +13,12 @@ export const actionOneSchema = {
   }),
 };
 
+export const findByUserSchema = {
+  params: object({
+    userId: string().optional(),
+  }),
+};
+
 export const createOneSchema = {
   body: object({
     title: string({

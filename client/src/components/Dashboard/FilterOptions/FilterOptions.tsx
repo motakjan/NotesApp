@@ -1,6 +1,5 @@
 import { Avatar, Box, Button, InputAdornment, TextField, ToggleButton, ToggleButtonGroup } from '@mui/material';
-import React, { useRef, useState } from 'react';
-
+import React, { useState } from 'react';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CompressIcon from '@mui/icons-material/Compress';
 import ExpandIcon from '@mui/icons-material/Expand';
@@ -22,15 +21,11 @@ export const FilterOptions: React.FC<IFilterOptions> = ({
   setTaskSize,
   taskSize,
 }) => {
-  const handleTaskSizeChanged = (_event: React.MouseEvent<HTMLElement>, newSize: 'small' | 'medium' | 'large') =>
-    setTaskSize(newSize);
+  const handleTaskSizeChanged = (
+    _event: React.MouseEvent<HTMLElement, MouseEvent>,
+    newSize: 'small' | 'medium' | 'large'
+  ) => setTaskSize(newSize);
   const [searchClicked, setSearchClicked] = useState(false);
-  const searchInputRef = useRef();
-
-  const handleSearchClicked = () => {
-    if (searchInputRef.current) searchInputRef.current.focus();
-    setSearchClicked(true);
-  };
 
   return (
     <Box
@@ -42,8 +37,6 @@ export const FilterOptions: React.FC<IFilterOptions> = ({
     >
       <TextField
         id="input-with-icon-textfield"
-        inputRef={searchInputRef}
-        onClick={handleSearchClicked}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -53,12 +46,13 @@ export const FilterOptions: React.FC<IFilterOptions> = ({
         }}
         variant="standard"
         color="primary"
+        onFocus={() => setSearchClicked(prev => !prev)}
+        onBlur={() => setSearchClicked(prev => !prev)}
         placeholder="Search"
         sx={{
           width: searchClicked ? '12rem' : '6rem',
           transition: 'width 1s',
         }}
-        autoFocus
       />
       <Button
         startIcon={

@@ -8,7 +8,7 @@ import { Loading } from '../Loading/Loading';
 export const Dashboard = () => {
   const { data: boards, status } = useQuery<IDashboard[] | undefined, Error>(
     'dashboards-initial',
-    dashboardApi.getDashboards
+    dashboardApi.getUserDashboards
   );
 
   if (status === 'loading') {
