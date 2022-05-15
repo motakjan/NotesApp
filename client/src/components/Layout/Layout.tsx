@@ -15,7 +15,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import DateRangeIcon from '@mui/icons-material/DateRange';
-import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -29,6 +28,7 @@ import { NappLogo } from '../UI/NappLogo/NappLogo';
 import { AxiosError } from 'axios';
 import { DrawerIcon } from './DrawerIcon';
 import { grey } from '@mui/material/colors';
+import { AddDashboard } from '../AddDahboard/AddDashboard';
 
 export const Layout: React.FC<React.ReactNode> = ({ children }) => {
   const { mode, toggleColorMode } = useColorMode();
@@ -117,12 +117,7 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
           <Divider />
           <List>
             <DrawerIcon title="Dashboard" onClick={() => navigate('/dashboard')} icon={<DashboardIcon />} open={open} />
-            <DrawerIcon
-              title="Add Dashboard"
-              onClick={() => navigate('/add_dashboard')}
-              icon={<DashboardCustomizeIcon />}
-              open={open}
-            />
+            <AddDashboard />
           </List>
           <Divider />
           <List>

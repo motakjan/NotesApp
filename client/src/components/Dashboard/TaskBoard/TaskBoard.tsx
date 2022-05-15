@@ -1,10 +1,9 @@
-import { Box, Typography, createTheme } from '@mui/material';
-import { DragDropContext, DropResult, Droppable, DroppableProvided, DroppableStateSnapshot } from 'react-beautiful-dnd';
+import { Box, createTheme, Typography } from '@mui/material';
+import { DragDropContext, Droppable, DroppableProvided, DroppableStateSnapshot, DropResult } from 'react-beautiful-dnd';
 import { IDashboard, ITask, ITaskBoard } from '../../../types/Dashboard/dashboardTypes';
 import React, { useEffect, useState } from 'react';
 import { clearItemTask, generateColumns, onDragEnd } from '../../../utils/dashboardHelpers';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-
 import { DashboardHeader } from '../DashboardHeader/DashboardHeader';
 import DraggableItem from './DraggableItem/DraggableItem';
 import { FilterOptions } from '../FilterOptions/FilterOptions';

@@ -18,6 +18,7 @@ import { ControlledTextField } from '../../UI/ControlledTextField/ControlledText
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import DeleteSweepRoundedIcon from '@mui/icons-material/DeleteSweepRounded';
 import { IMainBar } from '../../../types/AddTask/addTaskTypes';
+import { ControlledAutoCompleteSelect } from '../../UI/ControlledAutoCompleteSelect/ControlledAutoCompleteSelect';
 
 const colourOptions = [
   { id: 1, name: 'Chocolate' },
@@ -115,7 +116,14 @@ export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors, res
           control={control}
           helperTextMessage="Input description that describes your task"
         />
-
+        <ControlledAutoCompleteSelect
+          control={control}
+          filterBy="name"
+          options={colourOptions}
+          name="taskSelectLabel"
+          helperText="Select tags that match your task"
+          placeholder="Please choose tags describing your task"
+        />
         <Controller
           name="taskSelectLabel"
           control={control}
@@ -167,7 +175,6 @@ export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors, res
             </MenuItem>
           ))}
         </ControlledTextField>
-
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Box sx={{ display: 'flex', gap: '1%' }}>
             <Controller
@@ -227,7 +234,6 @@ export const MainBar: React.FC<IMainBar> = ({ control, handleSubmit, errors, res
           labelPlacement="start"
           sx={{ marginRight: 'auto', marginLeft: '5px' }}
         />
-
         <Box
           sx={{
             display: 'flex',

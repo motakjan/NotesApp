@@ -13,4 +13,11 @@ export const dashboardApi = {
     };
     return instance.put(`/dashboard/${id}`, newData).then(res => res.data);
   },
+  postDashboardData(data: any) {
+    const dataForm = {
+      ...data,
+      users: data.users.flatMap((user: any) => user._id),
+    };
+    return instance.post('/dashboard', dataForm).then(res => res.data);
+  },
 };
