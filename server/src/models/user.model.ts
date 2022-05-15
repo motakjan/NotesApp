@@ -1,5 +1,14 @@
-import { prop, getModelForClass } from '@typegoose/typegoose';
+import { post, prop, getModelForClass } from '@typegoose/typegoose';
+import DashboardModel from './dashboard.model';
 
+@post<User>('save', async data => {
+  const dashboard = new DashboardModel({
+    title: `${data.firstName}'s Dashboard`,
+    description: `${data.firstName}'s Dashboard Description`,
+    users: [data._id.toString()],
+  });
+  await dashboard.save();
+})
 export class User {
   @prop({ required: true })
   public username: string;
@@ -25,11 +34,6 @@ export class User {
     },
   })
   public fullName?: string;
-
-  /*
-  @prop({ ref: () => Task})
-  public tasks?: Ref<Task>[];
-  */
 }
 
 const UserModel = getModelForClass(User, {

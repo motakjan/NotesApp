@@ -6,22 +6,26 @@ import { Layout } from './Layout';
 import { AxiosError } from 'axios';
 
 export const WithLayout = ({ page }: { page: JSX.Element }) => {
-  const { status } = useQuery<{ isLoggedIn: boolean; errors: AxiosError }>('isLoggedIn', authApi.isLoggedIn, {
-    retry: false,
-  });
   const navigate = useNavigate();
+  const { status, isLoading } = useQuery<{ isLoggedIn: boolean; errors: AxiosError }>(
+    'isLoggedIn',
+    authApi.isLoggedIn,
+    {
+      retry: false,
+    }
+  );
 
   if (status === 'error') {
     navigate('/login');
   }
 
-  if (status === 'loading') {
-    return <Loading status={status} />;
+  if (isLoading) {
+    return <div> Loading... </div>;
   }
 
   return (
     <>
-      <Layout>{status === 'loading' ? <Loading status={status} /> : page}</Layout>
+      <Layout>{isLoading ? <Loading status={status} /> : page}</Layout>
     </>
   );
 };

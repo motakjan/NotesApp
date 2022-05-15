@@ -110,6 +110,28 @@ export const getCurrentTheme = (mode: PaletteMode) => ({
       }),
   },    
   components: {
+    MuiSnackbar: {
+      variants: [
+        {
+          props: { variant: 'light' },
+          style: {
+            '& .MuiSnackbarContent-root': {
+              background: '#160c4a',
+              color: '#fff'
+            }
+          }
+        },
+        {
+          props: { variant: 'dark' },
+          style: {
+            '& .MuiSnackbarContent-root': {
+              background: '#1c1c1c',
+              color: '#fff'
+            }
+          }
+        }
+      ]
+    },
     MuiAvatar: {
       styleOverrides: {
         root: {

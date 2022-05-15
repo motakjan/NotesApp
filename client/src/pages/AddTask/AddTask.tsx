@@ -3,8 +3,8 @@ import { MainBar } from '../../components/AddTask/MainBar/MainBar';
 import { RightBar } from '../../components/AddTask/RightBar/RightBar';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { taskFormValidator } from './formValidator';
 import { ITaskFormValues } from '../../types/AddTask/addTaskTypes';
+import { addTaskSchema } from '../../utils/schemas/addTaskSchema';
 
 const DEFAULT_VALUES = {
   taskType: '',
@@ -25,7 +25,7 @@ export const AddTask = () => {
     formState: { errors },
     reset,
   } = useForm<ITaskFormValues>({
-    resolver: yupResolver(taskFormValidator),
+    resolver: yupResolver(addTaskSchema),
     defaultValues: DEFAULT_VALUES,
   });
 

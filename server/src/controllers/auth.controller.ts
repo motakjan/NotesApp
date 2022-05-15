@@ -31,7 +31,6 @@ export const loginHandler = async (req: Request<{}, {}, LoginUserBody>, res: Res
     const validPassword = await isPasswordValid(user.password, req.body.password);
     if (!validPassword) return res.status(StatusCodes.FORBIDDEN).json({ errorMessage: 'Invalid password.' });
 
-    // eslint-disable-next-line no-underscore-dangle
     const jwtToken = jwt.sign({ _id: user._id }, process.env.JWT_TOKEN_SECRET as string, { expiresIn: '7d' });
 
     return res.header('auth-token', jwtToken).status(StatusCodes.OK).json({ jwtToken });
@@ -44,7 +43,6 @@ export const isLoggedInHandler = async (req: Request, res: Response) => {
   const token = req.header('auth-token');
   if (!token)
     return res.status(StatusCodes.UNAUTHORIZED).json(generateErrorObject('access', 'Access denied (no token)'));
-
   try {
     const tokenCheck = jwt.verify(token, process.env.JWT_TOKEN_SECRET as string);
     return res.status(StatusCodes.OK).json({ isLoggedIn: true, tokenCheck });

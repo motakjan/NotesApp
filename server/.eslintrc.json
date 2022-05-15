@@ -20,8 +20,9 @@
     "prettier/prettier": "error",
     "import/prefer-default-export": "off",
     "import/no-default-export": "off",
+    "no-underscore-dangle": "off",
     "no-use-before-define": [
-      "error",
+      "off",
       {
         "functions": false,
         "classes": true,

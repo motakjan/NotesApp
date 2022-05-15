@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export const taskFormValidator = Yup.object().shape({
+export const addTaskSchema = Yup.object().shape({
   dropzone: Yup.array(),
   taskType: Yup.string().required(),
   taskTitle: Yup.string().required(),

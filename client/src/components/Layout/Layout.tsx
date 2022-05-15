@@ -25,7 +25,6 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router';
 import { useQueryClient } from 'react-query';
-import _ from 'lodash';
 import { NappLogo } from '../UI/NappLogo/NappLogo';
 import { AxiosError } from 'axios';
 import { DrawerIcon } from './DrawerIcon';
@@ -33,7 +32,7 @@ import { grey } from '@mui/material/colors';
 
 export const Layout: React.FC<React.ReactNode> = ({ children }) => {
   const { mode, toggleColorMode } = useColorMode();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [_isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const queryClient = useQueryClient();
   const cachedIsLoggedIn: { isLoggedIn: boolean; errors: AxiosError } = queryClient.getQueryData('isLoggedIn')!;
   const navigate = useNavigate();

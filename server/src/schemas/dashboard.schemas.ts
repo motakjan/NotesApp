@@ -1,4 +1,4 @@
-import { TypeOf, array, object, string } from 'zod';
+import { TypeOf, array, object, string, number } from 'zod';
 
 import mongoose from 'mongoose';
 
@@ -10,6 +10,12 @@ export const actionOneSchema = {
   }).refine(data => mongoose.Types.ObjectId.isValid(data.id), {
     path: ['id'],
     message: 'Invalid mongoose ObjectID in params',
+  }),
+};
+
+export const findByUserSchema = {
+  params: object({
+    userId: string().optional(),
   }),
 };
 
@@ -26,13 +32,19 @@ export const createOneSchema = {
         path: ['id'],
         message: 'Invalid ObjectID in users array',
       })
-    ),
+    ).optional(),
     tasks: array(
-      string().refine(user => mongoose.Types.ObjectId.isValid(user), {
-        path: ['id'],
-        message: 'Invalid ObjectID in tasks array',
+      object({
+        id: string({
+          required_error: 'id is required',
+        }).refine(user => mongoose.Types.ObjectId.isValid(user), {
+          path: ['id'],
+          message: 'Invalid ObjectID in tasks array',
+        }),
+        position: number().optional(),
+        column: number().optional(),
       })
-    ),
+    ).optional(),
   }),
 };
 
@@ -43,24 +55,26 @@ export const updateOneSchema = {
     }),
   }).refine(data => mongoose.Types.ObjectId.isValid(data.id), { path: ['id'], message: 'Invalid ObjectID in params' }),
   body: object({
-    title: string({
-      required_error: 'title is required',
-    }),
-    description: string({
-      required_error: 'title is required',
-    }),
+    title: string().optional(),
+    description: string().optional(),
     users: array(
       string().refine(user => mongoose.Types.ObjectId.isValid(user), {
         path: ['id'],
         message: 'Invalid ObjectID in users array',
       })
-    ),
+    ).optional(),
     tasks: array(
-      string().refine(user => mongoose.Types.ObjectId.isValid(user), {
-        path: ['id'],
-        message: 'Invalid ObjectID in tasks array',
+      object({
+        id: string({
+          required_error: 'id is required',
+        }).refine(user => mongoose.Types.ObjectId.isValid(user), {
+          path: ['id'],
+          message: 'Invalid ObjectID in tasks array',
+        }),
+        position: number().optional(),
+        column: number().optional(),
       })
-    ),
+    ).optional(),
   }),
 };
 

@@ -2,6 +2,7 @@ import { array, number, object, string, TypeOf } from 'zod';
 import mongoose from 'mongoose';
 
 const VALUES = ['event', 'basic', 'notification'];
+const TASK_TYPES = ['appointment', 'task', 'meeting', 'note', 'default'];
 const PRIORITY = [1, 2, 3, 4, 5];
 
 // check if string is valid date format
@@ -23,6 +24,7 @@ export const createUpdateBodySchema = {
         .max(20),
     })
   ),
+  type: string().refine((el: string) => TASK_TYPES.includes(el)),
   start: string()
     .refine(el => isValidDate(el), {
       path: ['start'],
@@ -62,7 +64,49 @@ export const updateOneSchema = {
       required_error: 'Id is required',
     }),
   }).refine(data => mongoose.Types.ObjectId.isValid(data.id), { path: ['id'], message: 'Invalid ObjectID' }),
-  body: object(createUpdateBodySchema),
+  body: object({
+    title: string().min(3).max(20).optional(),
+    description: string().min(3).max(500).optional(),
+    tags: array(
+      object({
+        tagType: string().refine((el: string) => VALUES.includes(el), {
+          path: ['tagType'],
+          message: 'Invalid TagType',
+        }),
+        tagText: string({
+          required_error: 'tagText is required',
+        })
+          .min(3)
+          .max(20),
+      })
+    ).optional(),
+    type: string()
+      .refine((el: string) => TASK_TYPES.includes(el))
+      .optional(),
+    start: string()
+      .refine(el => isValidDate(el), {
+        path: ['start'],
+        message: 'Invalid start date',
+      })
+      .optional(),
+    end: string()
+      .refine(el => isValidDate(el), {
+        path: ['end'],
+        message: 'Invalid end date',
+      })
+      .optional(),
+    priority: number()
+      .refine((el: number) => PRIORITY.includes(el), {
+        path: ['priority'],
+        message: 'Invalid priority type please choose from [1,2,3,4,5]',
+      })
+      .optional(),
+    users: array(
+      string()
+        .refine(user => mongoose.Types.ObjectId.isValid(user), { path: ['id'], message: 'Invalid ObjectID' })
+        .optional()
+    ),
+  }),
 };
 
 export type TActionOneParams = TypeOf<typeof actionOneSchema.params>;

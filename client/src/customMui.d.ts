@@ -7,3 +7,9 @@ declare module '@mui/material/styles/createPalette' {
     nappPersonModal: TypeNappPersonModal;
   }
 }
+
+declare module '@mui/material/Snackbar' {
+  interface SnackbarProps {
+    variant: string;
+  }
+}

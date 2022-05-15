@@ -1,3 +1,4 @@
+import { TUpdateOneBody } from '../schemas/task.schemas';
 import TaskModel, { Task } from '../models/task.model';
 import UserModel from '../models/user.model';
 
@@ -13,14 +14,14 @@ export const createOne = async (data: Task) => {
   return newTest.save();
 };
 
-export const updateOne = async (id: string, data: Task) =>
+export const updateOne = async (id: string, data: TUpdateOneBody) =>
   TaskModel.findByIdAndUpdate(id, data, {
     new: true,
   });
 
 export const deleteOne = async (id: string) => TaskModel.findByIdAndDelete(id);
 
-export const checkIfProvidedUsersExists = async (users: Task['users']) => {
+export const checkIfProvidedUsersExists = async (users: TUpdateOneBody['users'] | undefined) => {
   let usersFound = [];
   if (users?.length === 0) return true;
 

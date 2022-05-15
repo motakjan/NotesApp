@@ -1,4 +1,4 @@
-import { Avatar, AvatarGroup, Chip } from '@mui/material';
+import { Chip } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
@@ -7,12 +7,13 @@ import CircleIcon from '@mui/icons-material/Circle';
 import './CardActionsArea.css';
 import { useColorMode } from '../../../../context/ColorModeContext';
 import { v4 as uuidv4 } from 'uuid';
+import { TAG_TYPE_COLORS } from '../../../../utils/constVariables';
 
-export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, handleClick }) => {
+export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, handleClick, text, updatedAt, size }) => {
   const { mode } = useColorMode();
 
   return (
-    <Box onClick={() => handleClick()} className={`hvr-fade-${mode}`}>
+    <Box onClick={() => handleClick()} className={`hvr-fade-${mode}`} sx={{ width: '100%' }}>
       <CardContent
         sx={{
           padding: '12px 16px 2px 16px',
@@ -28,10 +29,11 @@ export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, ha
         >
           {title}
         </Typography>
-        <Typography variant="caption" display="block" gutterBottom>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel reprehenderit quaerat quasi doloribus autem
-          velit consequuntur, quo inventore ...
-        </Typography>
+        {size === 'large' && (
+          <Typography variant="caption" display="block" gutterBottom>
+            {text}
+          </Typography>
+        )}
         <Box
           sx={{
             margin: '10px 0px',
@@ -42,6 +44,7 @@ export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, ha
           }}
         >
           {tags &&
+            size === 'large' &&
             tags.map((tag: TaskCardTagType) => (
               <Chip
                 key={`${uuidv4()}-chip`}
@@ -50,20 +53,16 @@ export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, ha
                   height: '20px',
                   padding: '0px 3px',
                 }}
-                variant={tag.type === 'tag' ? 'outlined' : 'filled'}
-                color={tag.color}
+                variant="outlined"
+                color={TAG_TYPE_COLORS[tag.tagType]}
                 size="small"
                 icon={
-                  tag.type === 'tag' ? (
-                    <CircleIcon
-                      sx={{
-                        width: '10px',
-                        height: '10px',
-                      }}
-                    />
-                  ) : (
-                    <></>
-                  )
+                  <CircleIcon
+                    sx={{
+                      width: '10px',
+                      height: '10px',
+                    }}
+                  />
                 }
                 label={
                   <Typography
@@ -73,7 +72,7 @@ export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, ha
                       fontSize: '0.6rem',
                     }}
                   >
-                    {tag.name}
+                    {tag.tagText}
                   </Typography>
                 }
               />
@@ -95,14 +94,8 @@ export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, ha
               }}
               gutterBottom
             >
-              updated 2022-08-05 15:00
+              {`updated at ${new Date(updatedAt!).toLocaleString()}`}
             </Typography>
-            <AvatarGroup max={3} variant="rounded">
-              <Avatar alt="Remy Sharp" src="https://avatars.dicebear.com/api/adventurer-neutral/yarosla.svg" />
-              <Avatar alt="Remy Sharp" src="https://avatars.dicebear.com/api/adventurer-neutral/yaro.svg" />
-              <Avatar alt="Remy Sharp" src="https://avatars.dicebear.com/api/adventurer-neutral/yaroslav1.svg" />
-              <Avatar alt="Remy" src="https://avatars.dicebear.com/api/adventurer-neutral/ya1.svg" />
-            </AvatarGroup>
           </Box>
         </Box>
       </CardContent>

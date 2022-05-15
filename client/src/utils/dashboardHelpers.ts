@@ -1,10 +1,10 @@
-import { IOnDragEnd } from '../types/Dashboard';
-import { v4 as uuidv4 } from 'uuid';
+import { IDashboard, IOnDragEnd, ITask } from '../types/Dashboard';
+import _ from 'lodash';
 
 export const onDragEnd: IOnDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
-  const { source, destination } = result;
 
+  const { source, destination } = result;
   if (source.droppableId !== destination.droppableId) {
     const sourceColumn = columns[source.droppableId];
     const destColumn = columns[destination.droppableId];
@@ -12,6 +12,7 @@ export const onDragEnd: IOnDragEnd = (result, columns, setColumns) => {
     const destItems = [...destColumn.items];
     const [removed] = sourceItems.splice(source.index, 1);
     destItems.splice(destination.index, 0, removed);
+    destItems[destination.index].column = parseFloat(destination.droppableId);
     setColumns({
       ...columns,
       [source.droppableId]: {
@@ -26,7 +27,8 @@ export const onDragEnd: IOnDragEnd = (result, columns, setColumns) => {
   } else {
     const column = columns[source.droppableId];
     const copiedItems = [...column.items];
-    const [removed] = copiedItems.splice(source.index, 1);
+    copiedItems[0].position = destination.index;
+    const removed = copiedItems.splice(source.index, 1)[0];
     copiedItems.splice(destination.index, 0, removed);
     setColumns({
       ...columns,
@@ -41,111 +43,43 @@ export const onDragEnd: IOnDragEnd = (result, columns, setColumns) => {
 export const getBGColor = (mode: string, darkColor: string, lightColor: string) =>
   mode === 'dark' ? darkColor : lightColor;
 
-const itemsFromBackend = [
-  {
-    id: uuidv4(),
-    title: 'First Task',
-    tags: [
-      {
-        name: 'Testing',
-        color: 'info',
-        type: 'tag',
-      },
-      {
-        name: 'Testing',
-        color: 'warning',
-        type: 'filledTag',
-      },
-    ],
-  },
-  {
-    id: uuidv4(),
-    title: 'Second Task',
-    tags: [],
-  },
-  {
-    id: uuidv4(),
-    title: 'Third Task',
-    tags: [
-      {
-        name: 'Working',
-        color: 'error',
-        type: 'tag',
-      },
-    ],
-  },
-  {
-    id: uuidv4(),
-    title: 'Third Task',
-    tags: [
-      {
-        name: 'Working',
-        color: 'error',
-        type: 'tag',
-      },
-    ],
-  },
-
-  {
-    id: uuidv4(),
-    title: 'Third Task',
-    tags: [
-      {
-        name: 'Working',
-        color: 'error',
-        type: 'tag',
-      },
-    ],
-  },
-
-  {
-    id: uuidv4(),
-    title: 'Third Task',
-    tags: [
-      {
-        name: 'Working',
-        color: 'error',
-        type: 'tag',
-      },
-    ],
-  },
-
-  {
-    id: uuidv4(),
-    title: 'Third Task',
-    tags: [
-      {
-        name: 'Working',
-        color: 'error',
-        type: 'tag',
-      },
-    ],
-  },
-];
-
-export const columnsFromBacked = {
-  [uuidv4()]: {
-    name: 'Unassigned',
-    items: [],
-  },
-  [uuidv4()]: {
-    name: 'Todo',
-    items: [],
-  },
-  [uuidv4()]: {
-    name: 'Requested',
-    items: itemsFromBackend,
-  },
-  [uuidv4()]: {
-    name: 'In Progress',
-    items: [],
-  },
-  [uuidv4()]: {
-    name: 'Done',
-    items: [],
-  },
-  [uuidv4()]: {
-    name: 'Old',
-    items: [],
-  },
+const getTasksForColumn = (id: number, board: IDashboard) => {
+  const singleColumn = board.tasks.filter(el => el.column === id);
+  return _.orderBy(singleColumn, ['position'], ['asc']);
 };
+
+export const generateColumns = (board: IDashboard) => ({
+  '1': {
+    name: 'Unassigned',
+    items: getTasksForColumn(1, board),
+  },
+  '2': {
+    name: 'Todo',
+    items: getTasksForColumn(2, board),
+  },
+  '3': {
+    name: 'Requested',
+    items: getTasksForColumn(3, board),
+  },
+  '4': {
+    name: 'In Progress',
+    items: getTasksForColumn(4, board),
+  },
+  '5': {
+    name: 'Done',
+    items: getTasksForColumn(5, board),
+  },
+  '6': {
+    name: 'Old',
+    items: getTasksForColumn(6, board),
+  },
+});
+
+export const clearItemTask = ({ element, changedProp }: { element: ITask[]; changedProp?: string }) =>
+  element?.map((el: ITask, index: any) => {
+    const { title, description, users, tags, ...rest } = el;
+    if (changedProp) {
+      rest.position = index;
+    }
+    return rest;
+  });
