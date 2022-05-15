@@ -6,7 +6,7 @@ export const hashPassword = async (password: User['password']) => {
   return bcrypt.hash(password, salt);
 };
 
-export const createUser = async (userData: User, hashedPassword: string) => {
+export const createUser = async (userData: Omit<User, 'password'>, hashedPassword: string) => {
   const newUser = new UserModel({
     ...userData,
     password: hashedPassword,

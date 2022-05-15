@@ -27,6 +27,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.29.4",
     "express": "^4.17.1",
+    "google-auth-library": "^8.0.2",
     "helmet": "^4.6.0",
     "http-status-codes": "^2.2.0",
     "jsonwebtoken": "^8.5.1",

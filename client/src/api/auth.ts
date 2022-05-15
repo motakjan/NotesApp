@@ -8,4 +8,7 @@ export const authApi = {
   isLoggedIn() {
     return instance.get('/auth/isLoggedIn').then(res => res.data);
   },
+  googleLoginUser(data: LoginDataType) {
+    return instance.post('/auth/googleLogin', data).then(res => res.data);
+  },
 };

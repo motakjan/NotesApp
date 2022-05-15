@@ -2,24 +2,23 @@ import { NappLink } from '../UI/Link/NappLink';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import GoogleIcon from '@mui/icons-material/Google';
-import FacebookIcon from '@mui/icons-material/Facebook';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { LoginWithButton } from '../UI/LoginWithButton/LoginWithButton';
 import { Divider } from '@mui/material';
 import { NappLogo } from '../UI/NappLogo/NappLogo';
 import { AnimatedBox } from '../UI/FramerMotion/AnimatedDiv';
 import { LOGIN_FORM_VARIANTS } from '../../utils/framerMotion/variants';
 import { Theme } from '@mui/material/styles';
+import { GoogleLogin } from '@react-oauth/google';
 
 interface ILoginProps {
   login: (event: React.FormEvent<HTMLFormElement>) => void;
+  googleLogin: (data: any) => void;
 }
 
-export const Login: React.FC<ILoginProps> = ({ login }) => (
+export const Login: React.FC<ILoginProps> = ({ login, googleLogin }) => (
   <AnimatedBox initial="hidden" animate="visible" variants={LOGIN_FORM_VARIANTS}>
     <Container
       component="main"
@@ -132,8 +131,7 @@ export const Login: React.FC<ILoginProps> = ({ login }) => (
               gap: '1rem',
             }}
           >
-            <LoginWithButton icon={<GoogleIcon />} color="black" />
-            <LoginWithButton icon={<FacebookIcon />} color="blue" />
+            <GoogleLogin onSuccess={googleLogin} auto_select={false} shape="pill" useOneTap />
           </Box>
           <Divider
             variant="middle"

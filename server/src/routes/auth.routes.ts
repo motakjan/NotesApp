@@ -7,6 +7,7 @@ const authRouter = express.Router();
 
 authRouter.post('/register', processRequest({ body: registerUserSchema.body }), AuthController.registerHandler);
 authRouter.post('/login', processRequest({ body: loginUserSchema.body }), AuthController.loginHandler);
+authRouter.post('/googleLogin', AuthController.googleLoginHandler);
 authRouter.get('/isLoggedIn', AuthController.isLoggedInHandler);
 
 export default authRouter;
