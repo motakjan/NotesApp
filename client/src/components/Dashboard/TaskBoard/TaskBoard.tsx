@@ -173,7 +173,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
                       }}
                     >
                       {column.items!.map((item: ITask, index: number) => (
-                        <DraggableItem item={item} index={index} itemSize={taskSize} />
+                        <DraggableItem key={item.id} item={item} index={index} itemSize={taskSize} />
                       ))}
                       {provided.placeholder}
                     </Box>

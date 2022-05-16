@@ -11,7 +11,7 @@ interface IDraggableItem {
 }
 
 const DraggableItem: React.FC<IDraggableItem> = ({ item, index, itemSize }) => (
-  <Draggable key={item.id} draggableId={item.id} index={index}>
+  <Draggable draggableId={item.id} index={index}>
     {/* eslint-disable-next-line @typescript-eslint/no-shadow */}
     {(provided: DraggableProvided, _snapshot: DraggableStateSnapshot) => (
       <Box

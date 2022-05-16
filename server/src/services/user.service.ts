@@ -15,7 +15,7 @@ export const addUserAvatar = async (id: string, path: string) =>
   UserModel.findByIdAndUpdate(
     id,
     {
-      image: path,
+      image: `${process.env.BASE_URL}${path}`,
     },
     { new: true }
   );

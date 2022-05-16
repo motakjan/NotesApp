@@ -128,10 +128,11 @@ export const Login: React.FC<ILoginProps> = ({ login, googleLogin }) => (
           <Box
             sx={{
               display: 'flex',
+              justifyContent: 'center',
               gap: '1rem',
             }}
           >
-            <GoogleLogin onSuccess={googleLogin} auto_select={false} shape="pill" useOneTap />
+            <GoogleLogin text="continue_with" width="350px" onSuccess={googleLogin} auto_select={false} useOneTap />
           </Box>
           <Divider
             variant="middle"

@@ -1,8 +1,8 @@
 import { ThemeProvider } from '@emotion/react';
-import { Badge, createTheme, CssBaseline, ListItemButton, Tooltip } from '@mui/material';
+import { Avatar, Badge, createTheme, CssBaseline, ListItemAvatar, ListItemButton, Tooltip } from '@mui/material';
 import { getCurrentTheme } from '../../assets/theme';
 import { useColorMode } from '../../context/ColorModeContext';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
@@ -17,35 +17,31 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { AppBar, Drawer, DrawerHeader } from './LayoutStyledComponents';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router';
-import { useQueryClient } from 'react-query';
 import { NappLogo } from '../UI/NappLogo/NappLogo';
-import { AxiosError } from 'axios';
 import { DrawerIcon } from './DrawerIcon';
-import { grey } from '@mui/material/colors';
+import { blue, grey } from '@mui/material/colors';
+import { useLoggedUser } from '../../context/LoggedUserContext';
 
 export const Layout: React.FC<React.ReactNode> = ({ children }) => {
   const { mode, toggleColorMode } = useColorMode();
-  const [_isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const queryClient = useQueryClient();
-  const cachedIsLoggedIn: { isLoggedIn: boolean; errors: AxiosError } = queryClient.getQueryData('isLoggedIn')!;
+  const { loggedUser, status, isLoggedIn } = useLoggedUser();
   const navigate = useNavigate();
 
-  const theme = React.useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);
+  console.log(loggedUser);
 
   useEffect(() => {
-    if (cachedIsLoggedIn && !cachedIsLoggedIn.errors) {
-      setIsLoggedIn(cachedIsLoggedIn.isLoggedIn);
-    } else {
-      setIsLoggedIn(false);
+    if (!isLoggedIn && status === 'error') {
+      navigate('/login');
     }
-  }, [cachedIsLoggedIn]);
+  }, [status, isLoggedIn, navigate]);
+
+  const theme = React.useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);
 
   const [open, setOpen] = React.useState(false);
 
@@ -59,7 +55,6 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
 
   const handleLogout = () => {
     localStorage.setItem('auth-token', '');
-    setIsLoggedIn(false);
     navigate('/login');
   };
 
@@ -100,10 +95,16 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
             </Tooltip>
             <Tooltip title="Profile" placement="bottom">
               <ListItemButton sx={{ borderRadius: '60px', maxWidth: 'fit-content', padding: '3px 12px' }}>
-                <ListItemIcon sx={{ minWidth: '34px' }}>
-                  <PersonIcon sx={{ color: grey[50] }} />
-                </ListItemIcon>
-                <ListItemText primary="Jan Moták" />
+                <ListItemAvatar sx={{ minWidth: '36px' }}>
+                  <Avatar
+                    sx={{ bgcolor: blue[100], color: blue[600] }}
+                    alt={loggedUser?.fullName}
+                    src={loggedUser?.image}
+                  >
+                    {`${loggedUser?.firstName.charAt(0)}${loggedUser?.lastName.charAt(0)}`}
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={loggedUser?.fullName} />
               </ListItemButton>
             </Tooltip>
           </Toolbar>

@@ -1,8 +1,8 @@
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { TokenPayload } from 'google-auth-library';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { createUser, findUser, hashPassword, isPasswordValid } from '../services/auth.service';
+import { createUser, findUser, hashPassword, isPasswordValid, findUserById } from '../services/auth.service';
 import { generateErrorObject, validatePassword } from '../utils/helpers';
 import { LoginUserBody, RegisterUserBody } from '../schemas/auth.schemas';
 import { client } from '../utils/googleLoginClient';
@@ -73,13 +73,15 @@ export const googleLoginHandler = async (req: Request, res: Response) => {
   }
 };
 
-export const isLoggedInHandler = async (req: Request, res: Response) => {
+export const getLoggedUserHandler = async (req: Request, res: Response) => {
   const token = req.header('auth-token');
   if (!token)
     return res.status(StatusCodes.UNAUTHORIZED).json(generateErrorObject('access', 'Access denied (no token)'));
   try {
-    const tokenCheck = jwt.verify(token, process.env.JWT_TOKEN_SECRET as string);
-    return res.status(StatusCodes.OK).json({ isLoggedIn: true, tokenCheck });
+    const tokenCheck = jwt.verify(token, process.env.JWT_TOKEN_SECRET as string) as JwtPayload;
+    const loggedUser = await findUserById(tokenCheck?._id);
+
+    return res.status(StatusCodes.OK).json({ loggedUser, tokenCheck, isLoggedIn: true });
   } catch (err) {
     return res.status(StatusCodes.UNAUTHORIZED).json(generateErrorObject('access', 'Invalid or expired token'));
   }

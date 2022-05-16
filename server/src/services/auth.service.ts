@@ -22,5 +22,12 @@ export const findUser = async (email: User['email']) => {
   return user;
 };
 
+export const findUserById = async (id: string) => {
+  const user = await UserModel.findById(id);
+  if (!user) return false;
+
+  return user;
+};
+
 export const isPasswordValid = async (storedPassword: User['password'], inputPassword: User['password']) =>
   bcrypt.compare(inputPassword, storedPassword);
