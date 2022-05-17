@@ -25,6 +25,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
   const [dashboardData, setDashboardData] = useState<any>([]);
   const [changedDashboard, setChangedDashboard] = useState<any>([]);
   const [taskSize, setTaskSize] = useState<'small' | 'medium' | 'large'>('large');
+  const [colored, setColored] = useState(true);
   const [dashboardChanged, setDashboardChanged] = useState<boolean>(false);
   const [personFilterClicked, setPersonFilterClicked] = useState(false);
   const [selectedUser, setSelectedUser] = useState('All Users');
@@ -116,6 +117,8 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
         selectedUser={selectedUser}
         setTaskSize={setTaskSize}
         taskSize={taskSize}
+        colored={colored}
+        setColored={setColored}
       />
       <Box
         sx={{
@@ -173,7 +176,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
                       }}
                     >
                       {column.items!.map((item: ITask, index: number) => (
-                        <DraggableItem key={item.id} item={item} index={index} itemSize={taskSize} />
+                        <DraggableItem key={item.id} item={item} index={index} itemSize={taskSize} colored={colored} />
                       ))}
                       {provided.placeholder}
                     </Box>

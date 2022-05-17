@@ -33,8 +33,6 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
   const { loggedUser, status, isLoggedIn } = useLoggedUser();
   const navigate = useNavigate();
 
-  console.log(loggedUser);
-
   useEffect(() => {
     if (!isLoggedIn && status === 'error') {
       navigate('/login');

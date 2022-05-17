@@ -7,12 +7,16 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import SearchIcon from '@mui/icons-material/Search';
 import SortIcon from '@mui/icons-material/Sort';
 import { blue } from '@mui/material/colors';
+import InvertColorsIcon from '@mui/icons-material/InvertColors';
+import InvertColorsOffIcon from '@mui/icons-material/InvertColorsOff';
 
 interface IFilterOptions {
   handlePersonClicked: () => void;
   selectedUser: any;
   setTaskSize: (size: 'small' | 'medium' | 'large') => void;
   taskSize: string;
+  colored: boolean;
+  setColored: (colored: boolean) => void;
 }
 
 export const FilterOptions: React.FC<IFilterOptions> = ({
@@ -20,12 +24,19 @@ export const FilterOptions: React.FC<IFilterOptions> = ({
   selectedUser,
   setTaskSize,
   taskSize,
+  colored,
+  setColored,
 }) => {
+  const [searchClicked, setSearchClicked] = useState(false);
+
   const handleTaskSizeChanged = (
     _event: React.MouseEvent<HTMLElement, MouseEvent>,
     newSize: 'small' | 'medium' | 'large'
   ) => setTaskSize(newSize);
-  const [searchClicked, setSearchClicked] = useState(false);
+
+  const handleColorChanged = (_event: React.MouseEvent<HTMLElement, MouseEvent>, color: boolean) => {
+    setColored(color);
+  };
 
   return (
     <Box
@@ -80,14 +91,24 @@ export const FilterOptions: React.FC<IFilterOptions> = ({
       <Button startIcon={<SortIcon />} sx={{ textTransform: 'none' }} variant="text">
         Sort
       </Button>
-      <ToggleButtonGroup size="small" value={taskSize} onChange={handleTaskSizeChanged} exclusive>
-        <ToggleButton value="small" key="small">
-          <CompressIcon />
-        </ToggleButton>
-        <ToggleButton value="large" key="large">
-          <ExpandIcon />
-        </ToggleButton>
-      </ToggleButtonGroup>
+      <Box sx={{ marginLeft: 'auto', display: 'flex', gap: '1rem' }}>
+        <ToggleButtonGroup size="small" value={taskSize} onChange={handleTaskSizeChanged} exclusive>
+          <ToggleButton value="small" key="small">
+            <CompressIcon />
+          </ToggleButton>
+          <ToggleButton value="large" key="large">
+            <ExpandIcon />
+          </ToggleButton>
+        </ToggleButtonGroup>
+        <ToggleButtonGroup size="small" value={colored} onChange={handleColorChanged} exclusive>
+          <ToggleButton value={false} key="large">
+            <InvertColorsOffIcon />
+          </ToggleButton>
+          <ToggleButton value={true} key="small">
+            <InvertColorsIcon />
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Box>
     </Box>
   );
 };

@@ -46,8 +46,6 @@ export const Authentication = () => {
     googleLoginMutate(googleData);
   };
 
-  console.log(googleLoginData);
-
   return (
     <Box
       sx={{

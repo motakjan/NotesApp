@@ -8,9 +8,10 @@ interface IDraggableItem {
   item: ITask;
   index: number;
   itemSize?: 'small' | 'medium' | 'large';
+  colored: boolean;
 }
 
-const DraggableItem: React.FC<IDraggableItem> = ({ item, index, itemSize }) => (
+const DraggableItem: React.FC<IDraggableItem> = ({ item, index, itemSize, colored }) => (
   <Draggable draggableId={item.id} index={index}>
     {/* eslint-disable-next-line @typescript-eslint/no-shadow */}
     {(provided: DraggableProvided, _snapshot: DraggableStateSnapshot) => (
@@ -35,6 +36,7 @@ const DraggableItem: React.FC<IDraggableItem> = ({ item, index, itemSize }) => (
           updatedAt={item.updatedAt}
           type={item.type}
           size={itemSize}
+          colored={colored}
         />
       </Box>
     )}

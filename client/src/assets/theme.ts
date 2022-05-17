@@ -51,6 +51,7 @@ export const getCurrentTheme = (mode: PaletteMode) => ({
         custom: {
           dashboardDrag: '#170b4a18',
           cardColor: '#fff',
+          cardBorderColor: '#d1d1d1',
           addTaskCard: '#fff',
         },
         nappPersonModal: {
@@ -101,6 +102,7 @@ export const getCurrentTheme = (mode: PaletteMode) => ({
         custom: {
           dashboardDrag: '#2b262855',
           cardColor: '#0e0e0e',
+          cardBorderColor: '#292929',
           addTaskCard: '#090909',
         },
         nappPersonModal: {
