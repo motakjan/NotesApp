@@ -1,11 +1,16 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { TokenPayload } from 'google-auth-library';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { createUser, findUser, hashPassword, isPasswordValid, findUserById } from '../services/auth.service';
+import {
+  createUser,
+  findUser,
+  hashPassword,
+  isPasswordValid,
+  findUserById,
+  getGoogleClient,
+} from '../services/auth.service';
 import { generateErrorObject, validatePassword } from '../utils/helpers';
 import { LoginUserBody, RegisterUserBody } from '../schemas/auth.schemas';
-import { client } from '../utils/googleLoginClient';
 
 export const registerHandler = async (req: Request<{}, {}, RegisterUserBody>, res: Response) => {
   try {
@@ -42,14 +47,10 @@ export const loginHandler = async (req: Request<{}, {}, LoginUserBody>, res: Res
 
 export const googleLoginHandler = async (req: Request, res: Response) => {
   try {
-    const { credential } = req.body;
-    const ticket = await client.verifyIdToken({
-      idToken: credential,
-      audience: process.env.CLIENT_ID,
-    });
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    const { name, email, picture, given_name, family_name, iss } = ticket.getPayload() as TokenPayload;
+    const { name, email, picture, given_name, family_name, iss } = await getGoogleClient(req.body);
     if (!email) return res.status(StatusCodes.NOT_FOUND).json({ errorMessage: 'Error while connecting with google' });
+
     let user = await findUser(email as string);
 
     if (!user) {
