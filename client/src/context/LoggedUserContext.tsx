@@ -31,9 +31,7 @@ export const LoggedUserContext = createContext<LoggedUserContextType>({
   isLoggedIn: false,
 });
 
-export function useLoggedUser() {
-  return useContext(LoggedUserContext);
-}
+export const useLoggedUser = () => useContext(LoggedUserContext);
 
 export const LoggedUserContextProvider: React.FC = props => {
   const { data, status, isLoading } = useQuery<{ isLoggedIn: boolean; loggedUser: ILoggedUser; errors: AxiosError }>(
