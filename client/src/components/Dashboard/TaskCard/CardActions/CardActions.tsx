@@ -18,7 +18,7 @@ export const CardAction: React.FC<CardActionPropsType> = ({ showActions, checked
       <Tooltip title="Open Menu">
         <IconButton
           sx={{
-            padding: '5px 2px',
+            padding: '5px',
           }}
         >
           <MenuOpenOutlinedIcon fontSize="small" />
@@ -28,7 +28,7 @@ export const CardAction: React.FC<CardActionPropsType> = ({ showActions, checked
       <Tooltip title="Comments">
         <IconButton
           sx={{
-            padding: '5px 2px',
+            padding: '5px',
           }}
         >
           <CommentOutlinedIcon fontSize="small" />
@@ -38,7 +38,7 @@ export const CardAction: React.FC<CardActionPropsType> = ({ showActions, checked
       <Tooltip title="Users">
         <IconButton
           sx={{
-            padding: '5px 2px',
+            padding: '5px',
           }}
         >
           <PeopleIcon fontSize="small" />
@@ -48,7 +48,7 @@ export const CardAction: React.FC<CardActionPropsType> = ({ showActions, checked
       <Tooltip title="Check">
         <IconButton
           sx={{
-            padding: '5px 2px',
+            padding: '5px',
           }}
         >
           <CheckOutlinedIcon fontSize="small" />

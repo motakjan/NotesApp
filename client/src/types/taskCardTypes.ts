@@ -11,6 +11,7 @@ export type TaskCardPropsType = {
   id: string;
   updatedAt?: string;
   size?: 'small' | 'medium' | 'large';
+  colored: boolean;
 };
 
 export type CardActionPropsType = {

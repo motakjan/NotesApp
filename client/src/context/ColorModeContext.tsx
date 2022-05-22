@@ -11,6 +11,8 @@ const ColorModeContext = createContext<ColorModeContextType>({
   mode: 'light',
 });
 
+export const useColorMode = () => useContext(ColorModeContext);
+
 export const ColorModeContextProvider: React.FC<React.ReactNode> = ({ children }) => {
   const [mode, setMode] = useState<PaletteMode>('light');
 
@@ -42,5 +44,3 @@ export const ColorModeContextProvider: React.FC<React.ReactNode> = ({ children }
     </ColorModeContext.Provider>
   );
 };
-
-export const useColorMode = () => useContext(ColorModeContext);
