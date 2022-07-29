@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import React, { useContext, useState, createContext } from 'react';
+import React, { useContext, createContext } from 'react';
 import { useQuery } from 'react-query';
 import { authApi } from '../api/auth';
 

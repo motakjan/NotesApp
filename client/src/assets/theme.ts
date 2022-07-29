@@ -53,6 +53,8 @@ export const getCurrentTheme = (mode: PaletteMode) => ({
           cardColor: '#fff',
           cardBorderColor: '#d1d1d1',
           addTaskCard: '#fff',
+          notificationScroll: '#e0e0e0',
+          notificationItemHover: '#ececec',
         },
         nappPersonModal: {
           addTaskUserModalHover: '#efefef',
@@ -104,13 +106,15 @@ export const getCurrentTheme = (mode: PaletteMode) => ({
           cardColor: '#0e0e0e',
           cardBorderColor: '#292929',
           addTaskCard: '#090909',
+          notificationScroll: '#1a1a1a',
+          notificationItemHover: '#1d1d1d',
         },
         nappPersonModal: {
           addTaskUserModalHover: '#131313',
           addTaskUserModalSelected: '#141414',
         }
       }),
-  },    
+  },
   components: {
     MuiSnackbar: {
       variants: [
