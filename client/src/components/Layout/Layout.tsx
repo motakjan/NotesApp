@@ -27,11 +27,17 @@ import { NappLogo } from '../UI/NappLogo/NappLogo';
 import { DrawerIcon } from './DrawerIcon';
 import { blue, grey } from '@mui/material/colors';
 import { useLoggedUser } from '../../context/LoggedUserContext';
+import { NotificationsPopper } from './NotificationsPopper';
 
 export const Layout: React.FC<React.ReactNode> = ({ children }) => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [open, setOpen] = React.useState(false);
   const { mode, toggleColorMode } = useColorMode();
   const { loggedUser, status, isLoggedIn } = useLoggedUser();
   const navigate = useNavigate();
+
+  const openNotifications = Boolean(anchorEl);
+  const id = open ? 'simple-popper' : undefined;
 
   useEffect(() => {
     if (!isLoggedIn && status === 'error') {
@@ -41,14 +47,16 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
 
   const theme = React.useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);
 
-  const [open, setOpen] = React.useState(false);
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
   };
 
   const handleLogout = () => {
@@ -65,6 +73,13 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
         }}
       >
         <CssBaseline />
+        <NotificationsPopper
+          id={id}
+          open={openNotifications}
+          anchorEl={anchorEl}
+          theme={theme}
+          setAnchorEl={setAnchorEl}
+        />
         <AppBar open={open}>
           <Toolbar>
             <IconButton
@@ -83,7 +98,7 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
             </IconButton>
             <NappLogo width="32px" height="32px" fill="white" />
             <Tooltip title="Notifications" placement="bottom">
-              <ListItemButton sx={{ maxWidth: '55px', ml: 'auto', borderRadius: '60px' }}>
+              <ListItemButton sx={{ maxWidth: '55px', ml: 'auto', borderRadius: '60px' }} onClick={handleClick}>
                 <ListItemIcon>
                   <Badge badgeContent={1} color="error">
                     <NotificationsActiveIcon sx={{ color: grey[50] }} />

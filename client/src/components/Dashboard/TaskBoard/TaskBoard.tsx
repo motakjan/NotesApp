@@ -70,10 +70,6 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
     setDashboardChanged(false);
   };
 
-  if (status === 'loading') {
-    return <Loading status={status} />;
-  }
-
   if (status === 'error') {
     return <div>Error</div>;
   }
