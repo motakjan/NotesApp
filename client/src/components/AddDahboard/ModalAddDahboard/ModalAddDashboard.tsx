@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Modal, Typography } from '@mui/material';
+import { alpha, Box, Button, createTheme, Modal, Typography } from '@mui/material';
 import { IAddDashboard } from '../../../types/AddDashboard/AddDahboard';
 import { ControlledTextField } from '../../UI/ControlledTextField/ControlledTextField';
 import { ControlledAutoCompleteSelect } from '../../UI/ControlledAutoCompleteSelect/ControlledAutoCompleteSelect';
@@ -7,22 +7,13 @@ import { useMutation, useQueryClient } from 'react-query';
 import { dashboardApi } from '../../../api/dashboard';
 import { useToast } from '../../../hooks/useToast';
 import { v4 as uuidv4 } from 'uuid';
+import { useColorMode } from '../../../context/ColorModeContext';
+import { getCurrentTheme } from '../../../assets/theme';
 
 type IModalAddDashboard = IAddDashboard & {
   open: boolean;
   users: any;
   setOpen: (open: boolean) => void;
-};
-
-const style = {
-  position: 'absolute' as const,
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 4,
 };
 
 export const ModalAddDashboard: React.FC<IModalAddDashboard> = ({
@@ -34,6 +25,8 @@ export const ModalAddDashboard: React.FC<IModalAddDashboard> = ({
   handleSubmit,
   reset,
 }) => {
+  const { mode } = useColorMode();
+  const theme = React.useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);
   const handleClose = () => {
     setOpen(false);
     reset();
@@ -59,13 +52,25 @@ export const ModalAddDashboard: React.FC<IModalAddDashboard> = ({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+        <Box
+          sx={{
+            position: 'absolute' as const,
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 550,
+            bgcolor: alpha(theme.palette.background.paper, 0.97),
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2" mb="16px">
             Add new Dashboard
           </Typography>
           <Box component="form" onSubmit={handleSubmit(onSubmit)}>
             <ControlledTextField
-              sx={{ mb: '2rem', mt: '1rem' }}
+              required
+              sx={{ mb: '2rem', mt: '1rem', lineHeight: '1.6' }}
               label="Title"
               errors={errors?.title}
               name="title"
@@ -73,7 +78,8 @@ export const ModalAddDashboard: React.FC<IModalAddDashboard> = ({
               control={control}
             />
             <ControlledTextField
-              sx={{ mb: '2rem' }}
+              required
+              sx={{ mb: '2rem', lineHeight: '1.6' }}
               label="Description"
               errors={errors?.description}
               name="description"
@@ -91,11 +97,11 @@ export const ModalAddDashboard: React.FC<IModalAddDashboard> = ({
             />
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: '0.8rem' }}>
-            <Button color="primary" variant="outlined" onClick={handleSubmit(onSubmit)}>
-              Create
-            </Button>
             <Button color="secondary" variant="outlined" onClick={handleClose}>
               Close
+            </Button>
+            <Button color="primary" variant="outlined" onClick={handleSubmit(onSubmit)}>
+              Create
             </Button>
           </Box>
         </Box>

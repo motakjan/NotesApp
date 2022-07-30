@@ -1,10 +1,10 @@
-import { Avatar, Box, Button, IconButton, Typography } from '@mui/material';
+import { Avatar, Box, Button, Typography } from '@mui/material';
 import { deepOrange } from '@mui/material/colors';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AddIcon from '@mui/icons-material/Add';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useNavigate } from 'react-router';
+import { AccountMenu } from './MoreActions/MoreActions';
 
 interface IDashboardActions {
   boardId: string;
@@ -38,9 +38,7 @@ export const DashboardActions: React.FC<IDashboardActions> = ({ boardId }) => {
       >
         Create Task
       </Button>
-      <IconButton aria-label="more actions" component="span">
-        <MoreHorizIcon />
-      </IconButton>
+      <AccountMenu />
     </Box>
   );
 };

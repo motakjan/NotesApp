@@ -9,6 +9,7 @@ export const ControlledTextField: React.FC<any> = ({
   helperTextMessage,
   errors,
   sx,
+  required = false,
   ...props
 }) => (
   <Controller
@@ -22,6 +23,7 @@ export const ControlledTextField: React.FC<any> = ({
         helperText={errors?.message || helperTextMessage}
         sx={{ width: '100%', ...sx }}
         variant="outlined"
+        required={required}
         color="secondary"
         size="small"
       >

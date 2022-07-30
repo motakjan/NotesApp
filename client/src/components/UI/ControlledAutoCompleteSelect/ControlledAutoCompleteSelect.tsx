@@ -47,7 +47,7 @@ export const ControlledAutoCompleteSelect: React.FC<any> = ({
               size="small"
               label={label || 'tags'}
               helperText={helperText}
-              placeholder={placeholder}
+              placeholder={!params.InputProps.startAdornment && placeholder}
               InputLabelProps={{ shrink: true }}
             />
           )}

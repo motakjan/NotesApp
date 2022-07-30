@@ -39,7 +39,7 @@
         "yup": "^0.32.11"
     },
     "scripts": {
-        "start": "vite",
+        "dev": "vite",
         "build": "eslint src && tsc && vite build",
         "test": "vite test",
         "eject": "vite eject",

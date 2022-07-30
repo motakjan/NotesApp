@@ -8,6 +8,7 @@ interface INappModal {
   buttonText: string;
   buttonSx?: React.CSSProperties;
   buttonSize: 'small' | 'medium' | 'large';
+  buttonVariant?: 'contained' | 'outlined' | 'text';
 }
 
 const style = {
@@ -21,14 +22,20 @@ const style = {
   boxShadow: 24,
 };
 
-export const NappModal: React.FC<INappModal> = ({ children, buttonText, buttonSx, buttonSize }) => {
+export const NappModal: React.FC<INappModal> = ({ children, buttonVariant, buttonText, buttonSx, buttonSize }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <>
-      <Button color="secondary" variant="outlined" onClick={handleOpen} sx={buttonSx} size={buttonSize}>
+      <Button
+        color="secondary"
+        variant={buttonVariant || 'outlined'}
+        onClick={handleOpen}
+        sx={buttonSx}
+        size={buttonSize}
+      >
         {buttonText}
       </Button>
       <Modal open={open} onClose={handleClose}>

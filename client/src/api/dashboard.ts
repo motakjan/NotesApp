@@ -13,6 +13,12 @@ export const dashboardApi = {
     };
     return instance.put(`/dashboard/${id}`, newData).then(res => res.data);
   },
+  leaveDashboard({ data, user, id }: any) {
+    const newData = {
+      users: data.users.filter((el: any) => el !== user.id),
+    };
+    return instance.put(`/dashboard/${id}`, newData).then(res => res.data);
+  },
   postDashboardData(data: any) {
     const dataForm = {
       ...data,
