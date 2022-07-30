@@ -1,8 +1,14 @@
-import jwt from 'jsonwebtoken';
-
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { createUser, findUser, hashPassword, isPasswordValid } from '../services/auth.service';
+import {
+  createUser,
+  findUser,
+  hashPassword,
+  isPasswordValid,
+  findUserById,
+  getGoogleClient,
+} from '../services/auth.service';
 import { generateErrorObject, validatePassword } from '../utils/helpers';
 import { LoginUserBody, RegisterUserBody } from '../schemas/auth.schemas';
 
@@ -39,13 +45,44 @@ export const loginHandler = async (req: Request<{}, {}, LoginUserBody>, res: Res
   }
 };
 
-export const isLoggedInHandler = async (req: Request, res: Response) => {
+export const googleLoginHandler = async (req: Request, res: Response) => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const { name, email, picture, given_name, family_name, iss } = await getGoogleClient(req.body);
+    if (!email) return res.status(StatusCodes.NOT_FOUND).json({ errorMessage: 'Error while connecting with google' });
+
+    let user = await findUser(email as string);
+
+    if (!user) {
+      const hashedPassword = await hashPassword(iss);
+      user = await createUser(
+        {
+          username: name || '',
+          email,
+          image: picture,
+          firstName: given_name || '',
+          lastName: family_name || '',
+        },
+        hashedPassword
+      );
+    }
+
+    const jwtToken = jwt.sign({ _id: user._id }, process.env.JWT_TOKEN_SECRET as string, { expiresIn: '7d' });
+    return res.header('auth-token', jwtToken).status(StatusCodes.OK).json({ jwtToken });
+  } catch (err) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(err);
+  }
+};
+
+export const getLoggedUserHandler = async (req: Request, res: Response) => {
   const token = req.header('auth-token');
   if (!token)
     return res.status(StatusCodes.UNAUTHORIZED).json(generateErrorObject('access', 'Access denied (no token)'));
   try {
-    const tokenCheck = jwt.verify(token, process.env.JWT_TOKEN_SECRET as string);
-    return res.status(StatusCodes.OK).json({ isLoggedIn: true, tokenCheck });
+    const tokenCheck = jwt.verify(token, process.env.JWT_TOKEN_SECRET as string) as JwtPayload;
+    const loggedUser = await findUserById(tokenCheck?._id);
+
+    return res.status(StatusCodes.OK).json({ loggedUser, tokenCheck, isLoggedIn: true });
   } catch (err) {
     return res.status(StatusCodes.UNAUTHORIZED).json(generateErrorObject('access', 'Invalid or expired token'));
   }

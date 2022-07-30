@@ -1,8 +1,8 @@
 import { ThemeProvider } from '@emotion/react';
-import { Badge, createTheme, CssBaseline, ListItemButton, Tooltip } from '@mui/material';
+import { Avatar, Badge, createTheme, CssBaseline, ListItemAvatar, ListItemButton, Tooltip } from '@mui/material';
 import { getCurrentTheme } from '../../assets/theme';
 import { useColorMode } from '../../context/ColorModeContext';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
@@ -16,38 +16,36 @@ import ListItemText from '@mui/material/ListItemText';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { AppBar, Drawer, DrawerHeader } from './LayoutStyledComponents';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router';
-import { useQueryClient } from 'react-query';
 import { NappLogo } from '../UI/NappLogo/NappLogo';
-import { AxiosError } from 'axios';
 import { DrawerIcon } from './DrawerIcon';
-import { grey } from '@mui/material/colors';
+import { blue,grey } from '@mui/material/colors';
 import { AddDashboard } from '../AddDahboard/AddDashboard';
+import { useLoggedUser } from '../../context/LoggedUserContext';
+import { NotificationsPopper } from './NotificationsPopper';
 
 export const Layout: React.FC<React.ReactNode> = ({ children }) => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [open, setOpen] = React.useState(false);
   const { mode, toggleColorMode } = useColorMode();
-  const [_isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const queryClient = useQueryClient();
-  const cachedIsLoggedIn: { isLoggedIn: boolean; errors: AxiosError } = queryClient.getQueryData('isLoggedIn')!;
+  const { loggedUser, status, isLoggedIn } = useLoggedUser();
   const navigate = useNavigate();
 
-  const theme = React.useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);
+  const openNotifications = Boolean(anchorEl);
+  const id = open ? 'simple-popper' : undefined;
 
   useEffect(() => {
-    if (cachedIsLoggedIn && !cachedIsLoggedIn.errors) {
-      setIsLoggedIn(cachedIsLoggedIn.isLoggedIn);
-    } else {
-      setIsLoggedIn(false);
+    if (!isLoggedIn && status === 'error') {
+      navigate('/login');
     }
-  }, [cachedIsLoggedIn]);
+  }, [status, isLoggedIn, navigate]);
 
-  const [open, setOpen] = React.useState(false);
+  const theme = React.useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -57,9 +55,12 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
     setOpen(false);
   };
 
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
   const handleLogout = () => {
     localStorage.setItem('auth-token', '');
-    setIsLoggedIn(false);
     navigate('/login');
   };
 
@@ -72,6 +73,13 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
         }}
       >
         <CssBaseline />
+        <NotificationsPopper
+          id={id}
+          open={openNotifications}
+          anchorEl={anchorEl}
+          theme={theme}
+          setAnchorEl={setAnchorEl}
+        />
         <AppBar open={open}>
           <Toolbar>
             <IconButton
@@ -90,7 +98,7 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
             </IconButton>
             <NappLogo width="32px" height="32px" fill="white" />
             <Tooltip title="Notifications" placement="bottom">
-              <ListItemButton sx={{ maxWidth: '55px', ml: 'auto', borderRadius: '60px' }}>
+              <ListItemButton sx={{ maxWidth: '55px', ml: 'auto', borderRadius: '60px' }} onClick={handleClick}>
                 <ListItemIcon>
                   <Badge badgeContent={1} color="error">
                     <NotificationsActiveIcon sx={{ color: grey[50] }} />
@@ -100,10 +108,16 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
             </Tooltip>
             <Tooltip title="Profile" placement="bottom">
               <ListItemButton sx={{ borderRadius: '60px', maxWidth: 'fit-content', padding: '3px 12px' }}>
-                <ListItemIcon sx={{ minWidth: '34px' }}>
-                  <PersonIcon sx={{ color: grey[50] }} />
-                </ListItemIcon>
-                <ListItemText primary="Jan Moták" />
+                <ListItemAvatar sx={{ minWidth: '36px' }}>
+                  <Avatar
+                    sx={{ bgcolor: blue[100], color: blue[600] }}
+                    alt={loggedUser?.fullName}
+                    src={loggedUser?.image}
+                  >
+                    {`${loggedUser?.firstName.charAt(0)}${loggedUser?.lastName.charAt(0)}`}
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={loggedUser?.fullName} />
               </ListItemButton>
             </Tooltip>
           </Toolbar>

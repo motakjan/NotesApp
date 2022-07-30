@@ -11,6 +11,10 @@ import './Authentication.css';
 
 export const Authentication = () => {
   const { data, mutate } = useMutation<GetAuthResType, AxiosError, LoginDataType>('login', authApi.loginUser);
+  const { data: googleLoginData, mutate: googleLoginMutate } = useMutation<GetAuthResType, AxiosError, LoginDataType>(
+    'googleLogin',
+    authApi.googleLoginUser
+  );
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,6 +23,13 @@ export const Authentication = () => {
       navigate('/');
     }
   }, [data, navigate]);
+
+  useEffect(() => {
+    if (googleLoginData) {
+      localStorage.setItem('auth-token', googleLoginData.jwtToken);
+      navigate('/');
+    }
+  }, [googleLoginData, navigate]);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -29,6 +40,10 @@ export const Authentication = () => {
       email,
       password,
     });
+  };
+
+  const googleLogin = async (googleData: any) => {
+    googleLoginMutate(googleData);
   };
 
   return (
@@ -45,7 +60,7 @@ export const Authentication = () => {
     >
       <Box className="loginGradientBox">
         <LoginInfo />
-        <Login login={onSubmit} />
+        <Login login={onSubmit} googleLogin={googleLogin} />
       </Box>
     </Box>
   );

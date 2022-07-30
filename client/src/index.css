@@ -75,3 +75,7 @@ select {
     scroll-behavior: auto !important;
   }
 }
+
+.google-login {
+  width: 100%;
+}
