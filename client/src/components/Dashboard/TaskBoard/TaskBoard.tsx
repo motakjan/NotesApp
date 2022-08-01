@@ -7,7 +7,6 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { DashboardHeader } from '../DashboardHeader/DashboardHeader';
 import DraggableItem from './DraggableItem/DraggableItem';
 import { FilterOptions } from '../FilterOptions/FilterOptions';
-import { Loading } from '../../../pages/Loading/Loading';
 import { NappSnackbar } from '../../UI/NappSnackbar/NappSnackbar';
 import { NappUserPicker } from '../../UI/NappUserPicker/NappUserPicker';
 import { dashboardApi } from '../../../api/dashboard';

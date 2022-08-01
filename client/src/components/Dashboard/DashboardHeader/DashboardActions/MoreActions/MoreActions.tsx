@@ -7,7 +7,11 @@ import Tooltip from '@mui/material/Tooltip';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
-export const AccountMenu = () => {
+interface IAccountMenu {
+  handleLeaveDashboard: () => void;
+}
+
+export const AccountMenu: React.FC<IAccountMenu> = ({ handleLeaveDashboard }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -50,7 +54,7 @@ export const AccountMenu = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem>
+        <MenuItem onClick={handleLeaveDashboard}>
           <LogoutIcon fontSize="small" sx={{ pr: 1, width: 32 }} />
           Leave
         </MenuItem>

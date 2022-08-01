@@ -9,7 +9,7 @@ import { getCurrentTheme } from '../../../assets/theme';
 import { useColorMode } from '../../../context/ColorModeContext';
 import { NappTaskSkeleton } from '../../UI/NappTaskSkeleton/NappTaskSkeleton';
 
-export const TaskCard: React.FC<TaskCardPropsType> = ({ title, type, tags, text, id, updatedAt, size, colored }) => {
+export const TaskCard: React.FC<TaskCardPropsType> = ({ title, type, tags, text, updatedAt, size, colored }) => {
   const [showActions, setShowActions] = useState<boolean>(false);
   const [checked, setChecked] = useState(false);
   const { mode } = useColorMode();

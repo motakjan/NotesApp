@@ -1,5 +1,5 @@
 import React from 'react';
-import { alpha, Box, Button, createTheme, Modal, Typography } from '@mui/material';
+import { alpha, Box, Button, Checkbox, createTheme, FormControlLabel, Modal, Typography } from '@mui/material';
 import { IAddDashboard } from '../../../types/AddDashboard/AddDahboard';
 import { ControlledTextField } from '../../UI/ControlledTextField/ControlledTextField';
 import { ControlledAutoCompleteSelect } from '../../UI/ControlledAutoCompleteSelect/ControlledAutoCompleteSelect';
@@ -25,25 +25,31 @@ export const ModalAddDashboard: React.FC<IModalAddDashboard> = ({
   handleSubmit,
   reset,
 }) => {
+  const [privateDashboard, setPrivateDashboard] = React.useState(false);
   const { mode } = useColorMode();
   const theme = React.useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);
   const handleClose = () => {
     setOpen(false);
     reset();
   };
-
   const { successToast } = useToast();
   const queryClient = useQueryClient();
   const { mutate } = useMutation(`create-dashboard-${uuidv4()}`, dashboardApi.postDashboardData, {
     onSuccess: () => {
       handleClose();
       queryClient.invalidateQueries('dashboards-initial');
-      successToast('Dashboard saved');
+      successToast('Dashboard created');
     },
   });
+
   const onSubmit = (data: any) => {
     mutate(data);
   };
+
+  const handleChangePrivate = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPrivateDashboard(event.target.checked);
+  };
+
   return (
     <>
       <Modal
@@ -87,6 +93,7 @@ export const ModalAddDashboard: React.FC<IModalAddDashboard> = ({
               control={control}
             />
             <ControlledAutoCompleteSelect
+              disabled={privateDashboard}
               control={control}
               sx={{ mb: '2rem' }}
               label="Users"
@@ -96,13 +103,27 @@ export const ModalAddDashboard: React.FC<IModalAddDashboard> = ({
               placeholder="Please choose users to your dashboard"
             />
           </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: '0.8rem' }}>
-            <Button color="secondary" variant="outlined" onClick={handleClose}>
-              Close
-            </Button>
-            <Button color="primary" variant="outlined" onClick={handleSubmit(onSubmit)}>
-              Create
-            </Button>
+
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  color="secondary"
+                  checked={privateDashboard}
+                  onChange={handleChangePrivate}
+                  inputProps={{ 'aria-label': 'controlled' }}
+                />
+              }
+              label="Create dashboard only for me"
+            />
+            <Box sx={{ display: 'flex', gap: '0.8rem' }}>
+              <Button color="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button color="primary" onClick={handleSubmit(onSubmit)}>
+                Create
+              </Button>
+            </Box>
           </Box>
         </Box>
       </Modal>

@@ -1,14 +1,15 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import _ from 'lodash';
 import { TActionOneParams, TCreateOneBody, TUpdateOneBody, TUpdateOneParams } from '../schemas/dashboard.schemas';
 import {
   createOne,
   deleteOne,
   findAll,
-  findOneExtended,
-  findOne,
-  updateOne,
   findAllByUser,
+  findOne,
+  findOneExtended,
+  updateOne,
 } from '../services/dashboard.service';
 
 export const getDashboardsHandler = async (req: Request, res: Response) => {
@@ -36,7 +37,9 @@ export const getDashboardHandler = async (req: Request<TActionOneParams>, res: R
 
 export const createDashboardHandler = async (req: Request<{}, {}, TCreateOneBody>, res: Response) => {
   try {
-    const dashboard = await createOne(req.body);
+    if (!req.user) return res.status(StatusCodes.UNAUTHORIZED);
+    const modifiedDashboard = { ...req.body, users: _.union(req.body.users, [req.user._id]) };
+    const dashboard = await createOne(modifiedDashboard);
 
     return res.status(StatusCodes.OK).json(dashboard);
   } catch (err) {

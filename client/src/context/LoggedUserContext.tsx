@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import React, { useContext, createContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import { useQuery } from 'react-query';
 import { authApi } from '../api/auth';
 
@@ -41,7 +41,6 @@ export const LoggedUserContextProvider: React.FC = props => {
       retry: false,
     }
   );
-
   // Context Values
   const contextValue: LoggedUserContextType = {
     status,

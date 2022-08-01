@@ -5,6 +5,11 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router';
 import { AccountMenu } from './MoreActions/MoreActions';
+import { useMutation, useQueryClient } from 'react-query';
+import { useLoggedUser } from '../../../../context/LoggedUserContext';
+import { v4 as uuidv4 } from 'uuid';
+import { dashboardApi } from '../../../../api/dashboard';
+import { useToast } from '../../../../hooks/useToast';
 
 interface IDashboardActions {
   boardId: string;
@@ -12,9 +17,23 @@ interface IDashboardActions {
 
 export const DashboardActions: React.FC<IDashboardActions> = ({ boardId }) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { loggedUser } = useLoggedUser();
+  const { successToast } = useToast();
+  const data = queryClient.getQueryData([`dashboard-${boardId}`, { id: boardId }]);
+  const { mutate } = useMutation(`create-dashboard-${uuidv4()}`, dashboardApi.leaveDashboard, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('dashboards-initial');
+      successToast('Dashboard successfully left');
+    },
+  });
 
   const handleNavigate = () => {
     navigate(`/add_task/${boardId}`);
+  };
+
+  const handleLeaveDashboard = () => {
+    mutate({ data, user: loggedUser, id: boardId });
   };
 
   return (
@@ -38,7 +57,7 @@ export const DashboardActions: React.FC<IDashboardActions> = ({ boardId }) => {
       >
         Create Task
       </Button>
-      <AccountMenu />
+      <AccountMenu handleLeaveDashboard={handleLeaveDashboard} />
     </Box>
   );
 };

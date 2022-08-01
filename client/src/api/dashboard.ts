@@ -15,7 +15,7 @@ export const dashboardApi = {
   },
   leaveDashboard({ data, user, id }: any) {
     const newData = {
-      users: data.users.filter((el: any) => el !== user.id),
+      users: data.users.filter((el: any) => el._id !== user._id).flatMap((el: any) => el._id),
     };
     return instance.put(`/dashboard/${id}`, newData).then(res => res.data);
   },

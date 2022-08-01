@@ -9,6 +9,7 @@ export const ControlledAutoCompleteSelect: React.FC<any> = ({
   filterBy,
   options,
   label,
+  disabled = false,
   helperText,
   placeholder,
   name,
@@ -33,6 +34,7 @@ export const ControlledAutoCompleteSelect: React.FC<any> = ({
           filterOptions={filterOptions}
           options={options}
           getOptionLabel={(option: any) => option[filterBy]}
+          disabled={disabled}
           renderTags={(value: readonly any[], getTagProps) =>
             value.map((option: any, index: number) => (
               <Chip variant="outlined" size="small" label={option[filterBy]} {...getTagProps({ index })} />
@@ -47,8 +49,9 @@ export const ControlledAutoCompleteSelect: React.FC<any> = ({
               size="small"
               label={label || 'tags'}
               helperText={helperText}
-              placeholder={!params.InputProps.startAdornment && placeholder}
+              placeholder={!params.InputProps.startAdornment ? placeholder : ''}
               InputLabelProps={{ shrink: true }}
+              disabled={disabled}
             />
           )}
           multiple
