@@ -107,9 +107,8 @@ export const NotificationsPopper: React.FC<any> = ({ open, id, anchorEl, theme, 
         <Divider />
         <List sx={{ width: '100%', maxWidth: 310 }} dense>
           {data.map((notification: any) => (
-            <>
+            <Box key={notification._id}>
               <ListItem
-                key={notification._id}
                 alignItems="flex-start"
                 sx={{ cursor: 'pointer', '&:hover': { backgroundColor: theme.palette.custom.notificationItemHover } }}
               >
@@ -126,7 +125,7 @@ export const NotificationsPopper: React.FC<any> = ({ open, id, anchorEl, theme, 
                 />
               </ListItem>
               <Divider />
-            </>
+            </Box>
           ))}
         </List>
       </Paper>

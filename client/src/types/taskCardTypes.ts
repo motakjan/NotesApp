@@ -15,6 +15,7 @@ export type TaskCardPropsType = {
 };
 
 export type CardActionPropsType = {
+  taskId: string;
   showActions: boolean;
   checked: boolean;
 };

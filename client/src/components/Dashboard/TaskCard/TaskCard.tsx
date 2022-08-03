@@ -43,7 +43,7 @@ export const TaskCard: React.FC<TaskCardPropsType> = ({ title, type, tags, text,
         size={size}
       />
       <Divider />
-      <CardAction showActions={showActions} checked={checked} />
+      <CardAction showActions={showActions} checked={checked} taskId={id} />
     </Card>
   );
 };
