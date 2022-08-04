@@ -1,32 +1,41 @@
 import { ThemeProvider } from '@emotion/react';
-import { Avatar, Badge, createTheme, CssBaseline, ListItemAvatar, ListItemButton, Tooltip } from '@mui/material';
-import { getCurrentTheme } from '../../assets/theme';
-import { useColorMode } from '../../context/ColorModeContext';
-import React, { useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-import DateRangeIcon from '@mui/icons-material/DateRange';
-import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import SettingsIcon from '@mui/icons-material/Settings';
-import { AppBar, Drawer, DrawerHeader } from './LayoutStyledComponents';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
+import DateRangeIcon from '@mui/icons-material/DateRange';
 import LogoutIcon from '@mui/icons-material/Logout';
+import MenuIcon from '@mui/icons-material/Menu';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import SettingsIcon from '@mui/icons-material/Settings';
+import {
+  Avatar,
+  Badge,
+  createTheme,
+  CssBaseline,
+  ListItemAvatar,
+  ListItemButton,
+  Tooltip,
+  Typography,
+} from '@mui/material';
+import Box from '@mui/material/Box';
+import { blue, grey } from '@mui/material/colors';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Toolbar from '@mui/material/Toolbar';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
+import { getCurrentTheme } from '../../assets/theme';
+import { useColorMode } from '../../context/ColorModeContext';
+import { useLoggedUser } from '../../context/LoggedUserContext';
 import { NappLogo } from '../UI/NappLogo/NappLogo';
 import { DrawerIcon } from './DrawerIcon';
-import { blue, grey } from '@mui/material/colors';
-import { useLoggedUser } from '../../context/LoggedUserContext';
+import { AppBar, Drawer, DrawerHeader } from './LayoutStyledComponents';
 import { NotificationsPopper } from './NotificationsPopper';
 
 export const Layout: React.FC<React.ReactNode> = ({ children }) => {
@@ -96,7 +105,13 @@ export const Layout: React.FC<React.ReactNode> = ({ children }) => {
             >
               <MenuIcon />
             </IconButton>
-            <NappLogo width="32px" height="32px" fill="white" />
+
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <NappLogo width="32px" height="32px" fill="white" />
+              <Typography variant="body1" sx={{ m: 0, fontWeight: '600' }} gutterBottom>
+                OTES.
+              </Typography>
+            </Box>
             <Tooltip title="Notifications" placement="bottom">
               <ListItemButton sx={{ maxWidth: '55px', ml: 'auto', borderRadius: '60px' }} onClick={handleClick}>
                 <ListItemIcon>
