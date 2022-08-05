@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import Card from '@mui/material/Card';
 import { createTheme, Divider } from '@mui/material';
-import { TaskCardPropsType } from '../../../types/taskCardTypes';
-import { CardAction } from './CardActions/CardActions';
-import { CardActionsArea } from './CardActions/CardActionsArea';
-import { TASK_TYPE_COLORS } from '../../../utils/constVariables';
+import Card from '@mui/material/Card';
+import React, { useState } from 'react';
 import { getCurrentTheme } from '../../../assets/theme';
 import { useColorMode } from '../../../context/ColorModeContext';
+import { TaskCardPropsType } from '../../../types/taskCardTypes';
+import { TASK_TYPE_COLORS } from '../../../utils/constVariables';
 import { NappTaskSkeleton } from '../../UI/NappTaskSkeleton/NappTaskSkeleton';
+import { CardAction } from './CardActions/CardActions';
+import { CardActionsArea } from './CardActions/CardActionsArea';
 
 export const TaskCard: React.FC<TaskCardPropsType> = ({ title, type, tags, text, id, updatedAt, size, colored }) => {
   const [showActions, setShowActions] = useState<boolean>(false);
@@ -28,7 +28,6 @@ export const TaskCard: React.FC<TaskCardPropsType> = ({ title, type, tags, text,
     <Card
       sx={{
         cursor: 'default',
-        width: '99%',
         borderLeft: '6px solid',
         borderLeftColor: colored ? TASK_TYPE_COLORS[type] : theme.palette.custom.cardBorderColor,
         backgroundColor: theme.palette.custom.cardColor,

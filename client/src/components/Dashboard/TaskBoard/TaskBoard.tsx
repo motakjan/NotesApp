@@ -1,21 +1,20 @@
-import { Box, Typography, createTheme } from '@mui/material';
-import { DragDropContext, DropResult, Droppable, DroppableProvided, DroppableStateSnapshot } from 'react-beautiful-dnd';
-import { IDashboard, ITask, ITaskBoard } from '../../../types/Dashboard/dashboardTypes';
+import { Box, createTheme, Grid, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { clearItemTask, generateColumns, onDragEnd } from '../../../utils/dashboardHelpers';
+import { DragDropContext, Droppable, DroppableProvided, DroppableStateSnapshot, DropResult } from 'react-beautiful-dnd';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { IDashboard, ITask, ITaskBoard } from '../../../types/Dashboard/dashboardTypes';
+import { clearItemTask, generateColumns, onDragEnd } from '../../../utils/dashboardHelpers';
 
-import { DashboardHeader } from '../DashboardHeader/DashboardHeader';
-import DraggableItem from './DraggableItem/DraggableItem';
-import { FilterOptions } from '../FilterOptions/FilterOptions';
-import { Loading } from '../../../pages/Loading/Loading';
-import { NappSnackbar } from '../../UI/NappSnackbar/NappSnackbar';
-import { NappUserPicker } from '../../UI/NappUserPicker/NappUserPicker';
+import { v4 as uuidv4 } from 'uuid';
 import { dashboardApi } from '../../../api/dashboard';
 import { getCurrentTheme } from '../../../assets/theme';
 import { useColorMode } from '../../../context/ColorModeContext';
 import { useToast } from '../../../hooks/useToast';
-import { v4 as uuidv4 } from 'uuid';
+import { NappSnackbar } from '../../UI/NappSnackbar/NappSnackbar';
+import { NappUserPicker } from '../../UI/NappUserPicker/NappUserPicker';
+import { DashboardHeader } from '../DashboardHeader/DashboardHeader';
+import { FilterOptions } from '../FilterOptions/FilterOptions';
+import DraggableItem from './DraggableItem/DraggableItem';
 
 export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
   const { mode } = useColorMode();
@@ -107,7 +106,12 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
           setOpen={setDashboardChanged}
         />
       )}
-      <DashboardHeader title={board.title} boardId={board._id} description={board.description} />
+      <DashboardHeader
+        title={board.title}
+        boardId={board._id}
+        description={board.description}
+        userCount={board.users.length}
+      />
       <FilterOptions
         handlePersonClicked={handleUsersPickerOpen}
         selectedUser={selectedUser}
@@ -121,66 +125,72 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
           display: 'flex',
           height: '100%',
           minHeight: '65vh',
-          minWidth: '100rem',
           pt: 2,
         }}
       >
         <DragDropContext onDragEnd={(result: DropResult) => onDragEnd(result, columns, setColumns)}>
-          {Object.entries(columns).map(([id, column]) => (
-            <Box
-              key={`${uuidv4()}-column`}
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                height: '100%',
-                minWidth: '16.66666%',
-              }}
-            >
-              <Box
-                sx={{
-                  m: '8px',
-                  height: '100%',
-                }}
-              >
-                <Typography
-                  variant="h5"
+          <Grid container spacing={1}>
+            {Object.entries(columns).map(([id, column]) => (
+              <Grid item xs={12} sm={4} md={3} lg={2} key={`${uuidv4()}-column`}>
+                <Box
                   sx={{
-                    fontSize: 'small',
-                    borderTopRightRadius: '4px',
-                    borderTopLeftRadius: '4px',
-                    background: theme.palette.primary.light,
-                    color: 'white',
-                    textAlign: 'center',
-                    fontWeight: '600',
-                    textTransform: 'uppercase',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100%',
                   }}
                 >
-                  {column.name}
-                </Typography>
-                <Droppable droppableId={id} key={id}>
-                  {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
-                    <Box
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
+                  <Box
+                    sx={{
+                      height: '100%',
+                    }}
+                  >
+                    <Typography
+                      variant="h5"
                       sx={{
-                        height: '100%',
-                        minWidth: '100%',
-                        p: '10px',
-                        backgroundColor: snapshot.isDraggingOver
-                          ? theme.palette.custom.dashboardDrag
-                          : theme.palette.background.paper,
+                        fontSize: 'small',
+                        borderTopRightRadius: '4px',
+                        borderTopLeftRadius: '4px',
+                        background: theme.palette.primary.light,
+                        color: 'white',
+                        textAlign: 'center',
+                        fontWeight: '600',
+                        textTransform: 'uppercase',
                       }}
                     >
-                      {column.items!.map((item: ITask, index: number) => (
-                        <DraggableItem key={item.id} item={item} index={index} itemSize={taskSize} colored={colored} />
-                      ))}
-                      {provided.placeholder}
-                    </Box>
-                  )}
-                </Droppable>
-              </Box>
-            </Box>
-          ))}
+                      {column.name}
+                    </Typography>
+                    <Droppable droppableId={id} key={id}>
+                      {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
+                        <Box
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
+                          sx={{
+                            height: '100%',
+                            minWidth: '100%',
+                            p: '10px',
+                            backgroundColor: snapshot.isDraggingOver
+                              ? theme.palette.custom.dashboardDrag
+                              : theme.palette.background.paper,
+                          }}
+                        >
+                          {column.items!.map((item: ITask, index: number) => (
+                            <DraggableItem
+                              key={item.id}
+                              item={item}
+                              index={index}
+                              itemSize={taskSize}
+                              colored={colored}
+                            />
+                          ))}
+                          {provided.placeholder}
+                        </Box>
+                      )}
+                    </Droppable>
+                  </Box>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
         </DragDropContext>
       </Box>
     </>

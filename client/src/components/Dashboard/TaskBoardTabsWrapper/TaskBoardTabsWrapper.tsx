@@ -1,4 +1,5 @@
 import { Tab, Tabs } from '@mui/material';
+import { tabsClasses } from '@mui/material/Tabs';
 import { Box } from '@mui/system';
 import { useState } from 'react';
 import { IDashboard, ITaskBoardTabsWrapper } from '../../../types/Dashboard/dashboardTypes';
@@ -26,11 +27,17 @@ export const TaskBoardTabsWrapper: React.FC<ITaskBoardTabsWrapper> = ({ boards }
           textColor="secondary"
           indicatorColor="secondary"
           variant="scrollable"
-          scrollButtons="auto"
+          scrollButtons
+          allowScrollButtonsMobile
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
-          sx={{ mb: 2 }}
+          sx={{
+            mb: 2,
+            [`& .${tabsClasses.scrollButtons}`]: {
+              '&.Mui-disabled': { opacity: 0.3 },
+            },
+          }}
         >
           {boards?.map((board: IDashboard, index: number) => (
             <Tab
