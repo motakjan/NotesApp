@@ -1,21 +1,21 @@
-import { Box, Typography, createTheme } from '@mui/material';
-import { DragDropContext, DropResult, Droppable, DroppableProvided, DroppableStateSnapshot } from 'react-beautiful-dnd';
-import { IDashboard, ITask, ITaskBoard } from '../../../types/Dashboard/dashboardTypes';
+import { Box, createTheme, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { clearItemTask, generateColumns, onDragEnd } from '../../../utils/dashboardHelpers';
+import { DragDropContext, Droppable, DroppableProvided, DroppableStateSnapshot, DropResult } from 'react-beautiful-dnd';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { IDashboard, ITask, ITaskBoard } from '../../../types/Dashboard/dashboardTypes';
+import { clearItemTask, generateColumns, manualMoveToBoard, onDragEnd } from '../../../utils/dashboardHelpers';
 
-import { DashboardHeader } from '../DashboardHeader/DashboardHeader';
-import DraggableItem from './DraggableItem/DraggableItem';
-import { FilterOptions } from '../FilterOptions/FilterOptions';
-import { Loading } from '../../../pages/Loading/Loading';
-import { NappSnackbar } from '../../UI/NappSnackbar/NappSnackbar';
-import { NappUserPicker } from '../../UI/NappUserPicker/NappUserPicker';
+import { v4 as uuidv4 } from 'uuid';
 import { dashboardApi } from '../../../api/dashboard';
 import { getCurrentTheme } from '../../../assets/theme';
 import { useColorMode } from '../../../context/ColorModeContext';
 import { useToast } from '../../../hooks/useToast';
-import { v4 as uuidv4 } from 'uuid';
+import { Loading } from '../../../pages/Loading/Loading';
+import { NappSnackbar } from '../../UI/NappSnackbar/NappSnackbar';
+import { NappUserPicker } from '../../UI/NappUserPicker/NappUserPicker';
+import { DashboardHeader } from '../DashboardHeader/DashboardHeader';
+import { FilterOptions } from '../FilterOptions/FilterOptions';
+import DraggableItem from './DraggableItem/DraggableItem';
 
 export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
   const { mode } = useColorMode();
@@ -29,7 +29,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
   const [dashboardChanged, setDashboardChanged] = useState<boolean>(false);
   const [personFilterClicked, setPersonFilterClicked] = useState(false);
   const [selectedUser, setSelectedUser] = useState('All Users');
-  const { successToast } = useToast();
+  const { successToast, errorToast } = useToast();
   const theme = React.useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);
   const { status } = useQuery<IDashboard, Error>(
     [`dashboard-${board._id}`, { id: board?._id }],
@@ -62,6 +62,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
   const handleSaveSnack = () => {
     mutate({ data: changedDashboard, id: board._id });
   };
+
   const handleCloseSnack = (_event: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
@@ -85,6 +86,15 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
   const handleUserListItemSelected = (user: string) => {
     setSelectedUser(user);
     setPersonFilterClicked(false);
+  };
+
+  const handleMoveClicked = (taskId: string, boardName: string) => {
+    const newColumns: any = manualMoveToBoard(taskId, boardName, columns);
+    if (newColumns.error === null) {
+      setColumns(newColumns.columns);
+    } else {
+      errorToast(newColumns.error);
+    }
   };
 
   return (
@@ -172,7 +182,15 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
                       }}
                     >
                       {column.items!.map((item: ITask, index: number) => (
-                        <DraggableItem key={item.id} item={item} index={index} itemSize={taskSize} colored={colored} />
+                        <DraggableItem
+                          key={item.id}
+                          item={item}
+                          index={index}
+                          itemSize={taskSize}
+                          colored={colored}
+                          onMoveClick={handleMoveClicked}
+                          from={column.name}
+                        />
                       ))}
                       {provided.placeholder}
                     </Box>

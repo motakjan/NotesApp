@@ -12,12 +12,16 @@ export type TaskCardPropsType = {
   updatedAt?: string;
   size?: 'small' | 'medium' | 'large';
   colored: boolean;
+  onMoveClick: (taskId: string, boardName: string) => void;
+  from: string;
 };
 
 export type CardActionPropsType = {
   taskId: string;
   showActions: boolean;
   checked: boolean;
+  onMoveClick: (taskId: string, boardName: string) => void;
+  from: string;
 };
 
 export type CardActionsAreaType = {
