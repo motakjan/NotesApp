@@ -9,7 +9,14 @@ import { NappCommentsModal } from '../../../UI/Modals/NappCommentsModal';
 import { NappConfirmModal } from '../../../UI/Modals/NappConfirmModal';
 import { NappMoveModal } from '../../../UI/Modals/NappMoveModal';
 
-export const CardAction: React.FC<CardActionPropsType> = ({ showActions, checked, taskId, onMoveClick, from }) => {
+export const CardAction: React.FC<CardActionPropsType> = ({
+  showActions,
+  checked,
+  taskId,
+  onMoveClick,
+  from,
+  item,
+}) => {
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [showCommentsModal, setShowCommentsModal] = useState<boolean>(false);
   const [showMoveModal, setShowMoveModal] = useState<boolean>(false);
@@ -20,7 +27,7 @@ export const CardAction: React.FC<CardActionPropsType> = ({ showActions, checked
   };
 
   const handleConfirmMove = (target: string) => {
-    onMoveClick(taskId, target);
+    onMoveClick(item, target);
   };
 
   return (

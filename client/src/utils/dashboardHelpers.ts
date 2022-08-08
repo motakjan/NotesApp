@@ -86,24 +86,23 @@ export const clearItemTask = ({ element, changedProp }: { element: ITask[]; chan
     return rest;
   });
 
-export const manualMoveToBoard = (taskId: string, boardName: string, columns: any) => {
+export const manualMoveToBoard = (movedItem: ITask, boardName: string, columns: any) => {
   let correctMove = true;
-  _.forEach(columns, (column, id) => {
-    const hasItem = column.items.find((item: any) => item.id === taskId);
+  _.forEach(columns, (column, _id) => {
+    const hasItem = column.items.find((item: any) => item.id === movedItem.id);
     if (column.name === boardName && hasItem) {
       correctMove = false;
     }
   });
 
   if (!correctMove) return { columns, error: 'Incorrect Move Operation' };
-  const allTasks = _.flatten(_.map(columns, (column, _id) => [...column.items]));
-  const movedTask = allTasks.filter(task => task.id === taskId)[0];
+
   const result = {};
   _.forEach(columns, (column, id) => {
     const columnTasks = [...column!.items];
-    const filteredItems = columnTasks.filter((item: any) => item.id !== taskId);
+    const filteredItems = columnTasks.filter((item: any) => item.id !== movedItem.id);
     if (column.name === boardName) {
-      const newItems = [...column.items, { ...movedTask, id: taskId, position: column.items.length, column: +id }];
+      const newItems = [...column.items, { ...movedItem, position: column.items.length, column: +id }];
       result[id] = { name: column.name, items: newItems };
     } else {
       result[id] = { name: column.name, items: filteredItems };

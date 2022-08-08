@@ -20,6 +20,7 @@ export const TaskCard: React.FC<TaskCardPropsType> = ({
   colored,
   onMoveClick,
   from,
+  item,
 }) => {
   const [showActions, setShowActions] = useState<boolean>(false);
   const [checked, setChecked] = useState(false);
@@ -54,7 +55,14 @@ export const TaskCard: React.FC<TaskCardPropsType> = ({
         size={size}
       />
       <Divider />
-      <CardAction showActions={showActions} checked={checked} taskId={id} onMoveClick={onMoveClick} from={from} />
+      <CardAction
+        showActions={showActions}
+        checked={checked}
+        taskId={id}
+        onMoveClick={onMoveClick}
+        from={from}
+        item={item}
+      />
     </Card>
   );
 };

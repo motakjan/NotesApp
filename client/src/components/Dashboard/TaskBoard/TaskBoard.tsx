@@ -88,8 +88,8 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
     setPersonFilterClicked(false);
   };
 
-  const handleMoveClicked = (taskId: string, boardName: string) => {
-    const newColumns: any = manualMoveToBoard(taskId, boardName, columns);
+  const handleMoveClicked = (item: ITask, boardName: string) => {
+    const newColumns: any = manualMoveToBoard(item, boardName, columns);
     if (newColumns.error === null) {
       setColumns(newColumns.columns);
     } else {

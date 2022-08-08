@@ -34,6 +34,7 @@ const DraggableItem: React.FC<IDraggableItem> = ({ item, index, itemSize, colore
           title={item.title}
           text={item.description}
           tags={item.tags as Array<TaskCardTagType>}
+          item={item}
           id={item.id}
           updatedAt={item.updatedAt}
           type={item.type}
