@@ -1,13 +1,13 @@
+import CircleIcon from '@mui/icons-material/Circle';
 import { Chip } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
-import { CardActionsAreaType, TaskCardTagType } from '../../../../types/taskCardTypes';
-import CircleIcon from '@mui/icons-material/Circle';
-import './CardActionsArea.css';
-import { useColorMode } from '../../../../context/ColorModeContext';
 import { v4 as uuidv4 } from 'uuid';
+import { useColorMode } from '../../../../context/ColorModeContext';
+import { CardActionsAreaType, TaskCardTagType } from '../../../../types/taskCardTypes';
 import { TAG_TYPE_COLORS } from '../../../../utils/constVariables';
+import './CardActionsArea.css';
 
 export const CardActionsArea: React.FC<CardActionsAreaType> = ({ title, tags, handleClick, text, updatedAt, size }) => {
   const { mode } = useColorMode();

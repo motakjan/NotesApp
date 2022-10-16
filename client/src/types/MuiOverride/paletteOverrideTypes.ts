@@ -5,6 +5,8 @@ export type TypeCustom = {
   addTaskCard: string;
   addTaskUserModalHover: string;
   addTaskUserModalSelected: string;
+  notificationScroll: string;
+  notificationItemHover: string;
 };
 export type TypeNappPersonModal = {
   addTaskUserModalHover: string;
