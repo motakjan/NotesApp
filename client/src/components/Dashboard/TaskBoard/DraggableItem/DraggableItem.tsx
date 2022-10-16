@@ -1,8 +1,8 @@
-import { Draggable, DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { Box } from '@mui/material';
-import { TaskCard } from '../../TaskCard/TaskCard';
-import { TaskCardTagType } from '../../../../types/taskCardTypes';
+import { Draggable, DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { ITask } from '../../../../types/Dashboard/dashboardTypes';
+import { TaskCardTagType } from '../../../../types/taskCardTypes';
+import { TaskCard } from '../../TaskCard/TaskCard';
 
 interface IDraggableItem {
   item: ITask;

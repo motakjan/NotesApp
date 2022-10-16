@@ -29,10 +29,14 @@ export const FilterOptions: React.FC<IFilterOptions> = ({
 }) => {
   const [searchClicked, setSearchClicked] = useState(false);
 
-  const handleTaskSizeChanged = (
-    _event: React.MouseEvent<HTMLElement, MouseEvent>,
-    newSize: 'small' | 'medium' | 'large'
-  ) => setTaskSize(newSize);
+    const handleTaskSizeChanged = (
+            _event: React.MouseEvent<HTMLElement, MouseEvent>,
+            newSize: 'small' | 'medium' | 'large'
+            ) => setTaskSize(newSize);
+
+    const handlePersonClicked = () => {
+        searchClicked.each
+    };
 
   const handleColorChanged = (_event: React.MouseEvent<HTMLElement, MouseEvent>, color: boolean) => {
     setColored(color);
