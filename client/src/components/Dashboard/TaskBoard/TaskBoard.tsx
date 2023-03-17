@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, DroppableProvided, DroppableStateSnapshot, DropResult } from 'react-beautiful-dnd';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { IDashboard, ITask, ITaskBoard } from '../../../types/Dashboard/dashboardTypes';
-import { clearItemTask, generateColumns, onDragEnd } from '../../../utils/dashboardHelpers';
+import { clearItemTask, generateColumns, manualMoveToBoard, onDragEnd } from '../../../utils/dashboardHelpers';
 
 import { v4 as uuidv4 } from 'uuid';
 import { dashboardApi } from '../../../api/dashboard';
@@ -28,7 +28,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
   const [dashboardChanged, setDashboardChanged] = useState<boolean>(false);
   const [personFilterClicked, setPersonFilterClicked] = useState(false);
   const [selectedUser, setSelectedUser] = useState('All Users');
-  const { successToast } = useToast();
+  const { successToast, errorToast } = useToast();
   const theme = React.useMemo(() => createTheme(getCurrentTheme(mode)), [mode]);
   const { status } = useQuery<IDashboard, Error>(
     [`dashboard-${board._id}`, { id: board?._id }],
@@ -61,6 +61,7 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
   const handleSaveSnack = () => {
     mutate({ data: changedDashboard, id: board._id });
   };
+
   const handleCloseSnack = (_event: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
@@ -84,6 +85,15 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
   const handleUserListItemSelected = (user: string) => {
     setSelectedUser(user);
     setPersonFilterClicked(false);
+  };
+
+  const handleMoveClicked = (item: any, boardName: string) => {
+    const newColumns: any = manualMoveToBoard(item, boardName, columns);
+    if (newColumns.error === null) {
+      setColumns(newColumns.columns);
+    } else {
+      errorToast(newColumns.error);
+    }
   };
 
   return (
@@ -180,6 +190,8 @@ export const TaskBoard: React.FC<ITaskBoard> = ({ board }) => {
                               index={index}
                               itemSize={taskSize}
                               colored={colored}
+                              onMoveClick={handleMoveClicked}
+                              from={column.name}
                             />
                           ))}
                           {provided.placeholder}

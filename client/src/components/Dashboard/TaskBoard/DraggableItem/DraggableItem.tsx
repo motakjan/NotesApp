@@ -9,9 +9,11 @@ interface IDraggableItem {
   index: number;
   itemSize?: 'small' | 'medium' | 'large';
   colored: boolean;
+  onMoveClick: (taskId: string, boardName: string) => void;
+  from: string;
 }
 
-const DraggableItem: React.FC<IDraggableItem> = ({ item, index, itemSize, colored }) => (
+const DraggableItem: React.FC<IDraggableItem> = ({ item, index, itemSize, colored, onMoveClick, from }) => (
   <Draggable draggableId={item.id} index={index}>
     {/* eslint-disable-next-line @typescript-eslint/no-shadow */}
     {(provided: DraggableProvided, _snapshot: DraggableStateSnapshot) => (
@@ -32,11 +34,14 @@ const DraggableItem: React.FC<IDraggableItem> = ({ item, index, itemSize, colore
           title={item.title}
           text={item.description}
           tags={item.tags as Array<TaskCardTagType>}
+          item={item}
           id={item.id}
           updatedAt={item.updatedAt}
           type={item.type}
           size={itemSize}
           colored={colored}
+          onMoveClick={onMoveClick}
+          from={from}
         />
       </Box>
     )}

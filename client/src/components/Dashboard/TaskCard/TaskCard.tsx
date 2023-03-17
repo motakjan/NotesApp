@@ -9,7 +9,19 @@ import { NappTaskSkeleton } from '../../UI/NappTaskSkeleton/NappTaskSkeleton';
 import { CardAction } from './CardActions/CardActions';
 import { CardActionsArea } from './CardActions/CardActionsArea';
 
-export const TaskCard: React.FC<TaskCardPropsType> = ({ title, type, tags, text, id, updatedAt, size, colored }) => {
+export const TaskCard: React.FC<TaskCardPropsType> = ({
+  title,
+  type,
+  tags,
+  text,
+  id,
+  updatedAt,
+  size,
+  colored,
+  onMoveClick,
+  from,
+  item,
+}) => {
   const [showActions, setShowActions] = useState<boolean>(false);
   const [checked, setChecked] = useState(false);
   const { mode } = useColorMode();
@@ -42,7 +54,14 @@ export const TaskCard: React.FC<TaskCardPropsType> = ({ title, type, tags, text,
         size={size}
       />
       <Divider />
-      <CardAction showActions={showActions} checked={checked} />
+      <CardAction
+        showActions={showActions}
+        checked={checked}
+        taskId={id}
+        onMoveClick={onMoveClick}
+        from={from}
+        item={item}
+      />
     </Card>
   );
 };

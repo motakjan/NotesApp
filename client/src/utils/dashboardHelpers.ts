@@ -1,5 +1,5 @@
-import { IDashboard, IOnDragEnd, ITask } from '../types/Dashboard';
 import _ from 'lodash';
+import { IColumns, IDashboard, IOnDragEnd, ITask } from '../types/Dashboard/dashboardTypes';
 
 export const onDragEnd: IOnDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
@@ -48,38 +48,68 @@ const getTasksForColumn = (id: number, board: IDashboard) => {
   return _.orderBy(singleColumn, ['position'], ['asc']);
 };
 
+export const COLUMN_NAMES = ['Unassigned', 'Todo', 'Requested', 'In Progress', 'Done', 'Finished'];
+
 export const generateColumns = (board: IDashboard) => ({
   '1': {
-    name: 'Unassigned',
+    name: COLUMN_NAMES[0],
     items: getTasksForColumn(1, board),
   },
   '2': {
-    name: 'Todo',
+    name: COLUMN_NAMES[1],
     items: getTasksForColumn(2, board),
   },
   '3': {
-    name: 'Requested',
+    name: COLUMN_NAMES[2],
     items: getTasksForColumn(3, board),
   },
   '4': {
-    name: 'In Progress',
+    name: COLUMN_NAMES[3],
     items: getTasksForColumn(4, board),
   },
   '5': {
-    name: 'Done',
+    name: COLUMN_NAMES[4],
     items: getTasksForColumn(5, board),
   },
   '6': {
-    name: 'Old',
+    name: COLUMN_NAMES[5],
     items: getTasksForColumn(6, board),
   },
 });
 
 export const clearItemTask = ({ element, changedProp }: { element: ITask[]; changedProp?: string }) =>
-  element?.map((el: ITask, index: any) => {
+  element?.map((el: ITask, index: number) => {
     const { title, description, users, tags, ...rest } = el;
     if (changedProp) {
       rest.position = index;
     }
     return rest;
   });
+
+export const manualMoveToBoard = (movedItem: ITask, boardName: string, columns: any) => {
+  let correctMove = true;
+  _.forEach(columns, (column, _id) => {
+    const hasItem = column.items.find((item: ITask) => item.id === movedItem.id);
+    if (column.name === boardName && hasItem) {
+      correctMove = false;
+    }
+  });
+
+  if (!correctMove) return { columns, error: 'Incorrect Move Operation' };
+
+  const result = { ...columns };
+
+  const startId: string = movedItem.column.toString();
+  const destId: string = _.findKey(columns, { name: boardName })!;
+
+  result[startId] = {
+    name: result[startId].name,
+    items: result[startId].items.filter((item: ITask) => item.id !== movedItem.id),
+  };
+  result[destId] = {
+    name: result[destId].name,
+    items: [...result[destId].items, { ...movedItem, position: result[destId].items.length, column: +destId }],
+  };
+
+  return { columns: result, error: null };
+};
