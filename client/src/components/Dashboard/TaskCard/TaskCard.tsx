@@ -40,7 +40,6 @@ export const TaskCard: React.FC<TaskCardPropsType> = ({
     <Card
       sx={{
         cursor: 'default',
-        width: '99%',
         borderLeft: '6px solid',
         borderLeftColor: colored ? TASK_TYPE_COLORS[type] : theme.palette.custom.cardBorderColor,
         backgroundColor: theme.palette.custom.cardColor,

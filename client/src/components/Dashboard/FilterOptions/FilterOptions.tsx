@@ -1,14 +1,14 @@
-import { Avatar, Box, Button, InputAdornment, TextField, ToggleButton, ToggleButtonGroup } from '@mui/material';
-import React, { useState } from 'react';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CompressIcon from '@mui/icons-material/Compress';
 import ExpandIcon from '@mui/icons-material/Expand';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import SearchIcon from '@mui/icons-material/Search';
-import SortIcon from '@mui/icons-material/Sort';
-import { blue } from '@mui/material/colors';
 import InvertColorsIcon from '@mui/icons-material/InvertColors';
 import InvertColorsOffIcon from '@mui/icons-material/InvertColorsOff';
+import SearchIcon from '@mui/icons-material/Search';
+import SortIcon from '@mui/icons-material/Sort';
+import { Avatar, Box, Button, InputAdornment, TextField, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { blue } from '@mui/material/colors';
+import React, { useState } from 'react';
 
 interface IFilterOptions {
   handlePersonClicked: () => void;
@@ -44,54 +44,59 @@ export const FilterOptions: React.FC<IFilterOptions> = ({
         p: '0.5rem 0 0.5rem 10px',
         gap: '0.5rem',
         display: 'flex',
+        alignItems: { xs: 'flex-start', md: 'flex-start', lg: 'center' },
+        flexDirection: { xs: 'column', md: 'column', lg: 'row' },
+        justifyContent: { xs: 'flex-start', md: 'flex-start', lg: 'space-between' },
       }}
     >
-      <TextField
-        id="input-with-icon-textfield"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon color="primary" />
-            </InputAdornment>
-          ),
-        }}
-        variant="standard"
-        color="primary"
-        onFocus={() => setSearchClicked(prev => !prev)}
-        onBlur={() => setSearchClicked(prev => !prev)}
-        placeholder="Search"
-        sx={{
-          width: searchClicked ? '12rem' : '6rem',
-          transition: 'width 1s',
-        }}
-      />
-      <Button
-        startIcon={
-          selectedUser !== 'All Users' ? (
-            <Avatar
-              sx={{ bgcolor: blue[100], color: blue[600] }}
-              alt={selectedUser.fullName}
-              src={selectedUser.image && `${import.meta.env.VITE_BE_URL}${selectedUser.image}`}
-            >
-              {`${selectedUser.firstName.charAt(0)}${selectedUser.lastName.charAt(0)}`}
-            </Avatar>
-          ) : (
-            <AccountCircleIcon />
-          )
-        }
-        sx={{ textTransform: 'none' }}
-        variant="text"
-        onClick={handlePersonClicked}
-      >
-        {selectedUser.fullName || 'All Users'}
-      </Button>
-      <Button startIcon={<FilterAltIcon />} sx={{ textTransform: 'none' }} variant="text">
-        Filter
-      </Button>
-      <Button startIcon={<SortIcon />} sx={{ textTransform: 'none' }} variant="text">
-        Sort
-      </Button>
-      <Box sx={{ marginLeft: 'auto', display: 'flex', gap: '1rem' }}>
+      <Box sx={{ display: 'flex', gap: 1 }}>
+        <TextField
+          id="input-with-icon-textfield"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon color="primary" />
+              </InputAdornment>
+            ),
+          }}
+          variant="standard"
+          color="primary"
+          onFocus={() => setSearchClicked(prev => !prev)}
+          onBlur={() => setSearchClicked(prev => !prev)}
+          placeholder="Search"
+          sx={{
+            width: searchClicked ? '12rem' : '6rem',
+            transition: 'width 1s',
+          }}
+        />
+        <Button
+          startIcon={
+            selectedUser !== 'All Users' ? (
+              <Avatar
+                sx={{ bgcolor: blue[100], color: blue[600] }}
+                alt={selectedUser.fullName}
+                src={selectedUser.image && `${import.meta.env.VITE_BE_URL}${selectedUser.image}`}
+              >
+                {`${selectedUser.firstName.charAt(0)}${selectedUser.lastName.charAt(0)}`}
+              </Avatar>
+            ) : (
+              <AccountCircleIcon />
+            )
+          }
+          sx={{ textTransform: 'none' }}
+          variant="text"
+          onClick={handlePersonClicked}
+        >
+          {selectedUser.fullName || 'All Users'}
+        </Button>
+        <Button startIcon={<FilterAltIcon />} sx={{ textTransform: 'none' }} variant="text">
+          Filter
+        </Button>
+        <Button startIcon={<SortIcon />} sx={{ textTransform: 'none' }} variant="text">
+          Sort
+        </Button>
+      </Box>
+      <Box sx={{ display: 'flex', gap: '1rem' }}>
         <ToggleButtonGroup size="small" value={taskSize} onChange={handleTaskSizeChanged} exclusive>
           <ToggleButton value="small" key="small">
             <CompressIcon />
